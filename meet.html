@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="meet.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-box">
+            <img src="templates/images/logo.png" alt="Logo" class="logo">
+        </div>
+
+        <nav class="main-nav">
+            <ul id="nav">
+                <li class="slide1"></li>
+                <li class="slide2"></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#floorplan">Floor Plans</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+        </nav>
+
+        <button class="register-btn">
+            <p>Register Now</p>
+        </button>
+    </header>
+
+
+    <section class="main-banner">
+
+    </section>
+
+    <section class="siteplan-section">
+        <div class="siteplan-wrapper">
+
+            <div class="siteplan-inner">
+                <img src="templates/images/Overall aerial view 13112025.jpg" class="siteplan-img">
+            </div>
+
+
+
+            <div class="floorplan-box box-standard prime-square"></div>
+            <div class="floorplan-box box-standard central-walk"></div>
+            <div class="floorplan-box box-standard merchant-bay"></div>
+
+            <div class="marker" style="top: 47%; left: 28%;" data-building="cinema"></div>
+            <div class="marker" style="top: 63%; left: 25%;" data-building="drive-thru"></div>
+            <div class="marker" style="top: 54%; left: 56%;" data-building="block-A"></div>
+            <div class="marker" style="top: 55%; left: 83%;" data-building="block-B"></div>
+            <div class="marker" style="top: 46%; left: 56%;" data-building="block-A7"></div>
+            <div class="marker" style="top: 46%; left: 78%;" data-building="block-F"></div>
+            <div class="marker" style="top: 40%; left: 51.5%;" data-building="skypark-1"></div>
+            <div class="marker" style="top: 40%; left: 59.5%;" data-building="skypark-2"></div>
+            <div class="marker" style="top: 40%; left: 72.5%;" data-building="skypark-3"></div>
+            <div class="marker" style="top: 40%; left: 80%;" data-building="skypark-4"></div>
+            <div class="marker" style="top: 33%; left: 51.5%;" data-building="block-D"></div>
+            <div class="marker" style="top: 33%; left: 59%;" data-building="block-E"></div>
+            <div class="marker" style="top: 33%; left: 71%;" data-building="block-G"></div>
+            <div class="marker" style="top: 33%; left: 78%;" data-building="block-H"></div>
+            <div class="marker" style="top: 28%; left: 63.5%;" data-building="block-I"></div>
+            
+            <div class="siteplan-legend">
+                <div class="legend-item">
+                    <span class="legend-box color-prime"></span>
+                    <span class="legend-label">Prime Square</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box color-central"></span>
+                    <span class="legend-label">Central Walk</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box color-merchant"></span>
+                    <span class="legend-label">Merchant Bay</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="cinema">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Cinema</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/2) Central walk .png" alt="Cinema">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="drive-thru">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Parkfront Avenue</h2>
+                <!-- <a href="#">View More Details</a> -->
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_captial square_V2 copy.png" alt="Drive Thru"
+                    class="model-img-layer-1">
+            </div>
+            <div class="modal-info">
+                <p>Drive-Through convenience with high-traffic visibility at the main entrance.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="block-A">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Block A</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer-2">
+            </div>
+            <div class="modal-info">
+                <h3>5-storage shop lot</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type A">
+                        <h5>Level 1</h5>
+                        <p>(1,400 sqft - 1,850 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type B">
+                        <h5>Level 2</h5>
+                        <p>(1,400 sqft - 1,850 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type C">
+                        <h5>Level 3</h5>
+                        <p>(1,400 sqft - 3,080 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Penthouse">
+                        <h5>Level 4</h5>
+                        <p>(1,400 sqft - 3,080 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Penthouse">
+                        <h5>Level 5</h5>
+                        <p>(6,900 sqft)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="block-B">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Block B</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer">
+            </div>
+            <div class="modal-info">
+                <h3>3-storage shop lot</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type A">
+                        <h5>Level 1</h5>
+                        <p>(1,640 sqft - 7,560 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type B">
+                        <h5>Level 2</h5>
+                        <p>(2,070 sqft - 3,770 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type C">
+                        <h5>Level 3</h5>
+                        <p>(2,070 sqft - 3,770 sqft)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="block-A7">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Block A7</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="block-F">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Block F</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="skypark-1">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Block A</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer">
+            </div>
+            <div class="modal-info">
+                <div class="floor-tabs">
+                    <button class="tab-btn selected" onclick="switchFloor(event, 'content-L1', 'img-L1')">
+                        Level 1 (Retail)
+                    </button>
+                    <button class="tab-btn" onclick="switchFloor(event, 'content-L2', 'img-L2')">
+                        Level 2 (Offices)
+                    </button>
+                    <button class="tab-btn" onclick="switchFloor(event, 'content-L3', 'img-L3')">
+                        Level 3 (Rooftop)
+                    </button>
+                </div>
+
+                <div id="content-L1" class="floor-content selected">
+                    <div class="floor-visual"><img src="templates/images/The_HUB_office2_Extend.png" alt="L1 Plan">
+                    </div>
+                    <div class="floor-data">
+                        <h3>Level 1: Retail & Lobby</h3>
+                        <p>The exterior Level 1 is now glowing, and the rest is dimmed.</p>
+                    </div>
+                </div>
+
+                <div id="content-L2" class="floor-content">
+                    <div class="floor-visual"><img src="templates/images/The_HUB_office2_Extend.png" alt="L2 Plan">
+                    </div>
+                    <div class="floor-data">
+                        <h3>Level 2: Corporate Suites</h3>
+                        <p>The exterior Level 2 is now glowing, and the rest is dimmed.</p>
+                    </div>
+                </div>
+
+                <div id="content-L3" class="floor-content">
+                    <div class="floor-visual"><img src="templates/images/The_HUB_office2_Extend.png" alt="L3 Plan">
+                    </div>
+                    <div class="floor-data">
+                        <h3>Level 3: Rooftop Garden</h3>
+                        <p>The exterior Level 3 is now glowing, and the rest is dimmed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="skypark-2">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Skypark 2</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="skypark-3">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Skypark 3</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="skypark-4">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Skypark 4</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="block-D">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Block D</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="block-E">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Block E</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="block-G">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Block G</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="block-H">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Block H</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <div class="modal" id="block-I">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Block I</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer">
+            </div>
+            <div class="modal-info">
+                <h3>2 & 3-storage shop lot</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type A">
+                        <h5>Level 1</h5>
+                        <p>(2,200 sqft - 4,360 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type B">
+                        <h5>Level 2</h5>
+                        <p>(2,215 sqft - 2,550 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type C">
+                        <h5>Level 3</h5>
+                        <p>(2,247 sqft - 2,555 sqft)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="banner-background">
+
+    </div>
+
+    <section class="facility">
+        <div class="image-slider">
+            <section class="slider_content">
+                <button class="slider-control--button prev-button">
+                    <i class="fa fa-arrow-circle-left"></i>
+                </button>
+
+                <main class="image-display"></main>
+
+                <button class="slider-control--button next-button">
+                    <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </section>
+
+            <nav class="slider-navigation">
+                <button class="nav-button" aria-selected="true" data-title="Central Walk"
+                    data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
+                    <img src="templates/images/2) Central walk .png" alt="Central walk" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="false" data-title="Rooftop Market (Victoria Park)"
+                    data-desc="Rooftop garden space for casual F&B kiosks and lifestyle retail.">
+                    <img src="templates/images/2) Central walk .png" alt="Central Walk" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="false" data-title="Active Park (Hydora Park)"
+                    data-desc="Open green rooftop designed for community workout, light sports and everyday wellness.">
+                    <img src="templates/images/3) Victoria Park (BlkD).jpg .png" alt="Victoria Park" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="false" data-title="Sky Events (Starview Park)"
+                    data-desc="Versatile open-air event space for celebrations, community gatherings and commercial launches.">
+                    <img src="templates/images/4) Landscape Perspective 4.jpg" alt="Landscape" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="false" data-title="Playground (Jubilee Park)"
+                    data-desc="Child-friendly rooftop playground for families to gather, relax and have fun together.">
+                    <img src="templates/images/5) Children Playground.jpg" alt="Playground" class="thumbnail">
+                </button>
+
+            </nav>
+        </div>
+
+        <div class="facility-details">
+            <h2 id="facility-title">Facilities</h2>
+            <p id="facility-desc">Loading facility details...</p>
+        </div>
+    </section>
+
+<section class="why-hub-section">
+        <h2 class="why-hub-title">Why Move Your Business to THE HUB</h2>
+
+        <div class="why-hub-grid">
+
+            <div class="why-hub-card card-lifestyle">
+                <div class="icon-box">
+                    <img src="templates/images/lifestyle.png" alt="Lifestyle">
+                </div>
+                <h3>Lifestyle</h3>
+                <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
+            </div>
+
+            <div class="why-hub-card card-footfall">
+                <div class="icon-box">
+                    <img src="templates/images/footfall.png" alt="Footfall">
+                </div>
+                <h3>Footfall</h3>
+                <p>Over 200,000 population within 10km+ regional catchment</p>
+            </div>
+
+            <div class="why-hub-card card-prestige">
+                <div class="icon-box">
+                    <img src="templates/images/prestige.png" alt="Prestige">
+                </div>
+                <h3>Prestige</h3>
+                <p>A premium image for brands seeking credibility, stability, and visibility</p>
+            </div>
+
+            <div class="why-hub-card card-safety">
+                <div class="icon-box">
+                    <img src="templates/images/safety.png" alt="Safety">
+                </div>
+                <h3>Safety</h3>
+                <p>CCTV-monitored, managed maintenance, and 24/7 security.</p>
+            </div>
+
+            <div class="why-hub-card card-location">
+                <div class="icon-box">
+                    <img src="templates/images/location.png" alt="Location">
+                </div>
+                <h3>Strategic Location</h3>
+                <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="register-container">
+        <div class="register-card">
+
+            <h2>Register Your Interest</h2>
+
+            <form>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact No</label>
+                        <input type="tel" placeholder="+60 12-345 6789">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" placeholder="Manager / Owner">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" placeholder="Malaysia">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="Muar">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Message / Address</label>
+                    <textarea placeholder="Tell us more about your inquiry..."></textarea>
+                </div>
+
+                <button class="btn">Submit Inquiry</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Register Form -->
+    <div class="register-container">
+        <div class="register-card">
+
+            <h2>Register Your Interest</h2>
+
+            <form>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact No</label>
+                        <input type="tel">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Address</label>
+                    <textarea></textarea>
+                </div>
+
+                <button class="btn">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+
+            <div class="footer-column">
+                <img src="templates/images/YKL Logo Ori_page-0003.jpg" class="footer-logo" alt="Logo">
+                <p class="footer-desc">
+                    Delivering future-ready living with sustainable design, smart layouts, and elevated lifestyle
+                    facilities.
+                </p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul class="contact-list">
+                    <li><i class="fa fa-map-marker"></i> KL, Malaysia</li>
+                    <li><i class="fa fa-phone"></i>012-727 7979</li>
+                    <li><i class="fa fa-envelope"></i>welcome.yklgroup.com.my</li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-youtube-play"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 Your Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="index.js"></script>
+
+</body>
+</html>
