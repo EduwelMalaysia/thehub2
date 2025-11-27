@@ -6,7 +6,9 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
-    background: var(--bg-light);
+    /* background: var(--bg-light); */
+    /* background: linear-gradient(to bottom, #412776, #05548e, #147db3, #05548e, #412776); */
+    background: none;
     color: var(--text-dark);
 }
 /* #20a2dc, #83bc41, #e11f27, #662e86, #e22c7c */
@@ -124,14 +126,13 @@ body {
 /* Header */
 
 /* Main Background */
-.main-banner {
-    width: 100%;
-    padding: 60px 15px;
-    background-image: url('templates/images/The_HUB_office2_Extend.png');
-    background-size: 100%;
-    background-position: center;
-    height: 100vh;
+.main-banner img {
+    width: 100%;       /* full width */
+    height: auto;      /* maintain aspect ratio */
+    display: block;    /* remove inline spacing */
+    
 }
+
 
 /* Main Background */
 
@@ -139,7 +140,7 @@ body {
 .siteplan-section {
     width: 100%;
     padding: 50px;
-    background: linear-gradient(120deg, var(--blue), var(--green), var(--red), var(--purple), var(--pink));
+    background: linear-gradient(to bottom, #147db3, #05548e, #412776);
     background-size: 200% auto;
 }
 
@@ -607,6 +608,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    background: linear-gradient(to bottom, #412776, #05548e, #147db3);
 }
 
 .video-frame {
@@ -644,7 +647,8 @@ body {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    background: var(--green);
+    /* background: var(--green); */
+    background: linear-gradient(to bottom, #412776, #05548e, #147db3);
 }
 
 .facility-details {
@@ -790,7 +794,7 @@ body {
 .facility-details h2 {
     font-size: 2.2rem;
     font-weight: 800;
-    color: var(--bg-dark);
+    color: var(--bg-light);
     text-shadow: 0 0 15px var(--blue);
 }
 
@@ -799,7 +803,7 @@ body {
     font-size: 1.1rem;
     line-height: 1.7;
     font-weight: 600;
-    color: var(--bg-dark);
+    color: var(--bg-light);
 }
 
 /* Facility Section */
@@ -807,13 +811,15 @@ body {
 /* Why The Hub Section */
 .why-hub-section {
     padding: 100px 20px;
-    background: var(--bg-light);
+    /* background: var(--bg-light); */
+    background: linear-gradient(to bottom, #147db3, #05548e, #412776);
     text-align: center;
 }
 
 .why-hub-title {
     font-size: 2.5rem;
-    color: var(--brand-purple);
+    /* color: var(--brand-purple); */
+    color: var(--bg-light);
     margin-bottom: 60px;
     position: relative;
     display: inline-block;
@@ -870,7 +876,8 @@ body {
 .register-container {
     width: 100%;
     padding: 80px 20px;
-    background: linear-gradient(135deg, #20A2DC 0%, #662E86 100%);
+    background: linear-gradient(to bottom, #412776, #05548e, #147db3, #05548e, #412776);
+    /* background: var(--bg-light); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -880,6 +887,7 @@ body {
 .register-card {
     width: 100%;
     max-width: 850px;
+    /* background: linear-gradient(to bottom, #412776, #05548e, #147db3, #05548e, #412776); */
     background: rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 40px 50px;
