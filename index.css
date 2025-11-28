@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
-
+html{
+    scroll-behavior: smooth;
+}
 html,
 body {
     margin: 0;
@@ -1077,3 +1079,58 @@ textarea:focus {
     transform: translateY(0px);
 }
 /* Fade-in Animation */
+
+/* Floating Icon */
+/* Container to stack buttons */
+.floating-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999;
+}
+
+/* Common Button Styles */
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s, visibility 0.3s;
+    font-size: 30px;
+}
+
+.floating-btn:hover {
+    transform: translateY(-5px);
+}
+.whatsapp-btn i { color: #25D366; }
+.waze-btn i { color: #33CCFF; }
+
+.scroll-btn {
+    background-color: #333; /* Dark background */
+    color: #fff;
+    font-size: 24px;
+    
+    /* Hidden by default (opacity 0) */
+    opacity: 0;
+    visibility: hidden;
+    
+    /* Ensure it stays at the bottom of the stack */
+    order: 1; 
+}
+
+/* Class added by JS when user scrolls down */
+.scroll-btn.show {
+    opacity: 1;
+    visibility: visible;
+}
+/* Floating Icon */

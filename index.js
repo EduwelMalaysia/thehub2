@@ -259,3 +259,23 @@ document.addEventListener('DOMContentLoaded', () => {
         new Slider(sliderElement);
     }
 });
+
+// Floating Icon
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // <--- THIS makes it scroll instead of jump
+    });
+}
+
+// 2. Logic to Show/Hide the button
+window.addEventListener('scroll', function() {
+    var scrollBtn = document.querySelector('.scroll-btn');
+    
+    // If user has scrolled down more than 300 pixels, fade in the button
+    if (window.scrollY > 200) {
+        scrollBtn.classList.add('show');
+    } else {
+        scrollBtn.classList.remove('show');
+    }
+});
