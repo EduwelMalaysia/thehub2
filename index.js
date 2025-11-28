@@ -260,19 +260,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Floating Icon
+// Scroll to Top Button
 function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // <--- THIS makes it scroll instead of jump
-    });
-}
+    const duration = 2000; 
+    const start = window.scrollY;
+    const startTime = performance.now();
 
-// 2. Logic to Show/Hide the button
-window.addEventListener('scroll', function() {
+    function scroll(currentTime) {
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = progress < 0.5
+            ? 2 * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+        window.scrollTo(0, start * (1 - ease));
+
+        if (timeElapsed < duration) {
+            requestAnimationFrame(scroll);
+        }
+    }
+
+    requestAnimationFrame(scroll);
+}
+window.addEventListener('scroll', function () {
     var scrollBtn = document.querySelector('.scroll-btn');
-    
-    // If user has scrolled down more than 300 pixels, fade in the button
     if (window.scrollY > 200) {
         scrollBtn.classList.add('show');
     } else {
