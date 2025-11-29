@@ -25,6 +25,10 @@
                 <li><a href="#gallery">Gallery</a></li>
             </ul>
         </nav>
+        <button class="hamburger-menu" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
         <div class="register-btn-container">
             <button class="register-btn">
                 <p>Register<br>Now</p>
@@ -34,7 +38,9 @@
 
 
     <div class="main-banner">
-        <img src="templates/images/cover page 13112025.jpg" alt="Banner" />
+        <img src="templates/images/cover page 13112025.jpg" alt="Banner" class="banner-bg" />
+
+        <img src="templates/images/Title.png" alt="Overlay Text" class="banner-overlay fade-on-scroll" />
     </div>
 
     <div class="content-1-wrap fade-on-scroll">
@@ -73,15 +79,17 @@
         </div>
     </div>
 
-    <section class="video-container">
+
+
+    <section class="combined-section fade-on-scroll" id="overview">
+            <div class="video-container">
         <iframe src="https://www.youtube.com/embed/VPuHj85fi1o?si=wBqrTu16xWjoAi5S&enablejsapi=1&mute=1"
             class="video-frame" title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
         </iframe>
-    </section>
+    </div>
 
-    <section class="combined-section fade-on-scroll" id="overview">
         <div class="overview-content">
             <img src="templates/images/arrow-down-circle.svg">
             <h1>overview</h1>
@@ -94,31 +102,34 @@
         <div class="siteplan-wrapper">
 
             <div class="siteplan-inner">
-                <img src="templates/images/Overall aerial view 13112025.jpg" class="siteplan-img">
+
+                <div class="map-frame">
+                    <img src="templates/images/Overall aerial view 13112025.jpg" class="siteplan-img">
+                    <div class="marker" style="top: 45%; left: 23%;" data-building="cinema"></div>
+                    <div class="marker" style="top: 65%; left: 18%;" data-building="drive-thru"></div>
+                    <div class="marker" style="top: 55%; left: 54%; background: #20A2DC;" data-building="block-A"></div>
+                    <div class="marker" style="top: 55%; left: 85%; background: #20A2DC;" data-building="block-B"></div>
+                    <div class="marker" style="top: 45%; left: 55%; background: #83BC41;" data-building="block-A7">
+                    </div>
+                    <div class="marker" style="top: 45%; left: 79%; background: #83BC41;" data-building="block-F"></div>
+                    <div class="marker" style="top: 38%; left: 49%; background: #83BC41;" data-building="skypark-1">
+                    </div>
+                    <div class="marker" style="top: 38%; left: 58%; background: #83BC41;" data-building="skypark-2">
+                    </div>
+                    <div class="marker" style="top: 38%; left: 72.5%; background: #83BC41;" data-building="skypark-3">
+                    </div>
+                    <div class="marker" style="top: 38%; left: 81.5%; background: #83BC41;" data-building="skypark-4">
+                    </div>
+                    <div class="marker" style="top: 29%; left: 48.5%; background: #83BC41;" data-building="block-D">
+                    </div>
+                    <div class="marker" style="top: 29%; left: 57%; background: #83BC41;" data-building="block-E"></div>
+                    <div class="marker" style="top: 29%; left: 71%; background: #83BC41;" data-building="block-G"></div>
+                    <div class="marker" style="top: 29%; left: 80%; background: #83BC41;" data-building="block-H"></div>
+                    <div class="marker" style="top: 23%; left: 63%; background: #E11F27;" data-building="block-I"></div>
+
+                </div>
+
             </div>
-
-            <!-- <svg class="highlight-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <polygon class="polygon-shape prime-square-poly" 
-                        points="44,46 93,46 97,63 43,70" />
-            </svg>
-            <div class="floorplan-box box-standard central-walk"></div>
-            <div class="floorplan-box box-standard merchant-bay"></div> -->
-
-            <div class="marker" style="top: 45%; left: 23%;" data-building="cinema"></div>
-            <div class="marker" style="top: 60%; left: 18%;" data-building="drive-thru"></div>
-            <div class="marker" style="top: 50%; left: 54%; background: #20A2DC;" data-building="block-A"></div>
-            <div class="marker" style="top: 52%; left: 83%; background: #20A2DC;" data-building="block-B"></div>
-            <div class="marker" style="top: 42%; left: 55%; background: #83BC41;" data-building="block-A7"></div>
-            <div class="marker" style="top: 42%; left: 79%; background: #83BC41;" data-building="block-F"></div>
-            <div class="marker" style="top: 36%; left: 49%; background: #83BC41;" data-building="skypark-1"></div>
-            <div class="marker" style="top: 36%; left: 58%; background: #83BC41;" data-building="skypark-2"></div>
-            <div class="marker" style="top: 36%; left: 72.5%; background: #83BC41;" data-building="skypark-3"></div>
-            <div class="marker" style="top: 36%; left: 81.5%; background: #83BC41;" data-building="skypark-4"></div>
-            <div class="marker" style="top: 28%; left: 48.5%; background: #83BC41;" data-building="block-D"></div>
-            <div class="marker" style="top: 28%; left: 57%; background: #83BC41;" data-building="block-E"></div>
-            <div class="marker" style="top: 28%; left: 70%; background: #83BC41;" data-building="block-G"></div>
-            <div class="marker" style="top: 28%; left: 79%; background: #83BC41;" data-building="block-H"></div>
-            <div class="marker" style="top: 22%; left: 61.5%; background: #E11F27;" data-building="block-I"></div>
 
             <div class="siteplan-legend">
                 <div class="legend-item">
@@ -243,22 +254,92 @@
             </div>
         </div>
     </div>
-
+    <!-- 
     <div class="modal" id="block-A7">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Block A7</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block A</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer-2">
+            </div>
+            <div class="modal-info">
+                <h3>5-storage shop lot</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type A">
+                        <h5>Level 1</h5>
+                        <p>(1,400 sqft - 1,850 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type B">
+                        <h5>Level 2</h5>
+                        <p>(1,400 sqft - 1,850 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type C">
+                        <h5>Level 3</h5>
+                        <p>(1,400 sqft - 3,080 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Penthouse">
+                        <h5>Level 4</h5>
+                        <p>(1,400 sqft - 3,080 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Penthouse">
+                        <h5>Level 5</h5>
+                        <p>(6,900 sqft)</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="block-F">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Block F</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block A</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer-2">
+            </div>
+            <div class="modal-info">
+                <h3>5-storage shop lot</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type A">
+                        <h5>Level 1</h5>
+                        <p>(1,400 sqft - 1,850 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type B">
+                        <h5>Level 2</h5>
+                        <p>(1,400 sqft - 1,850 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Type C">
+                        <h5>Level 3</h5>
+                        <p>(1,400 sqft - 3,080 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Penthouse">
+                        <h5>Level 4</h5>
+                        <p>(1,400 sqft - 3,080 sqft)</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="templates/images/The_HUB_office2_Extend.png" alt="Penthouse">
+                        <h5>Level 5</h5>
+                        <p>(6,900 sqft)</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="modal" id="skypark-1">
         <div class="modal-content">
@@ -323,32 +404,64 @@
     <div class="modal" id="block-D">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Block D</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block D</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/1) Hydora Park (Block E).png" alt="Block E SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="block-E">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Block E</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block D</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/1) Hydora Park (Block E).png" alt="Block E SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="block-G">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Block G</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block D</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/1) Hydora Park (Block E).png" alt="Block E SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="block-H">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Block H</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block D</h2>
+                <a href="#">View More Details</a>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/1) Hydora Park (Block E).png" alt="Block E SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
@@ -410,16 +523,6 @@
                 <button class="nav-button" aria-selected="true" data-title="Central Walk"
                     data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
                     <img src="templates/images/2) Central walk .png" alt="Central walk" class="thumbnail">
-                </button>
-
-                <button class="nav-button" aria-selected="true" data-title="Central Walk"
-                    data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
-                    <img src="templates/images/4) Landscape Perspective 4.jpg" alt="Central walk" class="thumbnail">
-                </button>
-
-                <button class="nav-button" aria-selected="false" data-title="Rooftop Market (Victoria Park)"
-                    data-desc="Rooftop garden space for casual F&B kiosks and lifestyle retail.">
-                    <img src="templates/images/2) Central walk .png" alt="Central Walk" class="thumbnail">
                 </button>
 
                 <button class="nav-button" aria-selected="false" data-title="Active Park (Hydora Park)"
@@ -510,6 +613,11 @@
         </div>
     </section>
 
+    <section class="location fade-on-scroll">
+        <h1>we are here</h1>
+        <img src="templates/images/location_building - Edited.png">
+    </section>
+
     <!-- Register Form -->
     <div class="register-container fade-on-scroll">
         <div class="register-card">
@@ -595,6 +703,7 @@
     <footer>
         <p>THE HUB. All Right Reserved. | Disclaimer</p>
     </footer>
+    
     <div class="floating-container">
 
         <a href="https://wa.me/60127277979" target="_blank" class="floating-btn whatsapp-btn">
