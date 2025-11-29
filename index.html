@@ -17,18 +17,19 @@
 
         <nav class="main-nav">
             <ul id="nav">
-                <li class="slide1"></li>
-                <li class="slide2"></li>
+                <!-- <li class="slide1"></li>
+                <li class="slide2"></li> -->
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#facilities">Facilities</a></li>
                 <li><a href="#floorplan">Floor Plans</a></li>
                 <li><a href="#gallery">Gallery</a></li>
             </ul>
         </nav>
-
-        <button class="register-btn">
-            <p>Register Now</p>
-        </button>
+        <div class="register-btn-container">
+            <button class="register-btn">
+                <p>Register<br>Now</p>
+            </button>
+        </div>
     </header>
 
 
@@ -36,42 +37,88 @@
         <img src="templates/images/cover page 13112025.jpg" alt="Banner" />
     </div>
 
+    <div class="content-1-wrap fade-on-scroll">
+        <div class="content-1">
+            <div class="intro">
+                <h2>muar's new centre of businesses & lifestyle</h2>
+                <h3>a beacon of sustainability</h3>
+                <p>THE HUB is an exciting, multi-component development that features innovative urban planning and
+                    design,
+                    carefully considering the needs of the community and businesses with equal measure. By incorporating
+                    green spaces, pedestrian-friendly pathways, and seamless connectivity, THE HUB fosters a lively,
+                    interconnected atmosphere that encourages social interaction and economic growth.</p>
+                <button class="btn-learn-more"><a href="#overview">more info &#8594;</a></button>
+            </div>
+            <div class="design-collage-section">
+                <div class="collage-wrapper">
+
+                    <div class="collage-col-left">
+                        <div class="img-box main-building">
+                            <img src="templates/images/The_HUB_office2_Extend.png" alt="Main Building">
+                        </div>
+
+                        <div class="img-box sculpture">
+                            <img src="templates/images/5) Children Playground.jpg" alt="Sculpture">
+                        </div>
+                    </div>
+
+                    <div class="collage-col-right">
+                        <div class="img-box retail-street">
+                            <img src="templates/images/2) Central walk .png" alt="Retail Street">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="video-container">
-        <iframe src="https://www.youtube.com/embed/VPuHj85fi1o?si=wBqrTu16xWjoAi5S" class="video-frame"
-            title="YouTube video player" frameborder="0"
+        <iframe src="https://www.youtube.com/embed/VPuHj85fi1o?si=wBqrTu16xWjoAi5S&enablejsapi=1&mute=1"
+            class="video-frame" title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+        </iframe>
     </section>
 
-    <section class="siteplan-section" id="overview">
+    <section class="combined-section fade-on-scroll" id="overview">
+        <div class="overview-content">
+            <img src="templates/images/arrow-down-circle.svg">
+            <h1>overview</h1>
+            <p>THE HUB comprises a wide range of components that cater to various aspects of life. From recreational
+                spaces, social events, and business facilities to retail outlets and dining options, every element will
+                be strategically placed to serve the needs and desires of the community</p>
+
+        </div>
+
         <div class="siteplan-wrapper">
 
             <div class="siteplan-inner">
                 <img src="templates/images/Overall aerial view 13112025.jpg" class="siteplan-img">
             </div>
 
-            <svg class="highlight-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- <svg class="highlight-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <polygon class="polygon-shape prime-square-poly" 
                         points="44,46 93,46 97,63 43,70" />
             </svg>
             <div class="floorplan-box box-standard central-walk"></div>
-            <div class="floorplan-box box-standard merchant-bay"></div>
+            <div class="floorplan-box box-standard merchant-bay"></div> -->
 
             <div class="marker" style="top: 45%; left: 23%;" data-building="cinema"></div>
             <div class="marker" style="top: 60%; left: 18%;" data-building="drive-thru"></div>
-            <div class="marker" style="top: 50%; left: 54%;" data-building="block-A"></div>
-            <div class="marker" style="top: 52%; left: 83%;" data-building="block-B"></div>
-            <div class="marker" style="top: 42%; left: 55%;" data-building="block-A7"></div>
-            <div class="marker" style="top: 42%; left: 79%;" data-building="block-F"></div>
-            <div class="marker" style="top: 36%; left: 49%;" data-building="skypark-1"></div>
-            <div class="marker" style="top: 36%; left: 58%;" data-building="skypark-2"></div>
-            <div class="marker" style="top: 36%; left: 72.5%;" data-building="skypark-3"></div>
-            <div class="marker" style="top: 36%; left: 81.5%;" data-building="skypark-4"></div>
-            <div class="marker" style="top: 28%; left: 48.5%;" data-building="block-D"></div>
-            <div class="marker" style="top: 28%; left: 57%;" data-building="block-E"></div>
-            <div class="marker" style="top: 28%; left: 70%;" data-building="block-G"></div>
-            <div class="marker" style="top: 28%; left: 79%;" data-building="block-H"></div>
-            <div class="marker" style="top: 22%; left: 61.5%;" data-building="block-I"></div>
+            <div class="marker" style="top: 50%; left: 54%; background: #20A2DC;" data-building="block-A"></div>
+            <div class="marker" style="top: 52%; left: 83%; background: #20A2DC;" data-building="block-B"></div>
+            <div class="marker" style="top: 42%; left: 55%; background: #83BC41;" data-building="block-A7"></div>
+            <div class="marker" style="top: 42%; left: 79%; background: #83BC41;" data-building="block-F"></div>
+            <div class="marker" style="top: 36%; left: 49%; background: #83BC41;" data-building="skypark-1"></div>
+            <div class="marker" style="top: 36%; left: 58%; background: #83BC41;" data-building="skypark-2"></div>
+            <div class="marker" style="top: 36%; left: 72.5%; background: #83BC41;" data-building="skypark-3"></div>
+            <div class="marker" style="top: 36%; left: 81.5%; background: #83BC41;" data-building="skypark-4"></div>
+            <div class="marker" style="top: 28%; left: 48.5%; background: #83BC41;" data-building="block-D"></div>
+            <div class="marker" style="top: 28%; left: 57%; background: #83BC41;" data-building="block-E"></div>
+            <div class="marker" style="top: 28%; left: 70%; background: #83BC41;" data-building="block-G"></div>
+            <div class="marker" style="top: 28%; left: 79%; background: #83BC41;" data-building="block-H"></div>
+            <div class="marker" style="top: 22%; left: 61.5%; background: #E11F27;" data-building="block-I"></div>
 
             <div class="siteplan-legend">
                 <div class="legend-item">
@@ -95,10 +142,9 @@
             <span class="close">&times;</span>
             <div class="modal-header">
                 <h2>Cinema</h2>
-                <a href="#">View More Details</a>
             </div>
             <div class="modal-img">
-                <img src="templates/images/2) Central walk .png" alt="Cinema">
+                <img src="templates/images/The_HUB_cinema2" alt="Cinema">
             </div>
             <div class="modal-info">
                 <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
@@ -173,7 +219,7 @@
                 <a href="#">View More Details</a>
             </div>
             <div class="modal-img">
-                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer">
+                <img src="templates/images/The_HUB_hotel2_V2" alt="Cinema" class="model-img-layer">
             </div>
             <div class="modal-info">
                 <h3>3-storage shop lot</h3>
@@ -218,51 +264,13 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <div class="modal-header">
-                <h2>Block A</h2>
-                <a href="#">View More Details</a>
+                <h2>Block D SkyPark</h2>
             </div>
             <div class="modal-img">
-                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer">
+                <img src="templates/images/3) Victoria Park (BlkD).jpg .png" alt="Block D SkyPark">
             </div>
             <div class="modal-info">
-                <div class="floor-tabs">
-                    <button class="tab-btn selected" onclick="switchFloor(event, 'content-L1', 'img-L1')">
-                        Level 1 (Retail)
-                    </button>
-                    <button class="tab-btn" onclick="switchFloor(event, 'content-L2', 'img-L2')">
-                        Level 2 (Offices)
-                    </button>
-                    <button class="tab-btn" onclick="switchFloor(event, 'content-L3', 'img-L3')">
-                        Level 3 (Rooftop)
-                    </button>
-                </div>
-
-                <div id="content-L1" class="floor-content selected">
-                    <div class="floor-visual"><img src="templates/images/The_HUB_office2_Extend.png" alt="L1 Plan">
-                    </div>
-                    <div class="floor-data">
-                        <h3>Level 1: Retail & Lobby</h3>
-                        <p>The exterior Level 1 is now glowing, and the rest is dimmed.</p>
-                    </div>
-                </div>
-
-                <div id="content-L2" class="floor-content">
-                    <div class="floor-visual"><img src="templates/images/The_HUB_office2_Extend.png" alt="L2 Plan">
-                    </div>
-                    <div class="floor-data">
-                        <h3>Level 2: Corporate Suites</h3>
-                        <p>The exterior Level 2 is now glowing, and the rest is dimmed.</p>
-                    </div>
-                </div>
-
-                <div id="content-L3" class="floor-content">
-                    <div class="floor-visual"><img src="templates/images/The_HUB_office2_Extend.png" alt="L3 Plan">
-                    </div>
-                    <div class="floor-data">
-                        <h3>Level 3: Rooftop Garden</h3>
-                        <p>The exterior Level 3 is now glowing, and the rest is dimmed.</p>
-                    </div>
-                </div>
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
             </div>
         </div>
     </div>
@@ -270,24 +278,45 @@
     <div class="modal" id="skypark-2">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Skypark 2</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block E SkyPark</h2>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/1) Hydora Park (Block E).png" alt="Block E SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="skypark-3">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Skypark 3</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block G SkyPark</h2>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/5) Children Playground.jpg" alt="Block G SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="skypark-4">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Skypark 4</h2>
-            <p></p>
+            <div class="modal-header">
+                <h2>Block H SkyPark</h2>
+            </div>
+            <div class="modal-img">
+                <img src="templates/images/8) Starview Park Block H.png" alt="Block H SkyPark">
+            </div>
+            <div class="modal-info">
+                <p>Modern cinema complex complemented by entertainment retails for family leisure.</p>
+            </div>
         </div>
     </div>
 
@@ -331,7 +360,7 @@
                 <a href="#">View More Details</a>
             </div>
             <div class="modal-img">
-                <img src="templates/images/The_HUB_office2_Extend.png" alt="Cinema" class="model-img-layer">
+                <img src="templates/images/The_HUB_Block I 2_v2_Extend" alt="Cinema" class="model-img-layer">
             </div>
             <div class="modal-info">
                 <h3>2 & 3-storage shop lot</h3>
@@ -356,30 +385,36 @@
         </div>
     </div>
 
+    <!-- <div class="banner-background">
 
+    </div> -->
 
-    <div class="banner-background">
-
-    </div>
-
-    <section class="facility" id="facilities">
+    <section class="facility fade-on-scroll" id="facilities">
         <div class="image-slider">
             <section class="slider_content">
                 <button class="slider-control--button prev-button">
-                    <i class="fa fa-arrow-circle-left"></i>
                 </button>
 
                 <main class="image-display"></main>
 
                 <button class="slider-control--button next-button">
-                    <i class="fa fa-arrow-circle-right"></i>
                 </button>
             </section>
 
             <nav class="slider-navigation">
                 <button class="nav-button" aria-selected="true" data-title="Central Walk"
                     data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
+                    <img src="templates/images/6) Entrance with Signboard.png" alt="Central walk" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="true" data-title="Central Walk"
+                    data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
                     <img src="templates/images/2) Central walk .png" alt="Central walk" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="true" data-title="Central Walk"
+                    data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
+                    <img src="templates/images/4) Landscape Perspective 4.jpg" alt="Central walk" class="thumbnail">
                 </button>
 
                 <button class="nav-button" aria-selected="false" data-title="Rooftop Market (Victoria Park)"
@@ -405,56 +440,68 @@
             </nav>
         </div>
 
-        <div class="facility-details">
-            <h2 id="facility-title">Facilities</h2>
+        <div class="facility-details fade-on-scroll">
+            <h2 id="facility-title" class="line-header">Facilities</h2>
             <p id="facility-desc">Loading facility details...</p>
         </div>
     </section>
 
-    <section class="why-hub-section">
-        <h2 class="why-hub-title">Why Move Your Business to THE HUB</h2>
+    <section class="why-hub-section fade-on-scroll">
+        <div class="why-hub-title">
+            <h2>Why Move</h2>
+            <h2>Your Business to THE HUB</h2>
+        </div>
 
-        <div class="why-hub-grid">
+        <div class="slider-wrapper">
 
-            <div class="why-hub-card card-lifestyle">
-                <div class="icon-box">
-                    <img src="templates/images/lifestyle.png" alt="Lifestyle">
+            <div class="why-hub-viewport">
+                <div class="why-hub-grid" id="cardTrack">
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
+                            <img src="templates/images/lifestyle.png" alt="Lifestyle">
+                        </div>
+                        <h3>Lifestyle</h3>
+                        <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
+                    </div>
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
+                            <img src="templates/images/footfall.png" alt="Footfall">
+                        </div>
+                        <h3>Footfall</h3>
+                        <p>Over 200,000 population within 10km+ regional catchment</p>
+                    </div>
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
+                            <img src="templates/images/prestige.png" alt="Prestige">
+                        </div>
+                        <h3>Prestige</h3>
+                        <p>A premium image for brands seeking credibility, stability, and visibility</p>
+                    </div>
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
+                            <img src="templates/images/safety.png" alt="Safety">
+                        </div>
+                        <h3>Safety</h3>
+                        <p>CCTV-monitored, managed maintenance, and 24/7 security.</p>
+                    </div>
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
+                            <img src="templates/images/location.png" alt="Location">
+                        </div>
+                        <h3>Strategic Location</h3>
+                        <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
+                    </div>
                 </div>
-                <h3>Lifestyle</h3>
-                <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
             </div>
 
-            <div class="why-hub-card card-footfall">
-                <div class="icon-box">
-                    <img src="templates/images/footfall.png" alt="Footfall">
-                </div>
-                <h3>Footfall</h3>
-                <p>Over 200,000 population within 10km+ regional catchment</p>
-            </div>
-
-            <div class="why-hub-card card-prestige">
-                <div class="icon-box">
-                    <img src="templates/images/prestige.png" alt="Prestige">
-                </div>
-                <h3>Prestige</h3>
-                <p>A premium image for brands seeking credibility, stability, and visibility</p>
-            </div>
-
-            <div class="why-hub-card card-safety">
-                <div class="icon-box">
-                    <img src="templates/images/safety.png" alt="Safety">
-                </div>
-                <h3>Safety</h3>
-                <p>CCTV-monitored, managed maintenance, and 24/7 security.</p>
-            </div>
-
-            <div class="why-hub-card card-location">
-                <div class="icon-box">
-                    <img src="templates/images/location.png" alt="Location">
-                </div>
-                <h3>Strategic Location</h3>
-                <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
-            </div>
+            <button class="arrow-btn" id="nextBtn">
+                <i class="fa fa-chevron-right"></i>
+            </button>
         </div>
     </section>
 
@@ -464,69 +511,76 @@
     </section>
 
     <!-- Register Form -->
-    <div class="register-container">
+    <div class="register-container fade-on-scroll">
         <div class="register-card">
-
+            <h5>contact</h5>
             <h2>Register Your Interest</h2>
+            <h3>send a message</h3>
 
             <form>
 
                 <div class="grid-2">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text">
+                    <div class="form-group icon-input">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Name">
                     </div>
-                    <div class="form-group">
-                        <label>Contact No</label>
-                        <input type="tel">
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-phone"></i>
+                        <input type="tel" placeholder="Contact No">
                     </div>
                 </div>
 
                 <div class="grid-2">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email">
+                    <div class="form-group icon-input">
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" placeholder="Email">
                     </div>
-                    <div class="form-group">
-                        <label>Position</label>
-                        <input type="text">
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-briefcase"></i>
+                        <input type="text" placeholder="Position">
                     </div>
                 </div>
 
                 <div class="grid-2">
-                    <div class="form-group">
-                        <label>Country</label>
-                        <input type="text">
+                    <div class="form-group icon-input">
+                        <i class="fa fa-globe"></i>
+                        <input type="text" placeholder="Country">
                     </div>
-                    <div class="form-group">
-                        <label>City</label>
-                        <input type="text">
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-city"></i>
+                        <input type="text" placeholder="City">
                     </div>
                 </div>
 
-                <div class="form-group full-width">
-                    <label>Address</label>
-                    <textarea></textarea>
+                <div class="form-group full-width icon-input">
+                    <i class="fa fa-location-dot"></i>
+                    <textarea placeholder="Address"></textarea>
                 </div>
 
-                <button class="btn">Submit</button>
+                <button class="submit-btn">Submit<i class="fa-solid fa-paper-plane"></i></button>
             </form>
 
         </div>
     </div>
 
-    <footer class="site-footer" id="floorplan">
+    <div class="content-2-wrap">
+        <div class="content-2">
+            <p>Delivering future-ready living with sustainable design, smart layout, and elevated lifestyle facilities.
+            </p>
+        </div>
+    </div>
+
+    <section class="site-footer">
         <div class="footer-container">
 
             <div class="footer-column">
                 <img src="templates/images/YKL Logo Ori_page-0003.jpg" class="footer-logo" alt="Logo">
-                <p class="footer-desc">
-                    Delivering future-ready living with sustainable design, smart layouts, and elevated lifestyle
-                    facilities.
-                </p>
             </div>
 
-            <div class="footer-column">
+            <div class="footer-column column2">
                 <h4>Contact</h4>
                 <ul class="contact-list">
                     <li><i class="fa fa-map-marker"></i> KL, Malaysia</li>
@@ -535,36 +589,23 @@
                 </ul>
             </div>
 
-            <div class="footer-column">
-                <h4>Follow Us</h4>
-                <div class="footer-socials">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-instagram"></i></a>
-                    <a href="#"><i class="fa fa-youtube-play"></i></a>
-                </div>
-            </div>
-
         </div>
+    </section>
 
-        <div class="footer-bottom">
-            <p>© 2025 Your Company Name. All rights reserved.</p>
-        </div>
+    <footer>
+        <p>THE HUB. All Right Reserved. | Disclaimer</p>
     </footer>
-
     <div class="floating-container">
 
-        <a href="https://wa.me/60127277979" 
-        target="_blank" 
-        class="floating-btn whatsapp-btn">
+        <a href="https://wa.me/60127277979" target="_blank" class="floating-btn whatsapp-btn">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
 
-        <a href="https://www.waze.com/ul?q=Lot+663%2C+Batu+10%2C+Kampung+Paya+Panjang+Bukit+Pasir%2C+84300+Muar%2C+Johor&navigate=yes" 
-        target="_blank" 
-        class="floating-btn waze-btn">
+        <a href="https://www.waze.com/ul?q=Lot+663%2C+Batu+10%2C+Kampung+Paya+Panjang+Bukit+Pasir%2C+84300+Muar%2C+Johor&navigate=yes"
+            target="_blank" class="floating-btn waze-btn">
             <i class="fa-brands fa-waze"></i>
         </a>
-        
+
         <button class="floating-btn scroll-btn" onclick="scrollToTop()">
             <i class="fa-solid fa-arrow-up"></i>
         </button>

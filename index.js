@@ -1,36 +1,69 @@
 // Navigation Slide Effect
-$("#nav a").on("click", function () {
-    var position = $(this).parent().position();
-    var width = $(this).parent().width();
-    $("#nav .slide1").css({
-        opacity: 1,
-        left: +position.left,
-        width: width
+// $("#nav a").on("click", function () {
+//     var position = $(this).parent().position();
+//     var width = $(this).parent().width();
+//     $("#nav .slide1").css({
+//         opacity: 1,
+//         left: +position.left,
+//         width: width
+//     });
+// });
+
+// $("#nav a").on("mouseover", function () {
+//     var position = $(this).parent().position();
+//     var width = $(this).parent().width();
+//     $("#nav .slide2").css({
+//         opacity: 1,
+//         left: +position.left,
+//         width: width
+//     }).addClass("squeeze");
+// });
+
+// $("#nav a").on("mouseout", function () {
+//     $("#nav .slide2")
+//         .css({ opacity: 0 })
+//         .removeClass("squeeze");
+// });
+
+// var currentWidth = $("#nav li:nth-of-type(3) a").parent("li").width();
+// var current = $("#nav li:nth-of-type(3) a").position();
+
+// $("#nav .slide1").css({
+//     left: +current.left,
+//     width: currentWidth
+// });
+
+const navLinks = document.querySelectorAll('#nav li a');
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= (sectionTop - 120)) {
+            const id = section.getAttribute('id');
+            if (id) {
+                current = id;
+            }
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active-link');
+        if (link.getAttribute('href').includes(current)) {
+            link.classList.add('active-link');
+        }
     });
 });
 
-$("#nav a").on("mouseover", function () {
-    var position = $(this).parent().position();
-    var width = $(this).parent().width();
-    $("#nav .slide2").css({
-        opacity: 1,
-        left: +position.left,
-        width: width
-    }).addClass("squeeze");
-});
-
-$("#nav a").on("mouseout", function () {
-    $("#nav .slide2")
-        .css({ opacity: 0 })
-        .removeClass("squeeze");
-});
-
-var currentWidth = $("#nav li:nth-of-type(3) a").parent("li").width();
-var current = $("#nav li:nth-of-type(3) a").position();
-
-$("#nav .slide1").css({
-    left: +current.left,
-    width: currentWidth
+// Navigation opacity on scroll
+window.addEventListener('scroll', function () {
+    var siteHeader = document.querySelector('.site-header');
+    if (window.scrollY > 100) {
+        siteHeader.classList.add('nav-transparent');
+    } else {
+        siteHeader.classList.remove('nav-transparent');
+    }
 });
 
 document.querySelectorAll('.marker').forEach(marker => {
@@ -262,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Scroll to Top Button
 function scrollToTop() {
-    const duration = 2000; 
+    const duration = 2000;
     const start = window.scrollY;
     const startTime = performance.now();
 
@@ -288,5 +321,90 @@ window.addEventListener('scroll', function () {
         scrollBtn.classList.add('show');
     } else {
         scrollBtn.classList.remove('show');
+    }
+});
+
+// why the hub card loading
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('cardTrack');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let isAnimating = false;
+
+    function getSlideWidth() {
+        const firstCard = track.firstElementChild;
+        const style = window.getComputedStyle(firstCard);
+        return firstCard.offsetWidth + 30;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const slideWidth = getSlideWidth();
+
+        track.style.transition = 'transform 0.5s ease-in-out';
+        track.style.transform = `translateX(-${slideWidth}px)`;
+
+        track.addEventListener('transitionend', () => {
+            track.style.transition = 'none';
+            track.appendChild(track.firstElementChild);
+            track.style.transform = 'translateX(0)';
+
+            setTimeout(() => {
+                isAnimating = false;
+            }, 50);
+
+        }, { once: true });
+    });
+});
+
+// Fade In Animation
+// Scroll Animation Observer
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1 // Trigger when 10% of the element is visible
+};
+
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target); // Stop watching after it's revealed (runs once)
+        }
+    });
+}, observerOptions);
+
+// Attach observer to all elements with the 'fade-on-scroll' class
+document.querySelectorAll('.fade-on-scroll').forEach((element) => {
+    observer.observe(element);
+});
+
+// Youtube Autoplay while scrolling
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Select your specific container and iframe
+    const videoContainer = document.querySelector('.video-container');
+    const iframe = videoContainer ? videoContainer.querySelector('.video-frame') : null;
+
+    if (videoContainer && iframe) {
+        // 2. Create the Observer
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Check if the video is at least 50% visible
+                if (entry.isIntersecting) {
+                    // Send "Play" command to YouTube
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                } else {
+                    // Send "Pause" command when you scroll away
+                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when 50% of the video is visible
+        });
+
+        // 3. Start Watching
+        videoObserver.observe(videoContainer);
     }
 });
