@@ -22,17 +22,14 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#facilities">Facilities</a></li>
                 <li><a href="#floorplan">Floor Plans</a></li>
-                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#location">Location</a></li>
             </ul>
         </nav>
-        <button class="hamburger-menu" aria-label="Toggle Navigation">
-            <i class="fa-solid fa-bars"></i>
-        </button>
 
         <div class="register-btn-container">
-            <button class="register-btn">
+            <a href="#register" class="register-btn">
                 <p>Register<br>Now</p>
-            </button>
+            </a>
         </div>
     </header>
 
@@ -79,28 +76,64 @@
         </div>
     </div>
 
+    <section class="video-container">
+            <iframe src="https://www.youtube.com/embed/VPuHj85fi1o?si=wBqrTu16xWjoAi5S&enablejsapi=1&mute=1"
+                class="video-frame" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </section>
 
-
-    <section class="combined-section fade-on-scroll" id="overview">
-            <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/VPuHj85fi1o?si=wBqrTu16xWjoAi5S&enablejsapi=1&mute=1"
-            class="video-frame" title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-        </iframe>
+    <section class="philosophy-section">
+    <div class="philosophy-header">
+        <h3 class="sub-title">The Philosophy</h3>
+        <h2>Redefining Muar’s Skyline</h2>
+        <div class="divider-line"></div>
+        <p class="philosophy-desc">
+            The Hub is not just an address; it is a destination. We are redefining the commercial landscape by introducing Muar’s first fully managed, safe, and lifestyle-centric business park. Designed for the modern entrepreneur, The Hub bridges the gap between commerce and community. It is a place where businesses grow, families gather, and lifestyles are elevated.
+        </p>
     </div>
 
+    <div class="pillars-grid">
+        
+        <div class="pillar-card">
+            <div class="icon-circle">
+                <i class="fa fa-handshake-o"></i>
+            </div>
+            <h4>Curated Synergy</h4>
+            <p>A lease-only ecosystem ensuring a premium mix of retail, wellness, and office tenants.</p>
+        </div>
+
+        <div class="pillar-card">
+            <div class="icon-circle">
+                <i class="fa fa-shield"></i>
+            </div>
+            <h4>Professionally Managed</h4>
+            <p>Gated, guarded, and maintained by YKL Capital for absolute peace of mind.</p>
+        </div>
+
+        <div class="pillar-card">
+            <div class="icon-circle">
+                <i class="fa fa-heart-o"></i>
+            </div>
+            <h4>Vibrant Lifestyle</h4>
+            <p>From rooftop decks to the cinema, we bring energy to your doorstep.</p>
+        </div>
+
+    </div>
+</section>
+
+    <section class="combined-section fade-on-scroll" id="overview">
         <div class="overview-content">
             <img src="templates/images/arrow-down-circle.svg">
-            <h1>overview</h1>
+            <h1>The Ecosystem</h1>
             <p>THE HUB comprises a wide range of components that cater to various aspects of life. From recreational
                 spaces, social events, and business facilities to retail outlets and dining options, every element will
                 be strategically placed to serve the needs and desires of the community</p>
-
+            
         </div>
 
         <div class="siteplan-wrapper">
-
             <div class="siteplan-inner">
 
                 <div class="map-frame">
@@ -503,6 +536,19 @@
     </div> -->
 
     <section class="facility fade-on-scroll" id="facilities">
+
+        <div class="slider-overlay-card">
+            <h4 class="overlay-eyebrow">A VIBRANT NEW EXPERIENCE</h4>
+            
+            <h2 id="facility-title">THE HUB</h2>
+            
+            <div class="overlay-divider"></div>
+            
+            <p id="facility-desc">
+                Whether it’s a power lunch at our signature F&B outlets, a workout at the wellness hub, or a weekend movie with the family—The Hub is the pulse of the city.
+            </p>
+        </div>
+
         <div class="image-slider">
             <section class="slider_content">
                 <button class="slider-control--button prev-button">
@@ -514,10 +560,27 @@
                 </button>
             </section>
 
+
+
             <nav class="slider-navigation">
-                <button class="nav-button" aria-selected="true" data-title="Central Walk"
-                    data-desc="Central Walk features 2 and 3-storey shop lots (1,320–5,465 sqft) designed as a vibrant lifestyle corridor connected to the Cinema and Sky Parks. Combining retail, leisure, and wellness with lush green spaces, it is the ideal location for F&B outlets, gyms, and entertainment businesses.">
-                    <img src="templates/images/6) Entrance with Signboard.png" alt="Central walk" class="thumbnail">
+                <button class="nav-button" aria-selected="true" data-title="THE HUB" data-desc="The HUB is the largest commercial hotspot in 
+Muar, bringing together business, lifestyle, 
+and entertainment in one destination. With its mix of oﬃces, retail, leisure, wellness, 
+education, and entertainment, The HUB will 
+attract steady and consistent foot traﬃc, 
+becoming the most active and connected 
+place in Muar.
+
+">
+                    <img src="templates/images/6) Entrance with Signboard.png" alt="THE HUB" class="thumbnail">
+                </button>
+
+                <button class="nav-button" aria-selected="false" data-title="THE Hub Highway" data-desc="Strategically located at the heart of Muar 
+along the Muar Bypass Road (AMJ), The HUB 
+Business Park has direct access to major 
+highways connecting Muar to Batu Pahat, 
+Tangkak, and Melaka.">
+                    <img src="templates/images/The_HUB_highway3b.png" alt="Highway" class="thumbnail">
                 </button>
 
                 <button class="nav-button" aria-selected="true" data-title="Central Walk"
@@ -525,19 +588,15 @@
                     <img src="templates/images/2) Central walk .png" alt="Central walk" class="thumbnail">
                 </button>
 
-                <button class="nav-button" aria-selected="false" data-title="Active Park (Hydora Park)"
-                    data-desc="Open green rooftop designed for community workout, light sports and everyday wellness.">
-                    <img src="templates/images/3) Victoria Park (BlkD).jpg .png" alt="Victoria Park" class="thumbnail">
+                <button class="nav-button" aria-selected="false" data-title="Cinema" data-desc="Modern cinema complex complemented by 
+entertainment retails for family leisure">
+                    <img src="templates/images/The_HUB_cinema2.png" alt="Landscape" class="thumbnail">
                 </button>
 
-                <button class="nav-button" aria-selected="false" data-title="Sky Events (Starview Park)"
-                    data-desc="Versatile open-air event space for celebrations, community gatherings and commercial launches.">
-                    <img src="templates/images/4) Landscape Perspective 4.jpg" alt="Landscape" class="thumbnail">
-                </button>
-
-                <button class="nav-button" aria-selected="false" data-title="Playground (Jubilee Park)"
+                <button class="nav-button" aria-selected="false" data-title="Parkfront Avenue"
                     data-desc="Child-friendly rooftop playground for families to gather, relax and have fun together.">
-                    <img src="templates/images/5) Children Playground.jpg" alt="Playground" class="thumbnail">
+                    <img src="templates/images/The_HUB_captial square_V2 copy.png" alt="Parkfront Avenue"
+                        class="thumbnail">
                 </button>
 
             </nav>
@@ -562,10 +621,10 @@
 
                     <div class="why-hub-card">
                         <div class="icon-box">
-                            <img src="templates/images/lifestyle.png" alt="Lifestyle">
+                            <img src="templates/images/location.png" alt="Location">
                         </div>
-                        <h3>Lifestyle</h3>
-                        <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
+                        <h3>Strategic Location</h3>
+                        <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
                     </div>
 
                     <div class="why-hub-card">
@@ -578,6 +637,22 @@
 
                     <div class="why-hub-card">
                         <div class="icon-box">
+                            <img src="templates/images/film.png" alt="Cinema">
+                        </div>
+                        <h3>1<sup>st</sup> Cinema</h3>
+                        <p>1<sup>st</sup> Cinema in Muar, 7 halls with 700 seats</p>
+                    </div>
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
+                            <img src="templates/images/lifestyle.png" alt="Lifestyle">
+                        </div>
+                        <h3>Lifestyle</h3>
+                        <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
+                    </div>
+
+                    <div class="why-hub-card">
+                        <div class="icon-box">
                             <img src="templates/images/prestige.png" alt="Prestige">
                         </div>
                         <h3>Prestige</h3>
@@ -586,18 +661,18 @@
 
                     <div class="why-hub-card">
                         <div class="icon-box">
-                            <img src="templates/images/safety.png" alt="Safety">
+                            <img src="templates/images/parking.png" alt="Parking">
                         </div>
-                        <h3>Safety</h3>
-                        <p>CCTV-monitored, managed maintenance, and 24/7 security.</p>
+                        <h3>Parking</h3>
+                        <p>Estimated 950 Carparks & 450 motorcycle parking lots</p>
                     </div>
 
                     <div class="why-hub-card">
                         <div class="icon-box">
-                            <img src="templates/images/location.png" alt="Location">
+                            <img src="templates/images/safety.png" alt="Safety">
                         </div>
-                        <h3>Strategic Location</h3>
-                        <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
+                        <h3>Safety</h3>
+                        <p>CCTV-monitored, 24/7 security with professional guards on duty</p>
                     </div>
                 </div>
             </div>
@@ -608,21 +683,204 @@
         </div>
     </section>
 
+    <section class="business-suites-section" id="floorplan">
+    <div class="suite-header">
+        <h3 class="sub-title">Commercial Offerings</h3>
+        <h2>Space To Succeed</h2>
+        <div class="divider-line"></div>
+        <p class="suite-intro">
+            427,000 sq.ft. of Gross Floor Area designed for visibility and prestige.
+        </p>
+    </div>
+
+    <div class="tabs-container">
+        
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="retail">
+                <i class="fa fa-shopping-bag"></i> Retail & F&B
+            </button>
+            <button class="tab-btn" data-tab="corporate">
+                <i class="fa fa-briefcase"></i> Corporate Offices
+            </button>
+            <button class="tab-btn" data-tab="convenience">
+                <i class="fa fa-car"></i> Convenience
+            </button>
+        </div>
+
+        <div class="tabs-content-wrapper">
+            
+            <div class="tab-pane active" id="retail">
+                <div class="pane-inner">
+                    <div class="pane-icon">
+                        <i class="fa fa-store"></i>
+                    </div>
+                    <div class="pane-text">
+                        <h3>Retail & F&B</h3>
+                        <p>Ground floor visibility with glass frontages. High footfall driven by anchor tenants and the surrounding residential catchment.</p>
+                        <ul class="pane-list">
+                            <li><i class="fa fa-check"></i> High Ceiling Design</li>
+                            <li><i class="fa fa-check"></i> Wide Frontage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="corporate">
+                <div class="pane-inner">
+                    <div class="pane-icon">
+                        <i class="fa fa-building-o"></i>
+                    </div>
+                    <div class="pane-text">
+                        <h3>Corporate Offices</h3>
+                        <p>Upper-level professional suites offering privacy and prestige. Equipped with lift access and flexible layouts for growing teams.</p>
+                        <ul class="pane-list">
+                            <li><i class="fa fa-check"></i> Dedicated Lift Lobbies</li>
+                            <li><i class="fa fa-check"></i> Modular Layouts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="convenience">
+                <div class="pane-inner">
+                    <div class="pane-icon">
+                        <i class="fa fa-parking"></i>
+                    </div>
+                    <div class="pane-text">
+                        <h3>Convenience</h3>
+                        <p>Supported by over 942 parking bays, ensuring hassle-free access for your clients, staff, and visitors.</p>
+                        <ul class="pane-list">
+                            <li><i class="fa fa-check"></i> 24/7 Security Patrol</li>
+                            <li><i class="fa fa-check"></i> Ample Visitor Parking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="suite-action">
+            <a href="templates/The Hub Booklet_rev7.pdf" class="download-btn" download>
+                <i class="fa fa-download"></i> Download Floor Plans (Blocks A-I)
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<section class="happenings-section fade-on-scroll" id="happenings">
+    
+    <div class="pulse-header">
+        <h3 class="sub-title">News & Updates</h3>
+        <h2>The Pulse</h2>
+        <div class="divider-line"></div>
+    </div>
+
+    <div class="news-scroller">
+        <div class="news-track">
+
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="templates/images/construction-site.jpg" alt="Construction Site" onerror="this.src='https://placehold.co/600x400?text=Construction'">
+                    <span class="news-tag">Construction</span>
+                </div>
+                <div class="news-content">
+                    <h3>Project Update: Site Progress Q4 2025</h3>
+                    <p>Shaping the future of Muar. See the latest milestones as we lay the foundation for the region's biggest hub.</p>
+                    <a href="#" class="read-more">Read Update <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="templates/images/handshake.jpg" alt="Partnership" onerror="this.src='https://placehold.co/600x400?text=Partnership'">
+                    <span class="news-tag">Event</span>
+                </div>
+                <div class="news-content">
+                    <h3>Official LOI Signing Ceremony</h3>
+                    <p>Securing the future with key anchor tenants. A landmark partnership that brings premium brands to Muar.</p>
+                    <a href="#" class="read-more">View Gallery <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="templates/images/cinema-render.jpg" alt="Cinema" onerror="this.src='https://placehold.co/600x400?text=Cinema+Render'">
+                    <span class="news-tag">Coming Soon</span>
+                </div>
+                <div class="news-content">
+                    <h3>Sneak Peek: Cinema Complex Interiors</h3>
+                    <p>Get an exclusive first look at the luxurious 7-hall cinema designed for the ultimate immersive experience.</p>
+                    <a href="#" class="read-more">See Renders <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <div class="news-image">
+                    <img src="templates/images/community.jpg" alt="Community" onerror="this.src='https://placehold.co/600x400?text=Community'">
+                    <span class="news-tag">Lifestyle</span>
+                </div>
+                <div class="news-content">
+                    <h3>Community Wellness Day</h3>
+                    <p>Join us for morning yoga and health checks at the Rooftop Park this coming weekend.</p>
+                    <a href="#" class="read-more">Join Us <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
     <section class="floor-plan-container" id="floorplan">
         <div class="floor-plan-wrapper">
         </div>
     </section>
 
-    <section class="location fade-on-scroll">
-        <h1>we are here</h1>
-        <img src="templates/images/location_building - Edited.png">
-    </section>
+<section class="location fade-on-scroll" id="location">
+    <div class="location-container">
+        
+        <div class="location-map-visual">
+            <img src="templates/images/location_building - Edited.png" alt="Map Visual">
+        </div>
+
+        <div class="location-details-wrapper">
+            
+            <div class="location-details">
+                <h1 class="loc-header">We Are Here</h1>
+                <p class="loc-body-copy">Located just 4km from Muar town along the AMJ Highway. We are positioned to serve a catchment of over 200,000 residents and the nearby EduHub Pagoh.</p>
+            </div>
+
+            <div class="location-markers-grid">
+                
+                <div class="marker-card">
+                    <i class="fa fa-road"></i>
+                    <h3>Access</h3>
+                    <p>AMJ Highway (Direct Frontage)</p>
+                </div>
+
+                <div class="marker-card">
+                    <i class="fa fa-graduation-cap"></i>
+                    <h3>Education</h3>
+                    <p>EduHub Pagoh (UTHM, IIUM)</p>
+                </div>
+
+                <div class="marker-card">
+                    <i class="fa fa-industry"></i>
+                    <h3>Industry</h3>
+                    <p>Muar Furniture Hub (800+ Factories)</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
 
     <!-- Register Form -->
-    <div class="register-container fade-on-scroll">
+    <div class="register-container fade-on-scroll" id="register">
         <div class="register-card">
             <h5>contact</h5>
-            <h2>Register Your Interest</h2>
+            <h2>YOUR BUSINESS DESERVES A BETTER ADDRESS</h2>
             <h3>send a message</h3>
 
             <form>
@@ -647,25 +905,13 @@
 
                     <div class="form-group icon-input">
                         <i class="fa fa-briefcase"></i>
-                        <input type="text" placeholder="Position">
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group icon-input">
-                        <i class="fa fa-globe"></i>
-                        <input type="text" placeholder="Country">
-                    </div>
-
-                    <div class="form-group icon-input">
-                        <i class="fa fa-city"></i>
-                        <input type="text" placeholder="City">
+                        <input type="text" placeholder="Business Type">
                     </div>
                 </div>
 
                 <div class="form-group full-width icon-input">
-                    <i class="fa fa-location-dot"></i>
-                    <textarea placeholder="Address"></textarea>
+                    <!-- <i class="fa fa-location-dot"></i> -->
+                    <textarea placeholder="Leave A Message"></textarea>
                 </div>
 
                 <button class="submit-btn">Submit<i class="fa-solid fa-paper-plane"></i></button>
@@ -680,6 +926,25 @@
             </p>
         </div>
     </div>
+
+    <section class="developer-section fade-on-scroll">
+    <div class="developer-content-wrap">
+        
+        <div class="developer-text">
+            <h3 class="sub-title">YKL CAPITAL SDN BHD</h3>
+            <h2>Built With Integrity</h2>
+            <div class="divider-line"></div>
+            <p>
+                With decades of experience in heavy industry and engineering, YKL Group brings a legacy of precision and reliability to property development. We are committed to building not just structures, but communities. As a developer with integrity, we ensure The Hub remains a sustainable, well-managed asset that drives economic growth for Muar.
+            </p>
+        </div>
+
+        <div class="developer-visual">
+            <img src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital Corporate" />
+        </div>
+        
+    </div>
+</section>
 
     <section class="site-footer">
         <div class="footer-container">
@@ -703,7 +968,7 @@
     <footer>
         <p>THE HUB. All Right Reserved. | Disclaimer</p>
     </footer>
-    
+
     <div class="floating-container">
 
         <a href="https://wa.me/60127277979" target="_blank" class="floating-btn whatsapp-btn">

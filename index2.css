@@ -1,148 +1,44 @@
-.strategic-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 30px 40px;
-    padding: 40px 0;
-    width: 100%;
+/* Magnifier Button Styling */
+.location-map-visual {
+    position: relative; /* CRUCIAL: reference point for the button */
+    /* keep existing styles */
 }
 
-.strategic-container h1{
-    text-align: center;
-}
-
-.strategic-small{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px 20px;
-}
-
-.small {
-    background: #FAD643;
-    border-radius: 10px;
-    padding: 25px 25px;
-    width: calc(25% - 40px); 
-    max-width: 300px; 
-    min-width: 240px;  
-
-    color: #000;
-    font-size: 20px;
-    font-weight: 700;
-    text-align: left;  
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    display: block;
-    box-shadow:
-        0 12px 24px rgba(0,0,0,0.25),
-        0 6px 12px rgba(0,0,0,0.20);
-}
-
-
-/* Flex grid wrapper */
-.card-container {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    padding: 40px;
-}
-
-/* Card */
-.card {
-    width: 260px;
-    background: #ffffff;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
-    padding-bottom: 20px;
-    text-align: center;
-    transition: all .3s ease;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-}
-
-/* Top section with gradient */
-.card-top {
-    height: 140px;
-    border-bottom-left-radius: 80px;
-    border-bottom-right-radius: 80px;
+.magnifier-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* Icon */
-.card-icon {
-    width: 60px;
-    filter: brightness(0) invert(1);
-}
-
-/* Gradient colors */
-.green {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-}
-
-.pink {
-    background: linear-gradient(135deg, #ff6fa8, #ff4f81);
-}
-
-.blue {
-    background: linear-gradient(135deg, #6a8dff, #516eff);
-}
-
-/* Title */
-.card h3 {
-    margin: 20px 0 10px;
-    font-size: 22px;
-    font-weight: 700;
-}
-
-/* Text */
-.card p {
-    padding: 0 20px;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* Button */
-.card-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 50px;
-    background: #2ecc71;
-    color: #fff;
+    font-size: 24px;
+    color: #5f6c9d; /* Blue color from background */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+    cursor: pointer;
     text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
 }
 
-.card-btn:hover {
-    opacity: 0.85;
+.magnifier-btn:hover {
+    background: #fff;
+    transform: scale(1.1);
+    color: #c48350; /* Gold highlight */
 }
 
-/* Button color variations */
-.pink-btn {
-    background: #ff4f81;
+/* Modal adjustments for the large map */
+.modal-content.large-map-content {
+    width: 90%; /* Wider view */
+    max-width: 1000px;
+    padding: 20px;
 }
 
-.blue-btn {
-    background: #516eff;
-}
-
-/* Responsive */
-@media(max-width: 768px) {
-    .card-container {
-        gap: 20px;
-    }
-    .card {
-        width: 100%;
-        max-width: 300px;
-    }
+.full-map-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
 }

@@ -359,12 +359,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+//Business Suites Tab Switching
+document.addEventListener('DOMContentLoaded', () => {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+
+            btn.classList.add('active');
+
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const openMapBtn = document.getElementById('open-map-modal');
+    const mapModal = document.getElementById('location-map-modal');
+
+    if (openMapBtn && mapModal) {
+        openMapBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent screen jump
+            mapModal.style.display = 'block';
+        });
+    }
+});
+
 // Fade In Animation
 // Scroll Animation Observer
 const observerOptions = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.1 // Trigger when 10% of the element is visible
+    threshold: 0.1
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
@@ -376,35 +407,27 @@ const observer = new IntersectionObserver((entries, observer) => {
     });
 }, observerOptions);
 
-// Attach observer to all elements with the 'fade-on-scroll' class
 document.querySelectorAll('.fade-on-scroll').forEach((element) => {
     observer.observe(element);
 });
 
 // Youtube Autoplay while scrolling
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. Select your specific container and iframe
     const videoContainer = document.querySelector('.video-container');
     const iframe = videoContainer ? videoContainer.querySelector('.video-frame') : null;
 
     if (videoContainer && iframe) {
-        // 2. Create the Observer
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Check if the video is at least 50% visible
                 if (entry.isIntersecting) {
-                    // Send "Play" command to YouTube
                     iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
                 } else {
-                    // Send "Pause" command when you scroll away
                     iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
                 }
             });
         }, {
-            threshold: 0.5 // Trigger when 50% of the video is visible
+            threshold: 0.5 
         });
-
-        // 3. Start Watching
         videoObserver.observe(videoContainer);
     }
 });
