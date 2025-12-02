@@ -138,7 +138,6 @@ class Slider {
         this.nextButton = slider.querySelector('.next-button');
         this.sliderNavigation = slider.querySelector('.slider-navigation');
 
-        // Get the Facility Text elements (Next to the slider)
         this.detailsContainer = slider.closest('.facility').querySelector('.facility-details');
         this.titleElement = this.detailsContainer.querySelector('#facility-title');
         this.descElement = this.detailsContainer.querySelector('#facility-desc');
@@ -146,9 +145,8 @@ class Slider {
         this.currentIndex = 0;
         this.preloadedImages = {};
 
-        // AUTOMATION CONFIG
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 4000; // Change slide every 4 seconds
+        this.autoPlayDelay = 4000;
 
         this.initialize();
     }
@@ -157,7 +155,7 @@ class Slider {
         this.preloadImages();
         this.setupSlider();
         this.eventListeners();
-        this.startAutoPlay(); // Start automation
+        this.startAutoPlay(); 
     }
 
     setupSlider() {
@@ -167,26 +165,20 @@ class Slider {
     showSliderImage(index) {
         this.currentIndex = index;
 
-        // 1. Update Image
         const navButtonImg = this.navButton[this.currentIndex].querySelector('img');
         if (navButtonImg) {
             const imgClone = navButtonImg.cloneNode(true);
 
-            // Add fade animation class
             imgClone.classList.add('animate-fade');
 
             this.display.replaceChildren(imgClone);
 
-            // Remove animation class after it finishes
             setTimeout(() => {
                 imgClone.classList.remove('animate-fade');
             }, 800);
         }
 
-        // 2. Update Text
         this.updateTextContent(index);
-
-        // 3. Update Nav Buttons
         this.updateNavButtons();
     }
 
@@ -195,10 +187,7 @@ class Slider {
         const newTitle = button.getAttribute('data-title');
         const newDesc = button.getAttribute('data-desc');
 
-        // Add fade-out class to text container
         this.detailsContainer.classList.add('text-fade-out');
-
-        // Wait 400ms (halfway through transition), swap text, then fade in
         setTimeout(() => {
             if (this.titleElement) this.titleElement.textContent = newTitle || "Facility";
             if (this.descElement) this.descElement.textContent = newDesc || "";
@@ -224,7 +213,6 @@ class Slider {
         });
     }
 
-    /* --- AUTOMATION LOGIC --- */
     startAutoPlay() {
         this.stopAutoPlay();
         this.autoPlayInterval = setInterval(() => {
@@ -242,13 +230,11 @@ class Slider {
     }
 
     eventListeners() {
-        // Keyboard
         document.addEventListener('keydown', (e) => {
             this.resetAutoPlay();
             this.handleAction(e.key);
         });
 
-        // Thumbnail Click
         this.sliderNavigation.addEventListener('click', (e) => {
             const targetButton = e.target.closest('.nav-button');
             const index = targetButton ? this.navButton.indexOf(targetButton) : -1;
@@ -258,7 +244,6 @@ class Slider {
             }
         });
 
-        // Arrow Clicks
         this.prevButton.addEventListener('click', () => {
             this.resetAutoPlay();
             this.handleAction('prev');
@@ -268,7 +253,6 @@ class Slider {
             this.handleAction('next');
         });
 
-        // Pause on Hover
         this.slider.addEventListener('mouseenter', () => this.stopAutoPlay());
         this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
     }
@@ -428,18 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle && mainNav) {
         
         menuToggle.addEventListener('click', () => {
-            // Toggles the CSS class 'menu-open' to slide the menu into view
             mainNav.classList.toggle('menu-open');
             
-            // Update accessibility attribute
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
             menuToggle.setAttribute('aria-expanded', !isExpanded);
             
-            // Optional: Prevent the body from scrolling when the menu is open
             document.body.classList.toggle('lock-scroll');
         });
         
-        // Optional: Close menu when a link is clicked (good for single-page sites)
         mainNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mainNav.classList.remove('menu-open');
