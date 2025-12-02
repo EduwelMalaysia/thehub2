@@ -377,19 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const openMapBtn = document.getElementById('open-map-modal');
-    const mapModal = document.getElementById('location-map-modal');
-
-    if (openMapBtn && mapModal) {
-        openMapBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent screen jump
-            mapModal.style.display = 'block';
-        });
-    }
-});
-
 // Fade In Animation
 // Scroll Animation Observer
 const observerOptions = {
@@ -429,5 +416,36 @@ document.addEventListener("DOMContentLoaded", function () {
             threshold: 0.5 
         });
         videoObserver.observe(videoContainer);
+    }
+});
+
+// Menu Toggle
+// Mobile Menu Toggle Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (menuToggle && mainNav) {
+        
+        menuToggle.addEventListener('click', () => {
+            // Toggles the CSS class 'menu-open' to slide the menu into view
+            mainNav.classList.toggle('menu-open');
+            
+            // Update accessibility attribute
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            
+            // Optional: Prevent the body from scrolling when the menu is open
+            document.body.classList.toggle('lock-scroll');
+        });
+        
+        // Optional: Close menu when a link is clicked (good for single-page sites)
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('menu-open');
+                menuToggle.setAttribute('aria-expanded', false);
+                document.body.classList.remove('lock-scroll');
+            });
+        });
     }
 });

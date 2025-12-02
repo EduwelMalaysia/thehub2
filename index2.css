@@ -1,44 +1,152 @@
-/* Magnifier Button Styling */
-.location-map-visual {
-    position: relative; /* CRUCIAL: reference point for the button */
-    /* keep existing styles */
+/* --- Section 4: The Experience (Gallery) --- */
+.experience-section {
+    padding: 100px 20px;
+    background-color: #fcfcfc; /* Very light background */
+    overflow: hidden;
 }
 
-.magnifier-btn {
-    position: absolute;
-    bottom: 25px;
-    right: 25px;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
+.experience-content-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    gap: 50px;
     align-items: center;
-    font-size: 24px;
-    color: #5f6c9d; /* Blue color from background */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    z-index: 10;
-    cursor: pointer;
+}
+
+/* Left Column: Text (Reusing Philosophy styles) */
+.experience-text {
+    flex: 1 1 40%;
+    text-align: left;
+    min-width: 300px;
+}
+
+.experience-text h2 {
+    font-size: 42px;
+    color: #333;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+}
+
+.experience-text .sub-title {
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c48350; /* Gold color */
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Reusing Gold Divider from Philosophy section */
+.experience-text .divider-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, #c48350, #e09f6d);
+    margin: 0 0 30px 0;
+    border-radius: 2px;
+}
+
+.caption-overlay-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* CTA Button */
+.explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #c48350, #e09f6d); /* Gold CTA */
+    color: #fff;
     text-decoration: none;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 20px rgba(196, 131, 80, 0.3);
 }
 
-.magnifier-btn:hover {
-    background: #fff;
-    transform: scale(1.1);
-    color: #c48350; /* Gold highlight */
+.explore-btn:hover {
+    transform: translateY(-3px);
 }
 
-/* Modal adjustments for the large map */
-.modal-content.large-map-content {
-    width: 90%; /* Wider view */
-    max-width: 1000px;
-    padding: 20px;
+/* --- Right Column: Gallery Masonry Grid --- */
+.gallery-masonry-grid {
+    flex: 1 1 50%;
+    display: grid;
+    /* Two columns for desktop */
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;
 }
 
-.full-map-image {
+.gallery-item {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Masonry Shaping */
+/* Make the first image span two rows (tall) */
+.gallery-item:nth-child(1) {
+    grid-row: span 2; 
+}
+
+/* Make the last image span two columns (wide) */
+.gallery-item:nth-child(6) {
+    grid-column: 1 / span 2;
+}
+
+/* Ensure images have varied heights for a masonry effect */
+.gallery-item img {
+    height: 200px; /* Base height */
+}
+.gallery-item:nth-child(1) img {
+    height: 415px; /* Tall height (approx 2x base + gap) */
+}
+
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .experience-content-wrap {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .experience-text {
+        text-align: center;
+        margin-bottom: 0;
+    }
+    .experience-text .divider-line {
+        margin: 0 auto 30px auto;
+    }
+    
+    .gallery-masonry-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        width: 100%;
+    }
+    /* Reset all custom spans on mobile */
+    .gallery-item,
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(6) {
+        grid-row: span 1; 
+        grid-column: span 1;
+    }
+    .gallery-item img {
+        height: 250px; /* Consistent height on mobile */
+    }
 }

@@ -1,29 +1,135 @@
-/* 1. The Container styling */
-.line-header {
-    display: flex;           /* Aligns text and line in a row */
-    align-items: center;     /* Vertically centers the line with the text */
-    gap: 20px;               /* Space between the text and the line */
-    white-space: nowrap;     /* Prevents text from wrapping if possible */
-    
-    /* Typography to match your image */
-    text-transform: uppercase;
-    font-weight: 800;
-    color: #333;             /* Dark text color */
-    margin: 0;
+/* --- Global Variables (New Colors for High Contrast Split) --- */
+:root {
+    --gold: #c48350;
+    --dark-navy: #1f2740; /* 深色基调 */
+    --light-grey: #f8f8f8; /* 浅色基调 */
 }
 
-/* 2. The Line styling */
-.line-header::after {
-    content: "";             /* Necessary for the element to appear */
-    display: block;
-    height: 3px;             /* Thickness of the line */
-    background-color: #4b6cb7; /* The blue color (Change this to your preferred blue) */
-    
-    /* --- Choose ONE option below for width --- */
-    
-    /* Option A: Fixed length (like your image) */
-    width: 150px; 
-    
-    /* Option B: Fills the remaining space */
-    /* flex-grow: 1; */ 
+/* --- Base Footer Styling --- */
+.site-footer {
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    color: #fff; /* 默认文字颜色 */
+}
+
+/* --- Footer Container: The Split Layout --- */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex; /* 启用左右分割 */
+    min-height: 450px; /* 确保视觉高度 */
+}
+
+/* Ensure columns take up 100% height of container */
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 40px;
+}
+
+/* ---------------------------------
+   LEFT COLUMN: CONTACT INFO (40%)
+   --------------------------------- */
+.footer-contact-col {
+    flex: 0 0 40%; /* 固定宽度占比 */
+    background-color: var(--dark-navy); /* 深色背景 */
+    color: #fff;
+    padding-right: 20px;
+}
+
+.footer-contact-col h4 {
+    color: #fff;
+    font-size: 32px; /* 更大的标题 */
+    font-weight: 800;
+}
+
+/* Contact List Overrides for Dark Background */
+.footer-contact-col .contact-list.new-design li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* 弱化分隔线 */
+}
+.footer-contact-col .contact-title {
+    color: #fff;
+}
+.footer-contact-col .contact-detail {
+    color: rgba(255, 255, 255, 0.7); /* 柔和白色 */
+}
+
+/* ---------------------------------
+   RIGHT COLUMN: LINKS & SOCIALS (60%)
+   --------------------------------- */
+.footer-auxiliary-col {
+    flex: 1 1 60%;
+    background-color: var(--light-grey); /* 浅色背景 */
+    color: #333;
+    padding-left: 80px; /* 增加左侧内边距，平衡分割线 */
+}
+
+.footer-aux-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.footer-auxiliary-col h4 {
+    color: #333;
+}
+
+/* Quick Links Styles */
+.quick-links-list li a {
+    color: #666;
+    transition: color 0.2s;
+}
+.quick-links-list li a:hover {
+    color: var(--gold);
+}
+
+/* Socials Styles */
+.footer-socials a {
+    color: var(--dark-navy);
+    font-size: 28px;
+    margin-right: 15px;
+}
+.footer-socials a:hover {
+    color: var(--gold);
+}
+
+/* --- Footer Bottom (Copyright Bar) --- */
+footer {
+    background-color: #333; /* 深灰底部栏 */
+    color: #aaa;
+    padding: 15px 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* --- Mobile Adjustments --- */
+@media (max-width: 900px) {
+    .footer-container {
+        flex-direction: column; /* 垂直堆叠 */
+        min-height: auto;
+    }
+    .footer-contact-col {
+        flex: 0 0 100%; 
+        padding: 40px 20px;
+        align-items: center; /* 居中 Contact 内容 */
+        text-align: center;
+    }
+    .footer-auxiliary-col {
+        flex: 0 0 100%;
+        padding: 40px 20px;
+    }
+    .footer-aux-inner {
+        /* 在移动端将链接和社交分开 */
+        flex-direction: column;
+        align-items: center;
+    }
+    /* 调整联系列表在深色区域居中 */
+    .footer-contact-col .contact-list.new-design li {
+        flex-direction: column;
+        align-items: center;
+    }
 }
