@@ -1,38 +1,3 @@
-// Navigation Slide Effect
-// $("#nav a").on("click", function () {
-//     var position = $(this).parent().position();
-//     var width = $(this).parent().width();
-//     $("#nav .slide1").css({
-//         opacity: 1,
-//         left: +position.left,
-//         width: width
-//     });
-// });
-
-// $("#nav a").on("mouseover", function () {
-//     var position = $(this).parent().position();
-//     var width = $(this).parent().width();
-//     $("#nav .slide2").css({
-//         opacity: 1,
-//         left: +position.left,
-//         width: width
-//     }).addClass("squeeze");
-// });
-
-// $("#nav a").on("mouseout", function () {
-//     $("#nav .slide2")
-//         .css({ opacity: 0 })
-//         .removeClass("squeeze");
-// });
-
-// var currentWidth = $("#nav li:nth-of-type(3) a").parent("li").width();
-// var current = $("#nav li:nth-of-type(3) a").position();
-
-// $("#nav .slide1").css({
-//     left: +current.left,
-//     width: currentWidth
-// });
-
 const navLinks = document.querySelectorAll('#nav li a');
 const sections = document.querySelectorAll('section');
 window.addEventListener('scroll', () => {
@@ -321,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return firstCard.offsetWidth + 30;
     }
 
-    nextBtn.addEventListener('click', () => {
+    function moveNext() {
         if (isAnimating) return;
         isAnimating = true;
 
@@ -338,9 +303,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 isAnimating = false;
             }, 50);
-
         }, { once: true });
-    });
+    }
+
+    nextBtn.addEventListener('click', moveNext);
+    setInterval(moveNext, 1000);
 });
 
 //Business Suites Tab Switching
@@ -428,4 +395,58 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+});
+/*************************************************
+ * UNIVERSAL ANIMATION ENGINE (ONE OBSERVER)
+ *************************************************/
+const animate = (selector, options = {}) => {
+    const elements = document.querySelectorAll(selector);
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+
+                // Stagger child animations
+                if (options.stagger) {
+                    const children = entry.target.querySelectorAll(options.stagger);
+                    children.forEach((el, i) => {
+                        setTimeout(() => el.classList.add("reveal"), i * (options.delay || 100));
+                    });
+                }
+
+                entry.target.classList.add("reveal");
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: options.threshold || 0.2 });
+
+    elements.forEach(el => observer.observe(el));
+};
+
+
+// Apply universal animations
+animate(".fade-on-scroll");
+
+animate(".location-map-visual");
+animate(".location-details-wrapper");
+
+animate(".why-hub-card");
+
+animate(".register-card", {
+    stagger: ".grid-2, .form-group, label, .submit-btn",
+    delay: 120
+});
+
+animate(".philosophy-header");
+animate(".philosophy-section", {
+    stagger: ".pillar-card",
+    delay: 150
+});
+
+animate(".suite-header");
+
+animate(".business-suites-section", {
+    stagger: ".tabs-nav .tab-btn",
+    delay: 80
 });

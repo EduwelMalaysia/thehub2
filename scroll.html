@@ -9,54 +9,96 @@
 	<link rel="stylesheet" href="scroll.css"/>
 </head>
 <body>
-<section class="site-footer">
-    <div class="footer-container">
-
-        <div class="footer-column footer-contact-col">
-            <h4>Contact Us</h4>
-            <ul class="contact-list new-design">
-                <li>
-                    <span class="contact-icon"><i class="fa fa-map-marker"></i></span>
-                    <div class="contact-info-text">
-                        <span class="contact-title">Office Address</span>
-                        <span class="contact-detail">YKL Capital Sdn Bhd Lot 663, Batu 10, Kampung Paya Panjang, Bukit Pasir, 84300 Muar, Johor.</span>
-                    </div>
-                </li>
-                <li>
-                    <span class="contact-icon"><i class="fa fa-phone"></i></span>
-                    <div class="contact-info-text">
-                        <span class="contact-title">Contact Numbers</span>
-                        <span class="contact-detail">012-727 7575 | 012-727 7979</span>
-                    </div>
-                </li>
-                <li>
-                    <span class="contact-icon"><i class="fa fa-globe"></i></span>
-                    <div class="contact-info-text">
-                        <span class="contact-title">Website</span>
-                        <span class="contact-detail">www.yklcapital.com.my</span>
-                    </div>
-                </li>
-            </ul>
+    <section class="business-suites-section">
+        <div class="suite-header">
+            <h3 class="sub-title">Commercial Offerings</h3>
+            <h2>Space To Succeed</h2>
+            <div class="divider-line"></div>
+            <p class="suite-intro">
+                427,000 sq.ft. of Gross Floor Area designed for visibility and prestige.
+            </p>
         </div>
 
-        <div class="footer-column footer-quicklinks-col">
-            <h4>Quick Links</h4>
-            <ul class="quick-links-list">
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#facilities">Facilities</a></li>
-                <li><a href="#floorplan">Floor Plans</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#happenings">The Pulse (News)</a></li>
-            </ul>
+        <div class="tabs-container">
+
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="retail">
+                    <i class="fa fa-shopping-bag"></i> Retail & F&B
+                </button>
+                <button class="tab-btn" data-tab="corporate">
+                    <i class="fa fa-briefcase"></i> Corporate Offices
+                </button>
+                <button class="tab-btn" data-tab="convenience">
+                    <i class="fa fa-car"></i> Convenience
+                </button>
+            </div>
+
+            <div class="tabs-content-wrapper">
+
+                <div class="tab-pane active" id="retail">
+                    <div class="pane-inner">
+                        <div class="pane-icon">
+                            <i class="fa fa-store"></i>
+                        </div>
+                        <div class="pane-text">
+                            <h3>Retail & F&B</h3>
+                            <p>Ground floor visibility with glass frontages. High footfall driven by anchor tenants and
+                                the surrounding residential catchment.</p>
+                            <ul class="pane-list">
+                                <li><i class="fa fa-check"></i> High Ceiling Design</li>
+                                <li><i class="fa fa-check"></i> Wide Frontage</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="corporate">
+                    <div class="pane-inner">
+                        <div class="pane-icon">
+                            <i class="fa fa-building-o"></i>
+                        </div>
+                        <div class="pane-text">
+                            <h3>Corporate Offices</h3>
+                            <p>Upper-level professional suites offering privacy and prestige. Equipped with lift access
+                                and flexible layouts for growing teams.</p>
+                            <ul class="pane-list">
+                                <li><i class="fa fa-check"></i> Dedicated Lift Lobbies</li>
+                                <li><i class="fa fa-check"></i> Modular Layouts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="convenience">
+                    <div class="pane-inner">
+                        <div class="pane-icon">
+                            <i class="fa fa-parking"></i>
+                        </div>
+                        <div class="pane-text">
+                            <h3>Convenience</h3>
+                            <p>Supported by over 942 parking bays, ensuring hassle-free access for your clients, staff,
+                                and visitors.</p>
+                            <ul class="pane-list">
+                                <li><i class="fa fa-check"></i> 24/7 Security Patrol</li>
+                                <li><i class="fa fa-check"></i> Ample Visitor Parking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="suite-action">
+                <a href="templates/The Hub Booklet_rev7.pdf" class="download-btn" download>
+                    <i class="fa fa-download"></i> Download Floor Plans (Blocks A-I)
+                </a>
+            </div>
+
         </div>
+    </section>
 
-    </div>
 
-</section>
 
-<footer>
-    <p>© 2025 The Hub @ Muar Business Park. All Rights Reserved.</p>
-
-</footer>
+    <script src="index.js"></script>
 </body>
 </html>
