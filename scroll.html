@@ -9,96 +9,46 @@
 	<link rel="stylesheet" href="scroll.css"/>
 </head>
 <body>
-    <section class="business-suites-section">
-        <div class="suite-header">
-            <h3 class="sub-title">Commercial Offerings</h3>
-            <h2>Space To Succeed</h2>
-            <div class="divider-line"></div>
-            <p class="suite-intro">
-                427,000 sq.ft. of Gross Floor Area designed for visibility and prestige.
-            </p>
-        </div>
+    <section class="location fade-on-scroll" id="location">
+        <div class="location-container">
 
-        <div class="tabs-container">
-
-            <div class="tabs-nav">
-                <button class="tab-btn active" data-tab="retail">
-                    <i class="fa fa-shopping-bag"></i> Retail & F&B
-                </button>
-                <button class="tab-btn" data-tab="corporate">
-                    <i class="fa fa-briefcase"></i> Corporate Offices
-                </button>
-                <button class="tab-btn" data-tab="convenience">
-                    <i class="fa fa-car"></i> Convenience
-                </button>
+            <div class="location-map-visual" id="lightbox">
+                <img id="lightbox-img" src="templates/images/location_building - Edited.png" alt="Map Visual">
             </div>
 
-            <div class="tabs-content-wrapper">
+            <div class="location-details-wrapper">
 
-                <div class="tab-pane active" id="retail">
-                    <div class="pane-inner">
-                        <div class="pane-icon">
-                            <i class="fa fa-store"></i>
-                        </div>
-                        <div class="pane-text">
-                            <h3>Retail & F&B</h3>
-                            <p>Ground floor visibility with glass frontages. High footfall driven by anchor tenants and
-                                the surrounding residential catchment.</p>
-                            <ul class="pane-list">
-                                <li><i class="fa fa-check"></i> High Ceiling Design</li>
-                                <li><i class="fa fa-check"></i> Wide Frontage</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="location-details">
+                    <h1 class="loc-header">We Are Here</h1>
+                    <p class="loc-body-copy">Located just 4km from Muar town along the AMJ Highway. We are positioned to
+                        serve a catchment of over 200,000 residents and the nearby EduHub Pagoh.</p>
                 </div>
 
-                <div class="tab-pane" id="corporate">
-                    <div class="pane-inner">
-                        <div class="pane-icon">
-                            <i class="fa fa-building-o"></i>
-                        </div>
-                        <div class="pane-text">
-                            <h3>Corporate Offices</h3>
-                            <p>Upper-level professional suites offering privacy and prestige. Equipped with lift access
-                                and flexible layouts for growing teams.</p>
-                            <ul class="pane-list">
-                                <li><i class="fa fa-check"></i> Dedicated Lift Lobbies</li>
-                                <li><i class="fa fa-check"></i> Modular Layouts</li>
-                            </ul>
-                        </div>
+                <div class="location-markers-grid">
+
+                    <div class="marker-card">
+                        <i class="fa fa-road"></i>
+                        <h3>Access</h3>
+                        <p>AMJ Highway (Direct Frontage)</p>
                     </div>
-                </div>
 
-                <div class="tab-pane" id="convenience">
-                    <div class="pane-inner">
-                        <div class="pane-icon">
-                            <i class="fa fa-parking"></i>
-                        </div>
-                        <div class="pane-text">
-                            <h3>Convenience</h3>
-                            <p>Supported by over 942 parking bays, ensuring hassle-free access for your clients, staff,
-                                and visitors.</p>
-                            <ul class="pane-list">
-                                <li><i class="fa fa-check"></i> 24/7 Security Patrol</li>
-                                <li><i class="fa fa-check"></i> Ample Visitor Parking</li>
-                            </ul>
-                        </div>
+                    <div class="marker-card">
+                        <i class="fa fa-graduation-cap"></i>
+                        <h3>Education</h3>
+                        <p>EduHub Pagoh (UTHM, IIUM)</p>
                     </div>
+
+                    <div class="marker-card">
+                        <i class="fa fa-industry"></i>
+                        <h3>Industry</h3>
+                        <p>Muar Furniture Hub (800+ Factories)</p>
+                    </div>
+
                 </div>
-
-            </div>
-
-            <div class="suite-action">
-                <a href="templates/The Hub Booklet_rev7.pdf" class="download-btn" download>
-                    <i class="fa fa-download"></i> Download Floor Plans (Blocks A-I)
-                </a>
             </div>
 
         </div>
     </section>
-
-
-
     <script src="index.js"></script>
 </body>
 </html>

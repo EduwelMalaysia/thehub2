@@ -450,3 +450,259 @@ animate(".business-suites-section", {
     stagger: ".tabs-nav .tab-btn",
     delay: 80
 });
+
+// --- 3. ROI Form Dynamic Unit Selection ---
+
+const unitData = {
+    "prime-square": {
+        "Block A [5-Storey Shop Lot]": [
+            "Level 1 (1,400 – 1850 sqft)",
+            "Level 2 (1,400 – 3080 sqft)",
+            "Level 3 (1,400 – 3080 sqft)",
+            "Level 4 (1,400 – 3080 sqft)",
+            "Level 5 (6,900 sqft)"
+        ],
+        "Block B [3-Storey Shop Lot]": [
+            "Level 1 (1,640 – 7560 sqft)",
+            "Level 2 (2,070 – 3,770 sqft)",
+            "Level 3 (2,700 – 3,770 sqft)"
+        ]
+    },
+    "merchant-bay": {
+        "Block I [3-Storey Shop Lot]": [
+            "Level 1 (2,200 – 4360 sqft)",
+            "Level 2 (2,215 – 2550 sqft)",
+            "Level 3 (2247 – 2550 sqft)"
+        ]
+    },
+    "central-walk": {
+        "Block A7 [3-Storey Shop Lot]": ["Level 1 (1440 – 1690 sqft)", "Level 2 (1440 – 1915 sqft)", "Level 3 (1440 – 1915 sqft)"],
+        "Block D [3-Storey Shop Lot]": ["Level 1 (1320 – 1530 sqft)", "Level 2 (1320 – 1530 sqft)", "Level 3 (5465 sqft)"],
+        "Block E [3-Storey Shop Lot]": ["Level 1 (1320 – 1530 sqft)", "Level 2 (1320 – 1530 sqft)", "Level 3 (5465 sqft)"],
+        "Block F [3-Storey Shop Lot]": ["Level 1 (1440 – 1690 sqft)", "Level 2 (1440 – 1915 sqft)", "Level 3 (1440 – 1915 sqft)"],
+        "Block G [3-Storey Shop Lot]": ["Level 1 (1320 – 1530 sqft)", "Level 2 (1320 – 1530 sqft)", "Level 3 (5465 sqft)"],
+        "Block H [3-Storey Shop Lot]": ["Level 1 (1320 – 1530 sqft)", "Level 2 (1320 – 1530 sqft)", "Level 3 (5465 sqft)"]
+    },
+    "parkfront-avenue": {
+        "Drive Thru": ["F&B 1 (sqft)", "F&B 2 (sqft)"]
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const selectZone = document.getElementById('select-zone');
+    const selectBlock = document.getElementById('select-block');
+    const selectLevel = document.getElementById('select-level');
+
+    if (!selectZone || !selectBlock || !selectLevel) return;
+
+    // Helper function to reset and disable subsequent dropdowns
+    const resetDropdown = (dropdown, defaultText) => {
+        dropdown.innerHTML = `<option value="" disabled selected>${defaultText}</option>`;
+        dropdown.disabled = true;
+        dropdown.value = "";
+    };
+
+    // 1. Zone Change Handler (Zone -> Block)
+    selectZone.addEventListener('change', () => {
+        const selectedZoneKey = selectZone.value;
+
+        // Reset Block and Level
+        resetDropdown(selectBlock, 'Select Block *');
+        resetDropdown(selectLevel, 'Select Level/Unit *');
+
+        if (selectedZoneKey && unitData[selectedZoneKey]) {
+            const blocks = unitData[selectedZoneKey];
+            
+            // Populate Block dropdown
+            for (const blockName in blocks) {
+                const option = document.createElement('option');
+                option.value = blockName;
+                option.textContent = blockName;
+                selectBlock.appendChild(option);
+            }
+            selectBlock.disabled = false;
+        }
+    });
+
+    // 2. Block Change Handler (Block -> Level)
+    selectBlock.addEventListener('change', () => {
+        const selectedZoneKey = selectZone.value;
+        const selectedBlockName = selectBlock.value;
+
+        // Reset Level
+        resetDropdown(selectLevel, 'Select Level/Unit *');
+
+        if (selectedZoneKey && selectedBlockName && unitData[selectedZoneKey] && unitData[selectedZoneKey][selectedBlockName]) {
+            const levels = unitData[selectedZoneKey][selectedBlockName];
+            
+            // Populate Level dropdown
+            levels.forEach(levelText => {
+                const option = document.createElement('option');
+                option.value = levelText;
+                option.textContent = levelText;
+                selectLevel.appendChild(option);
+            });
+            selectLevel.disabled = false;
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        const banner = document.querySelector(".main-banner");
+
+        const targetY = banner.offsetHeight - window.innerHeight;
+
+        if (targetY <= 0) return;
+
+        smoothScrollTo(targetY, 1500); // 1.5 sec scroll
+    }, 3000);
+});
+
+// Custom premium smooth scroll
+function smoothScrollTo(target, duration) {
+    const start = window.scrollY;
+    const distance = target - start;
+    let startTime = null;
+
+    function animation(currentTime) {
+        if (!startTime) startTime = currentTime;
+
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        // Ease-in-out curve (smooth like iPhone animations)
+        const ease = progress < 0.5
+            ? 2 * progress * progress
+            : -1 + (4 - 2 * progress) * progress;
+
+        window.scrollTo(0, start + distance * ease);
+
+        if (progress < 1) {
+            requestAnimationFrame(animation);
+        }
+    }
+
+    requestAnimationFrame(animation);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const mapTrigger = document.getElementById('open-full-map');
+    const mapModal = document.getElementById('location-map-modal');
+    const closeBtnMap = document.querySelector('.close-map-btn');
+    const closeBtns = document.querySelectorAll('.close');
+
+    if (mapModal) {
+        mapModal.style.display = 'none';
+    }
+
+    if (mapTrigger && mapModal) {
+        mapTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            mapModal.style.display = 'flex';
+        });
+
+        if (closeBtnMap) {
+            closeBtnMap.addEventListener('click', () => {
+                mapModal.style.display = 'none';
+            });
+        }
+    }
+
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.closest('.modal').style.display = "none";
+        });
+    });
+
+    window.addEventListener('click', function (event) {
+        const target = event.target;
+        
+        if (target === mapModal) {
+            target.style.display = "none";
+        }
+        
+        else if (target.classList.contains('modal') && target.id !== 'location-map-modal') {
+             target.style.display = "none";
+        }
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- Floor Plan Tabs Logic (Layered) ---
+    const zoneBtns = document.querySelectorAll('.fp-zone-btn');
+    const blockGroups = document.querySelectorAll('.fp-block-group');
+    const blockBtns = document.querySelectorAll('.fp-block-btn');
+    const contentPanes = document.querySelectorAll('.fp-tab-pane');
+    const visualPanes = document.querySelectorAll('.fp-visual-pane'); 
+
+    // Helper function to handle active class toggling
+    const activateItem = (items, targetId, attribute = 'data-zone') => {
+        items.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute(attribute) === targetId || item.id === targetId) {
+                 item.classList.add('active');
+            }
+        });
+    };
+
+    // 1. Layer 1 Click Handler (Zone -> Shows Blocks)
+    zoneBtns.forEach(zoneBtn => {
+        zoneBtn.addEventListener('click', () => {
+            const zoneKey = zoneBtn.getAttribute('data-zone');
+            
+            // 1a. Set Layer 1 Active State
+            activateItem(zoneBtns, zoneKey);
+
+            // 1b. Show the corresponding Layer 2 block group and hide others
+            blockGroups.forEach(group => {
+                group.classList.remove('active');
+                group.style.display = 'none';
+            }); 
+            
+            const targetGroup = document.querySelector(`[data-zone-group="${zoneKey}"]`);
+            if (targetGroup) {
+                targetGroup.classList.add('active');
+                targetGroup.style.display = 'flex';
+                
+                // 1c. Automatically trigger a click on the first block in the new group
+                const firstBlockBtn = targetGroup.querySelector('.fp-block-btn');
+                if (firstBlockBtn) {
+                    firstBlockBtn.click();
+                }
+            }
+        });
+    });
+
+    // 2. Layer 2 Click Handler (Block -> Shows Content and Visual)
+    blockBtns.forEach(blockBtn => {
+        blockBtn.addEventListener('click', () => {
+            const blockId = blockBtn.getAttribute('data-block');
+            
+            // 2a. Set Layer 2 Active State
+            activateItem(blockBtns, blockId, 'data-block');
+
+            // 2b. Show Content Pane (if applicable)
+            activateItem(contentPanes, blockId, 'id'); 
+
+            // 2c. Show the corresponding Visual Pane
+            const visualId = blockId + '-visual';
+            visualPanes.forEach(pane => {
+                pane.classList.remove('active');
+                if (pane.id === visualId) {
+                    pane.classList.add('active');
+                }
+            });
+        });
+    });
+
+    // 3. Initial Load: Ensure the first block/pane is active on load
+    const initialBlockBtn = document.querySelector('.fp-block-group.active .fp-block-btn');
+    if (initialBlockBtn) {
+        initialBlockBtn.click(); 
+    }
+
+});
