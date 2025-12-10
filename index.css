@@ -26,9 +26,7 @@ body {
     --purple: #662E86;
     --pink: #E22C7C;
     --gold: #bc7b47;
-    --light-gold: #c48350
-
-    --text-dark: #222;
+    --light-gold: #c48350 --text-dark: #222;
     --text-light: #666;
     --bg-light: #f7f7f7;
     --bg-dark: #111;
@@ -40,7 +38,7 @@ body {
     height: 70px;
     background: var(--bg-light);
     position: fixed;
-    top: 0;
+    /* top: 0; */
     z-index: 999;
     display: flex;
     align-items: center;
@@ -124,10 +122,10 @@ body {
 .register-btn {
     display: flex;
     justify-content: center;
-    align-items: center; 
-    
-    padding: 10px 20px; 
-    
+    align-items: center;
+
+    padding: 10px 20px;
+
     color: var(--bg-light, #fff);
     font-weight: 600;
     font-size: 16px;
@@ -136,7 +134,7 @@ body {
     cursor: pointer;
     text-decoration: none;
     text-transform: uppercase;
-    
+
     /* Keep animation/background gradient */
     background: linear-gradient(120deg, #e09f6d, #d49360, #c48350, #d49360, #e09f6d);
     background-size: 200% auto;
@@ -157,62 +155,64 @@ body {
 /* Header */
 
 /* Main Background */
-.main-banner, .background-pic1 {
+
+.main-banner {
     position: relative;
     width: 100vw;
     height: auto;
-    background-color: transparent; 
+    background-color: transparent;
     display: flex;
     justify-content: center;
 }
 
 .main-banner .banner-bg {
     width: 100%;
-    height: auto; 
+    height: auto;
     display: block;
-    object-fit: contain; 
+    object-fit: contain;
     /* margin-top: -30%; */
 }
 
 .banner-title-overlay {
+    font-family: classy, serif;
     position: absolute;
-    top: 10%;       
+    top: 30vh;
     /* left: 50%;       */
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     z-index: 2;
     padding: 2%;
     border: 2px solid #fff;
-    color: #fff; 
+    color: #fff;
     text-align: center;
     font-weight: 800;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
+
 .overlay-text-line {
     text-transform: uppercase;
-    line-height: 1.1;
 }
 
 .small-text {
-    font-size: 2vw;
+    font-size: 52px;
     letter-spacing: 1px;
 }
 
 .big-text {
-    font-size: 3vw;
+    font-size: 85px;
     font-weight: 700;
 }
 
 .overlay-text-line.with-divider {
-    display: flex; 
+    display: flex;
     align-items: center;
-    justify-content: flex-end; /* Align content to the right */
+    justify-content: flex-end;
     font-size: 2.5vw;
 }
 
 .vertical-divider {
-    height: 3.5vw; /* Height relative to the text size */
+    height: 3.5vh;
     width: 3px;
-    background-color: #fff; /* White vertical line */
+    background-color: var(--bg-light);
     margin: 50px auto;
 }
 
@@ -233,27 +233,31 @@ body {
 }
 
 .intro {
-    width: 40%;
+    width: 45%;
     padding: 0 40px;
 }
 
 .intro h2 {
     text-transform: uppercase;
+    font-size: 61px;
+    color: var(--gold);
 }
 
 .intro h3 {
     text-transform: capitalize;
+    font-size: 35px;
 }
 
 .intro p {
     line-height: 1.5em;
+    font-size: 25px;
+    color: #666;
 }
 
 .btn-learn-more {
-    /* width: 20%; */
     position: relative;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 30px;
     padding: 15px 25px;
     border: none;
     outline: none;
@@ -272,7 +276,7 @@ body {
 }
 
 .design-collage-section {
-    width: 60%;
+    width: 55%;
     max-width: 1200px;
     margin: 60px auto;
     padding: 0 20px;
@@ -334,47 +338,57 @@ body {
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
+
 /* Intro */
 
 /* background pic 1 */
-    .banner-bg2{
-        width: 120%;
-    }
+.background-pic1 {
+    position: relative;
+    width: 100vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
 
-    .background-pic1-container{
-        text-align: center;
-        padding: 100px 20px;
-        background: linear-gradient(120deg, #e1a06e, #dc9d6a, #d69664, #cd8c5a, #c3824b);
-        color: var(--bg-light);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.banner-bg2 {
+    width: 120%;
+}
 
-    .background-pic1-content{
-        width: 85%;
-    }
+.background-pic1-container {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(120deg, #e1a06e, #dc9d6a, #d69664, #cd8c5a, #c3824b);
+    color: var(--bg-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .background-pic1-content h1{
-        text-transform: uppercase;
-        font-weight: 500;
-    }
+.background-pic1-content {
+    width: 85%;
+}
 
-    .background-pic1-content h3{
-        text-transform: uppercase;
-        font-weight: 500;
-    }
+.background-pic1-content h1 {
+    text-transform: uppercase;
+    font-weight: 500;
+}
 
-    .background-pic1-content p{
-        
-        font-weight: 400;
-    }
+.background-pic1-content h3 {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.background-pic1-content p {
+
+    font-weight: 400;
+}
+
 /* background pic 1 */
 
 /* Video */
 .video-container {
     width: 100%;
-    padding: 50px 0;
+    padding: 50px 0;        
     display: flex;
     justify-content: center;
     align-items: center;
@@ -382,7 +396,7 @@ body {
 }
 
 .video-frame {
-    width: 85%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: 10px;
     overflow: hidden;
@@ -391,8 +405,10 @@ body {
         0 0 20px rgba(0, 0, 0, 0.35),
         0 0 40px rgba(102, 46, 134, 0.35);
     transition: 0.3s ease;
+    
+    /* Ensure the video content fills the frame */
+    object-fit: cover; 
 }
-
 /* Video */
 
 /* Philosophy Section */
@@ -416,18 +432,17 @@ body {
 }
 
 .sub-title {
-    font-size: 16px;
+    font-size: 30px;
     letter-spacing: 3px;
-    text-transform: uppercase;
     color: var(--light-gold);
-    font-weight: 700;
+    font-weight: 200;
     margin-bottom: 10px;
 }
 
 .philosophy-header h2 {
-    font-size: 42px;
+    font-size: 72px;
     color: #333;
-    font-weight: 800;
+    font-weight: 600;
     margin: 0 0 20px 0;
     text-transform: uppercase;
 }
@@ -441,8 +456,8 @@ body {
 }
 
 .philosophy-desc {
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: 25px;
+    line-height: 1.5em;
     color: #666;
     text-align: justify;
 }
@@ -500,16 +515,16 @@ body {
 }
 
 .pillar-card h4 {
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 35px;
+    font-weight: 600;
     margin-bottom: 15px;
     color: #333;
 }
 
 .pillar-card p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #777;
+    font-size: 22px;
+    line-height: 1.5em;
+    color: #666;
 }
 
 /* Philosophy Section */
@@ -518,22 +533,22 @@ body {
 .combined-section {
     width: 100%;
     padding: 60px 0;
-    background: linear-gradient(to bottom, #5f6c9d, #7d88b0, #b3b9d1);
+    background: linear-gradient(to bottom, #4d5c93, #1f2740);
     text-align: center;
     color: var(--bg-light);
 }
 
-.overview-content {
+/* .overview-content {
     width: 60%;
     margin: 0 auto 60px auto;
     line-height: 1.5em;
     letter-spacing: 0.1em;
-}
+} */
 
 .overview-content h1 {
     margin-top: 5%;
     text-transform: uppercase;
-    line-height: 1.2em;
+    line-height: 1.5em;
 }
 
 .overview-content img {
@@ -639,6 +654,7 @@ body {
 .color-parkfront {
     background-color: #e22c7c;
 }
+
 /* Site Plan Section */
 
 /* Markers on the image */
@@ -651,9 +667,15 @@ body {
     cursor: pointer;
     border: 3px solid #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    color: #fff;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: ripple 2s infinite;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 20;
+}
+
+.marker:hover {
+    transform: translate(-50%, -60%) scale(1.3);
+    z-index: 200;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .marker::after {
@@ -662,52 +684,62 @@ body {
     top: 28px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0,0,0,0.85);
     padding: 4px 8px;
     border-radius: 4px;
-    white-space: nowrap;
     color: #fff;
     font-size: 12px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     opacity: 0;
-    transition: 0.3s;
+    white-space: nowrap;
+    transition: 0.25s ease;
     pointer-events: none;
-    z-index: 10;
-}
-
-.marker:hover {
-    transform: translate(-50%, -60%) scale(1.3);
-    z-index: 100;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .marker:hover::after {
+    top: 34px;
     opacity: 1;
-    top: 32px;
 }
 
+.marker::before {
+    content: "";
+    position: absolute;
+    top: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 120px;
+    background-image: var(--preview-img);
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+
+    opacity: 0;
+    transition: 0.25s ease;
+    pointer-events: none;
+}
+
+.marker:hover::before {
+    opacity: 1;
+}
+
+/* RIPPLE ANIMATION */
 @keyframes ripple {
-    0% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-    }
-
-    70% {
-        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
 }
 
 /* Markers on the image */
 
 .fp-section {
     padding: 80px 20px 40px;
-    background: linear-gradient(to bottom, #4d5c93, #1f2740); 
-    color: #fff;
+    /* background: linear-gradient(to bottom, #1f2740, #4d5c93); */
     text-align: center;
     overflow: hidden;
 }
@@ -718,9 +750,9 @@ body {
 }
 
 .fp-header h2 {
-    font-size: 50px;
-    font-weight: 300;
-    color: #e09f6d; 
+    font-size: 72px;
+    font-weight: 600;
+    color: #e09f6d;
     letter-spacing: 5px;
     margin-bottom: 5px;
 }
@@ -738,7 +770,7 @@ body {
     margin-bottom: 0;
     background: transparent;
     border-radius: 0;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2); 
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .fp-nav-layer-2 {
@@ -757,13 +789,12 @@ body {
     background: transparent;
     border: none;
     padding: 10px 18px;
-    font-size: 16px;
-    font-weight: 600; 
-    color: #fff;
+    font-size: 25px;
+    font-weight: 200;
+    color: var(--bg-dark);
     cursor: pointer;
     transition: all 0.3s ease;
-    border-bottom: 3px solid transparent; 
-    border-radius: 0;
+    border-bottom: 3px solid transparent;
     text-transform: uppercase;
 }
 
@@ -771,22 +802,22 @@ body {
 .fp-block-btn.active,
 .fp-zone-btn:hover,
 .fp-block-btn:hover {
-    color: #e09f6d; 
+    color: #e09f6d;
     border-bottom: 3px solid #e09f6d;
-    background: transparent; 
+    background: transparent;
     box-shadow: none;
 }
 
 .fp-block-group {
-    display: flex; 
+    display: flex;
     gap: 10px;
     flex-wrap: wrap;
     padding: 5px 0;
-    justify-content: center; 
+    justify-content: center;
 }
 
 .fp-block-group:not(.active) {
-    display: none; 
+    display: none;
 }
 
 .fp-content-wrapper {
@@ -806,9 +837,38 @@ body {
     display: block;
 }
 
+/* FLOORPLAN INFO PANEL */
+.fp-info-panel {
+    width: 60%;
+    margin: 0 auto 30px auto;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px 25px;
+    border-radius: 10px;
+    text-align: left;
+    color: #fff;
+    backdrop-filter: blur(6px);
+    transition: 0.3s ease;
+}
+
+.fp-info-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #e09f6d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.fp-info-text {
+    font-size: 15px;
+    line-height: 1.5em;
+    opacity: 0.9;
+}
+
+
 .fp-visuals-wrapper {
     width: 70%;
-    height: 600px;   
+    height: 600px;
     margin: 0 auto;
     position: relative;
     background: #faf0ea;
@@ -820,7 +880,7 @@ body {
     display: none;
     opacity: 0;
     position: absolute;
-    inset: 0; 
+    inset: 0;
     transition: opacity 0.3s ease;
 }
 
@@ -842,9 +902,9 @@ body {
 
 .fp-block-btn.active {
     color: #1f2740 !important;
-    background: #e09f6d !important; 
+    background: #e09f6d !important;
     border: 1px solid #e09f6d;
-    box-shadow: 0 0 10px rgba(224, 159, 109, 0.8), 0 0 20px rgba(224, 159, 109, 0.4); 
+    box-shadow: 0 0 10px rgba(224, 159, 109, 0.8), 0 0 20px rgba(224, 159, 109, 0.4);
 }
 
 /* Box on image */
@@ -1027,7 +1087,7 @@ body {
 
 .modal-info p {
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.5em;
     opacity: 0.9;
     color: var(--bg-dark);
 }
@@ -1200,23 +1260,22 @@ body {
     width: 90%;
 }
 
-.overlay-eyebrow {
-    font-size: 34px;
+/* .overlay-eyebrow {
+    font-size: 35px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--light-gold);
-    /* Gold color */
-    font-weight: 700;
+    font-weight: 600;
     margin: 0 0 10px 0;
-}
+} */
 
 #facility-title {
-    font-size: 48px;
+    font-size: 61px;
     color: var(--bg-dark);
-    font-weight: 800;
+    font-weight: 600;
     margin: 2% 0 1% 0;
     text-transform: uppercase;
-    line-height: 1.1;
+    line-height: 1.5em;
 }
 
 .overlay-divider {
@@ -1228,11 +1287,10 @@ body {
 }
 
 #facility-desc {
-    font-size: 20px;
-    line-height: 1.7;
+    font-size: 25px;
+    line-height: 1.5em;
     color: #666;
     margin: 0;
-    font-weight: 500;
 }
 
 .image-slider {
@@ -1302,49 +1360,29 @@ body {
 }
 
 .slider-navigation {
-    z-index: 10;
     display: flex;
     justify-content: center;
-    gap: 15px;
-    padding: 15px;
-    overflow-x: auto;
-    margin: 0 auto;
-    /* display: none; */
+    gap: 10px;
+    padding: 15px 0;
 }
 
-.nav-button {
-    display: block;
-    width: 150px;
-    min-width: 80px;
-    aspect-ratio: 1/1;
-    overflow: hidden;
-    border: 0;
-    transition: transform 0.2s ease, filter 0.2s;
+.nav-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    background: #666;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
+    transition: all .3s ease;
+    display: none;
 }
 
-.thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.nav-dot[aria-selected="true"] {
+    background: #c48350;         /* Gold highlight */
+    transform: scale(1.4);
+    box-shadow: 0 0 6px #c48350;
 }
 
-.nav-button[aria-selected="true"] {
-    transform: scale(1.1);
-    outline: 3px solid #0f9fff;
-    z-index: 2;
-}
-
-.nav-button[aria-selected="false"] {
-    filter: opacity(0.6);
-}
-
-.nav-button[aria-selected="false"]:hover {
-    filter: opacity(1);
-}
 
 @keyframes fadeIn {
     from {
@@ -1357,7 +1395,7 @@ body {
         transform: scale(1);
     }
 }
-
+/* 
 .facility-details {
     width: 100%;
     margin: 20px auto 40px auto;
@@ -1369,12 +1407,12 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     letter-spacing: 0.01em;
-    line-height: 2em;
+    line-height: 1.5em;
     color: #555;
     margin: 0;
     max-width: 100%;
     text-align: justify;
-}
+} */
 
 .line-header {
     display: flex;
@@ -1410,7 +1448,8 @@ body {
 
 .why-hub-title h2 {
     width: 80%;
-    font-size: 3.5rem;
+    font-size: 72px;
+    font-weight: 600;
     text-transform: uppercase;
     margin: 0 auto;
     text-align: left;
@@ -1448,7 +1487,7 @@ body {
     width: 280px;
     flex-shrink: 0;
     text-align: center;
-        opacity: 0;
+    opacity: 0;
     transform: translateY(30px) scale(0.95);
     transition: all 0.7s ease-out;
 }
@@ -1457,20 +1496,21 @@ body {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
+
 .icon-box img {
     width: 50%;
     margin-bottom: 20px;
 }
 
 .why-hub-card h3 {
-    font-size: 1.25rem;
+    font-size: 35px;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--bg-dark);
 }
 
 .why-hub-card p {
-    font-size: 0.95rem;
-    color: #777;
+    font-size: 25px;
+    color: #666;
 }
 
 .arrow-btn {
@@ -1512,36 +1552,47 @@ body {
 .suite-header {
     max-width: 800px;
     margin: 0 auto 50px auto;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    font-weight: 600;
 }
 
-.suite-header > * {
+.suite-header>* {
     opacity: 0;
     transform: translateX(-15px);
     transition: all 0.6s ease-out;
 }
 
-.suite-header.reveal > * {
+.suite-header.reveal>* {
     opacity: 1;
     transform: translateX(0);
 }
 
-.suite-header.reveal h3 { transition-delay: 0ms; }
-.suite-header.reveal h2 { transition-delay: 80ms; }
-.suite-header.reveal .divider-line { transition-delay: 160ms; }
-.suite-header.reveal .suite-intro { transition-delay: 240ms; }
+.suite-header.reveal h3 {
+    transition-delay: 0ms;
+}
+
+.suite-header.reveal h2 {
+    transition-delay: 80ms;
+}
+
+.suite-header.reveal .divider-line {
+    transition-delay: 160ms;
+}
+
+.suite-header.reveal .suite-intro {
+    transition-delay: 240ms;
+}
 
 .suite-header h2 {
-    font-size: 42px;
-    color: #333;
-    font-weight: 800;
+    font-size: 61px;
     margin: 0 0 20px 0;
-    text-transform: uppercase;
 }
 
 .suite-intro {
-    font-size: 18px;
+    font-size: 25px;
     color: #666;
-    font-weight: 500;
+    text-transform: none;
 }
 
 .tabs-container {
@@ -1556,13 +1607,14 @@ body {
     border-bottom: 2px solid #eee;
     margin-bottom: 40px;
     flex-wrap: wrap;
+    font-size: 25px;
 }
 
 .tab-btn {
     background: transparent;
     border: none;
     padding: 15px 30px;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: 600;
     color: #888;
     cursor: pointer;
@@ -1582,7 +1634,7 @@ body {
 }
 
 .tab-btn i {
-    font-size: 18px;
+    font-size: 25px;
 }
 
 .tab-btn.active,
@@ -1618,6 +1670,7 @@ body {
     text-align: left;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
+
 .pane-icon {
     width: 80px;
     height: 80px;
@@ -1656,13 +1709,14 @@ body {
 .pane-text h3 {
     margin: 0 0 10px 0;
     color: #333;
-    font-size: 24px;
+    font-size: 30px;
 }
 
 .pane-text p {
     color: #666;
-    line-height: 1.6;
+    line-height: 1.5em;
     margin-bottom: 15px;
+    font-size: 25px;
 }
 
 .pane-list {
@@ -1706,14 +1760,9 @@ body {
 }
 
 .suite-action {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 1.5s ease-out 0.5s;
-}
-
-.suite-action.reveal {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(10px);
+    transition: all 0.6s ease-out; 
 }
 
 /* Business Suites Section */
@@ -1724,6 +1773,7 @@ body {
     background: #f4f6f8;
     text-align: center;
     overflow: hidden;
+    color: var(--bg-dark);
 }
 
 .pulse-header {
@@ -1732,12 +1782,18 @@ body {
     padding: 0 20px;
 }
 
+.pulse-header h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+
 .pulse-header h2 {
-    font-size: 42px;
-    color: #333;
-    font-weight: 800;
+    font-size: 72px;
     margin: 0 0 20px 0;
     text-transform: uppercase;
+    font-weight: 600;
 }
 
 .news-scroller {
@@ -1829,16 +1885,16 @@ body {
 
 .news-content h3 {
     margin: 0 0 15px 0;
-    font-size: 20px;
+    font-size: 30px;
     color: #333;
-    line-height: 1.4;
+    line-height: 1.5em;
 }
 
 .news-content p {
-    font-size: 15px;
+    font-size: 22px;
     color: #777;
     margin: 0 0 20px 0;
-    line-height: 1.6;
+    line-height: 1.5em;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -1851,8 +1907,8 @@ body {
     gap: 8px;
     text-decoration: none;
     color: #147db3;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 22px;
     transition: gap 0.3s;
 }
 
@@ -1873,7 +1929,7 @@ body {
 }
 
 .location-container {
-    max-width: 1200px;
+    width: 70%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -1902,7 +1958,6 @@ body {
 
 .location-map-visual img {
     width: 100%;
-    max-width: 500px;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -1937,10 +1992,12 @@ body {
     z-index: 10;
     transition: all 0.3s ease;
 }
+
 .open-map-trigger:hover .magnifier-icon {
     color: #ff9900;
     transform: scale(1.1);
 }
+
 #location-map-modal {
     display: none;
     position: fixed;
@@ -1949,11 +2006,11 @@ body {
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.9); 
+    background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: auto; 
+    overflow: auto;
 }
 
 .modal-content.full-screen-map-content {
@@ -1972,9 +2029,9 @@ body {
 .zoomable-map-image {
     width: auto;
     height: auto;
-    max-width: 100%; 
+    max-width: 100%;
     max-height: 100%;
-    object-fit: contain; 
+    object-fit: contain;
     cursor: zoom-out;
 }
 
@@ -1989,6 +2046,7 @@ body {
     z-index: 100000;
     transition: color 0.2s;
 }
+
 .close-map-btn:hover {
     color: #ff9900;
 }
@@ -2000,14 +2058,14 @@ body {
 
 .loc-header {
     text-transform: uppercase;
-    font-size: 36px;
-    font-weight: 800;
+    font-size: 72px;
+    font-weight: 600;
     margin: 0 0 15px 0;
 }
 
 .loc-body-copy {
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 22px;
+    line-height: 1.5em;
     margin-bottom: 40px;
     opacity: 0.9;
 }
@@ -2039,18 +2097,19 @@ body {
 }
 
 .marker-card h3 {
-    font-size: 16px;
+    font-size: 30px;
     margin: 0 0 5px 0;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-weight: 700;
+    font-weight: 200;
 }
 
 .marker-card p {
-    font-size: 14px;
+    font-size: 22px;
     margin: 0;
     opacity: 0.8;
 }
+
 /* Location Section */
 
 /* Register Section */
@@ -2072,19 +2131,14 @@ body {
 }
 
 .register-card h2 {
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 72px;
+    font-weight: 600;
+    margin: 0 auto;
 }
 
-.register-card h5 {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0;
-}
-
-.register-card h3 {
+.register-card h3 , .form-section-title{
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 200;
 }
 
 form {
@@ -2101,6 +2155,7 @@ form {
 
 .full-width {
     grid-column: span 2;
+    text-transform: none;
 }
 
 .form-group {
@@ -2204,6 +2259,7 @@ select {
     opacity: 1;
     transform: translateY(0);
 }
+
 /* Register Section */
 
 /* Content-2 Section */
@@ -2222,8 +2278,8 @@ select {
 .content-2 {
     width: 80%;
     text-align: center;
-    font-size: 50px;
-    font-weight: 700;
+    font-size: 72px;
+    font-weight: 600;
     word-break: normal;
     color: var(--bg-light);
     margin-bottom: 0;
@@ -2264,22 +2320,18 @@ select {
     display: block;
 }
 
-.developer-text .sub-title {
-    font-size: 16px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+.developer-text{
+    font-size: 35px;
     color: var(--light-gold);
-    font-weight: 700;
     margin-bottom: 10px;
 }
 
 .developer-text h2 {
-    font-size: 42px;
-    color: #333;
-    font-weight: 800;
+    font-size: 61px;
+    color: var(--bg-dark);
+    font-weight: 600;
     margin: 0 0 20px 0;
-    text-transform: uppercase;
-    text-align: justify;
+    text-align: left;
 }
 
 .developer-text .divider-line {
@@ -2291,9 +2343,10 @@ select {
 }
 
 .developer-text p {
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: 22px;
+    line-height: 1.5em;
     color: #666;
+    text-transform: none;
 }
 
 /* Developer Details */
@@ -2504,6 +2557,7 @@ footer {
         display: block;
         transform: none;
     }
+
     /* Navigation Section */
 
     /* Main Background */
@@ -2516,17 +2570,27 @@ footer {
         right: 7%;
         width: 40%;
     } */
+
+    .banner-title-overlay {
+        top: 15vh;
+    }
+
+    .big-text {
+        font-size: 45px;
+    }
     /* Main Background */
 
     /* Intro */
-    .content-1-wrap{
+    .content-1-wrap {
         justify-content: center;
     }
-    .content-1{
+
+    .content-1 {
         width: 100%;
         flex-direction: column;
         justify-content: center;
     }
+
     .intro {
         width: 90%;
         margin-top: 5%;
@@ -2536,16 +2600,16 @@ footer {
         text-align: center;
     }
 
-    .btn-learn-more{
+    .btn-learn-more {
         width: 80%;
     }
 
-    .design-collage-section{
+    .design-collage-section {
         width: 100%;
         padding: 0 15px;
     }
 
-    .collage-wrapper{
+    .collage-wrapper {
         display: flex;
         flex-direction: row;
         gap: 20px;
@@ -2554,40 +2618,153 @@ footer {
         justify-content: flex-end;
     }
 
-    .collage-col-left{
+    .collage-col-left {
         width: 60%;
     }
 
-    .collage-col-right{
+    .collage-col-right {
         width: 40%;
         margin-top: 100px;
     }
 
-    .main-building{
+    .main-building {
         height: 300px;
     }
-    .retail-street{
+
+    .retail-street {
         margin: 0;
         width: 100% !important;
         min-width: 150%;
         margin-left: -55%;
     }
+
     /* Intro */
+
+    /* Philosophy Section */
+    .philosophy-header{
+        width: 80%;
+    }
+    /* Philosophy Section */
+
+    /* Markers on the image */
+    .marker {
+        width: 15px;
+        height: 15px;
+    }
+    /* Markers on the image */
+
+    /* Font Size with 72px*/
+    .small-text,
+    .philosophy-header h2,
+    .why-hub-title h2,
+    .pulse-header h2,
+    .loc-header,
+    .register-card h2,
+    .content-2,
+    .fp-header h2 {
+        font-size: 52px;
+    }
+
+    /* Font Size with 61px*/
+    .intro h2,
+    #facility-title,
+    .suite-header h2,
+    .developer-text h2  {
+        font-size: 48px;
+    }
+
+    /* Font Size with 35px*/
+    .intro h3,
+    .pillar-card h4,
+    .why-hub-card h3,
+    .developer-text
+    {
+        font-size: 30px;
+    }
+
+    /* Font Size with 30px*/
+    .btn-learn-more,
+    .sub-title,
+    .pulse-header h3,
+    .news-content h3,
+    .marker-card h3,
+    .register-card h3, 
+    .form-section-title,
+    .pane-text h3
+    {
+        font-size: 22px;
+    }
+
+    /* Font Size with 25px*/
+    .intro p,
+    .philosophy-desc,
+    .fp-zone-btn,
+    .fp-block-btn,
+    #facility-desc,
+    .suite-intro,
+    .tabs-nav,
+    .why-hub-card p,
+    .marker-card p,
+    .loc-body-copy,
+    .pillar-card p,
+    .pane-text p,
+    .tab-btn,
+    .tab-btn i,
+    .news-content p 
+    {
+        font-size: 18px;
+    }
+
 }
 
 @media (max-width: 767px) {
+
+    /* Font Size with 72px*/
+    .small-text,
+    .philosophy-header h2,
+    .why-hub-title h2,
+    .pulse-header h2,
+    .loc-header,
+    .register-card h2,
+    .content-2 {
+        font-size: 48px;
+    }
+
+    /* Font Size with 61px*/
+    .intro h2,
+    #facility-title,
+    .suite-header h2,
+    .developer-text h2  {
+        font-size: 40px;
+    }
+
+    /* Font Size with 35px*/
+    .pillar-card h4
+    {
+        font-size: 24px;
+    }
+
+    /* Philosophy Section */
+    .pillars-grid {
+        gap: 15px;
+    }
+
+    .pillar-card {
+        flex: 1 1 200px;
+        max-width: 250px;
+        padding: 40px 30px;
+    }
+    /* Philosophy Section */
+
     /* Site Plan Section */
     .marker {
         width: 12px;
         height: 12px;
     }
+
     /* Site Plan Section */
 
     /* Facility Section */
-    #facility-desc {
-        font-size: 15px;
-    }
-
     .image-slider {
         width: 100%;
     }
@@ -2603,9 +2780,13 @@ footer {
     #facility-title {
         font-size: 28px;
     }
-   /* Facility Section */
 
-   /* Why the Hub Section */
+    .slider-overlay-card {
+        padding-top: 0;
+    }
+    /* Facility Section */
+
+    /* Why the Hub Section */
     .why-hub-section {
         padding: 200px 0;
     }
@@ -2616,8 +2797,14 @@ footer {
 
     .why-hub-card {
         width: 200px;
-    }   
+    }
+
     /* Why the Hub Section */
+
+    /* Location Section */
+    
+    /* Location Section */
+
     /* Developer Section */
     .developer-section {
         padding: 60px 20px;
@@ -2658,6 +2845,7 @@ footer {
         text-align: left;
         font-size: 16px;
     }
+
     /* Developer Section */
     /* Footer */
     .site-footer {
@@ -2691,10 +2879,95 @@ footer {
     .quick-links-list {
         gap: 8px;
     }
+
     /* Footer */
 }
 
 @media (max-width: 568px) {
+    /* Font Size with 72px*/
+    .small-text,
+    .philosophy-header h2,
+    .why-hub-title h2,
+    .pulse-header h2,
+    .loc-header,
+    .register-card h2,
+    .content-2 {
+        font-size: 40px;
+    }
+
+    /* Font Size with 35px*/
+    .intro h3,
+    .pillar-card h4,
+    .why-hub-card h3,
+    .developer-text
+    {
+        font-size: 22px;
+    }
+
+    /* Font Size with 30px*/
+    .btn-learn-more,
+    .sub-title,
+    .pulse-header h3,
+    .news-content h3,
+    .marker-card h3,
+    .register-card h3, 
+    .form-section-title
+    {
+        font-size: 20px;
+    }
+
+    /* Font Size with 25px*/
+    .intro p,
+    .philosophy-desc,
+    .fp-zone-btn,
+    .fp-block-btn,
+    #facility-desc,
+    .suite-intro,
+    .tabs-nav
+    {
+        font-size: 18px;
+    }
+
+
+    .main-building {
+        height: 200px;
+    }
+
+    .retail-street {
+        min-width: 200px;
+        height: 150px;
+        margin-top: -50%;
+    }
+    
+    /* Floorplan Visual Section */
+    .fp-nav-layer-1 {
+        flex-direction: column;
+        gap: 0;
+        border-bottom: none;
+    }
+
+    .fp-nav-layer-2 {
+        flex-direction: column;
+        padding: 10px 0;
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .fp-zone-btn,
+    .fp-block-btn {
+        padding: 12px;
+    }
+
+    .fp-block-group {
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px 20px;
+    }
+
+    .fp-visuals-wrapper {
+        min-height: 250px;
+    }
+    /* Floorplan Visual Section */
+
     /* Why the Hub Section */
     .why-hub-section {
         padding: 150px 0 70px 0;
@@ -2703,14 +2976,6 @@ footer {
     .icon-box img {
         width: 30%;
         margin-bottom: 20px;
-    }
-
-    .why-hub-card h3 {
-        font-size: 1rem;
-    }
-
-    .why-hub-card p {
-        font-size: 0.8rem;
     }
 
     /* Why the Hub Section */
@@ -2726,11 +2991,6 @@ footer {
     .suite-header h2 {
         font-size: 28px;
     }
-
-    .suite-intro {
-        font-size: 14px;
-    }
-
     .tabs-nav {
         flex-wrap: wrap;
         gap: 5px;
@@ -2741,7 +3001,6 @@ footer {
     .tab-btn {
         flex-grow: 1;
         flex-basis: calc(50% - 10px);
-        font-size: 13px;
         padding: 10px 5px;
         justify-content: center;
         text-align: center;
@@ -2758,10 +3017,6 @@ footer {
         gap: 20px;
     }
 
-    .pane-text h3 {
-        font-size: 20px;
-    }
-
     .pane-icon {
         margin: 0 auto;
     }
@@ -2771,17 +3026,13 @@ footer {
         align-items: center;
         gap: 10px;
     }
-
-    .suite-action {
-        text-align: center;
-    }
-
+/* 
     .download-btn {
         width: 100%;
         padding: 12px 20px;
         font-size: 14px;
         justify-content: center;
-    }
+    } */
 
     /* Business Suites Section */
 
@@ -2831,7 +3082,6 @@ footer {
     }
 
     .news-content p {
-        font-size: 14px;
         -webkit-line-clamp: 4;
     }
 
@@ -2897,43 +3147,8 @@ footer {
         font-size: 45%;
         margin: 0;
     }
+
     /* Content-2 Section */
-}
-
-@media (max-width: 425px) {
-    .main-building{
-        height: 200px;
-    }
-    .retail-street{
-        min-width: 200px;
-        height: 150px;
-        margin-top: -50%;
-    }
-
-        .fp-header h2 {
-        font-size: 32px;
-    }
-    .fp-nav-layer-1 {
-        flex-direction: column; 
-        gap: 0;
-        border-bottom: none;
-    }
-    .fp-nav-layer-2 {
-        flex-direction: column;
-        padding: 10px 0;
-        border-top: 2px solid rgba(255, 255, 255, 0.2);
-    }
-    .fp-zone-btn, .fp-block-btn {
-        padding: 12px;
-    }
-    .fp-block-group {
-        flex-direction: column;
-        gap: 5px;
-        padding: 10px 20px;
-    }
-    .fp-visuals-wrapper {
-        min-height: 250px;
-    }
 }
 
 /* Fade-in Animation */

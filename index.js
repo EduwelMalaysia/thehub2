@@ -31,46 +31,46 @@ window.addEventListener('scroll', function () {
     }
 });
 
-document.querySelectorAll('.marker').forEach(marker => {
-    const rawText = marker.getAttribute('data-building');
+// document.querySelectorAll('.marker').forEach(marker => {
+//     const rawText = marker.getAttribute('data-building');
 
-    if (rawText) {
-        const cleanText = rawText.replace(/-/g, ' ');
-        marker.setAttribute('data-label', cleanText);
-    }
-});
+//     if (rawText) {
+//         const cleanText = rawText.replace(/-/g, ' ');
+//         marker.setAttribute('data-label', cleanText);
+//     }
+// });
 
-const markers = document.querySelectorAll('.marker');
-const modals = document.querySelectorAll('.modal');
-const closeBtns = document.querySelectorAll('.close');
+// const markers = document.querySelectorAll('.marker');
+// const modals = document.querySelectorAll('.modal');
+// const closeBtns = document.querySelectorAll('.close');
 
-// Open Modal
-markers.forEach(marker => {
-    marker.addEventListener('click', () => {
-        const id = marker.getAttribute('data-building');
-        const modal = document.getElementById(id);
+// // Open Modal
+// markers.forEach(marker => {
+//     marker.addEventListener('click', () => {
+//         const id = marker.getAttribute('data-building');
+//         const modal = document.getElementById(id);
 
-        if (modal) {
-            modal.style.display = "block";
-        } else {
-            console.log("No modal found for ID: " + id);
-        }
-    });
-});
+//         if (modal) {
+//             modal.style.display = "block";
+//         } else {
+//             console.log("No modal found for ID: " + id);
+//         }
+//     });
+// });
 
-// Close Modal (X button)
-closeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        btn.closest('.modal').style.display = "none";
-    });
-});
+// // Close Modal (X button)
+// closeBtns.forEach(btn => {
+//     btn.addEventListener('click', () => {
+//         btn.closest('.modal').style.display = "none";
+//     });
+// });
 
-// Close Modal (Click outside)
-window.addEventListener('click', function (event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = "none";
-    }
-});
+// // Close Modal (Click outside)
+// window.addEventListener('click', function (event) {
+//     if (event.target.classList.contains('modal')) {
+//         event.target.style.display = "none";
+//     }
+// });
 
 function switchFloor(evt, contentId, imageId) {
     document.querySelectorAll('.floor-content').forEach(c => c.classList.remove('selected'));
@@ -98,14 +98,16 @@ class Slider {
     constructor(slider) {
         this.slider = slider;
         this.display = slider.querySelector('.image-display');
-        this.navButton = Array.from(slider.querySelectorAll('.nav-button'));
+
+        // updated for dot navigation
+        this.navButton = Array.from(slider.querySelectorAll('.nav-dot'));
         this.prevButton = slider.querySelector('.prev-button');
         this.nextButton = slider.querySelector('.next-button');
         this.sliderNavigation = slider.querySelector('.slider-navigation');
 
-        this.detailsContainer = slider.closest('.facility').querySelector('.facility-details');
-        this.titleElement = this.detailsContainer.querySelector('#facility-title');
-        this.descElement = this.detailsContainer.querySelector('#facility-desc');
+        // this.detailsContainer = slider.closest('.facility').querySelector('.facility-details');
+        // this.titleElement = this.detailsContainer.querySelector('#facility-title');
+        // this.descElement = this.detailsContainer.querySelector('#facility-desc');
 
         this.currentIndex = 0;
         this.preloadedImages = {};
@@ -120,7 +122,7 @@ class Slider {
         this.preloadImages();
         this.setupSlider();
         this.eventListeners();
-        this.startAutoPlay(); 
+        this.startAutoPlay();
     }
 
     setupSlider() {
@@ -130,50 +132,49 @@ class Slider {
     showSliderImage(index) {
         this.currentIndex = index;
 
-        const navButtonImg = this.navButton[this.currentIndex].querySelector('img');
-        if (navButtonImg) {
-            const imgClone = navButtonImg.cloneNode(true);
+        // load image from the dot's dataset
+        const button = this.navButton[this.currentIndex];
+        const imgSrc = button.getAttribute('data-img');
 
-            imgClone.classList.add('animate-fade');
+        if (imgSrc) {
+            const img = new Image();
+            img.src = imgSrc;
+            img.classList.add('animate-fade');
 
-            this.display.replaceChildren(imgClone);
+            this.display.replaceChildren(img);
 
-            setTimeout(() => {
-                imgClone.classList.remove('animate-fade');
-            }, 800);
+            setTimeout(() => img.classList.remove('animate-fade'), 800);
         }
 
-        this.updateTextContent(index);
+        // this.updateTextContent(index);
         this.updateNavButtons();
     }
 
-    updateTextContent(index) {
-        const button = this.navButton[index];
-        const newTitle = button.getAttribute('data-title');
-        const newDesc = button.getAttribute('data-desc');
+    // updateTextContent(index) {
+    //     const button = this.navButton[index];
+    //     const newTitle = button.getAttribute('data-title');
+    //     const newDesc = button.getAttribute('data-desc');
 
-        this.detailsContainer.classList.add('text-fade-out');
-        setTimeout(() => {
-            if (this.titleElement) this.titleElement.textContent = newTitle || "Facility";
-            if (this.descElement) this.descElement.textContent = newDesc || "";
-
-            this.detailsContainer.classList.remove('text-fade-out');
-        }, 400);
-    }
+    //     this.detailsContainer.classList.add('text-fade-out');
+    //     setTimeout(() => {
+    //         this.titleElement.textContent = newTitle || "Facility";
+    //         this.descElement.textContent = newDesc || "";
+    //         this.detailsContainer.classList.remove('text-fade-out');
+    //     }, 400);
+    // }
 
     updateNavButtons() {
         this.navButton.forEach((button, buttonIndex) => {
-            const isSelected = buttonIndex === this.currentIndex;
-            button.setAttribute('aria-selected', isSelected);
+            button.setAttribute('aria-selected', buttonIndex === this.currentIndex);
         });
     }
 
     preloadImages() {
         this.navButton.forEach(button => {
-            const img = button.querySelector('img');
-            if (img && img.src && !this.preloadedImages[img.src]) {
-                this.preloadedImages[img.src] = new Image();
-                this.preloadedImages[img.src].src = img.src;
+            const src = button.getAttribute('data-img');
+            if (src && !this.preloadedImages[src]) {
+                this.preloadedImages[src] = new Image();
+                this.preloadedImages[src].src = src;
             }
         });
     }
@@ -195,20 +196,23 @@ class Slider {
     }
 
     eventListeners() {
+        // keyboard support
         document.addEventListener('keydown', (e) => {
             this.resetAutoPlay();
             this.handleAction(e.key);
         });
 
+        // dot click
         this.sliderNavigation.addEventListener('click', (e) => {
-            const targetButton = e.target.closest('.nav-button');
-            const index = targetButton ? this.navButton.indexOf(targetButton) : -1;
+            const dot = e.target.closest('.nav-dot');
+            const index = this.navButton.indexOf(dot);
             if (index !== -1) {
                 this.resetAutoPlay();
                 this.showSliderImage(index);
             }
         });
 
+        // prev / next
         this.prevButton.addEventListener('click', () => {
             this.resetAutoPlay();
             this.handleAction('prev');
@@ -218,6 +222,7 @@ class Slider {
             this.handleAction('next');
         });
 
+        // stop autoplay on hover
         this.slider.addEventListener('mouseenter', () => this.stopAutoPlay());
         this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
     }
@@ -349,27 +354,43 @@ document.querySelectorAll('.fade-on-scroll').forEach((element) => {
     observer.observe(element);
 });
 
-// Youtube Autoplay while scrolling
+// Youtube Autoplay while scrolling (Updated for local MP4)
 document.addEventListener("DOMContentLoaded", function () {
     const videoContainer = document.querySelector('.video-container');
-    const iframe = videoContainer ? videoContainer.querySelector('.video-frame') : null;
+    const videoElement = document.getElementById('localVideoPlayer'); // Targeting the new video ID
 
-    if (videoContainer && iframe) {
+    // Check if the video element and its container exist
+    if (videoContainer && videoElement) {
+        
+        // Use Intersection Observer to control video playback
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                    // Check if the video is ready and attempt to play
+                    const playPromise = videoElement.play();
+                    
+                    // Handle potential promise rejection (common if video isn't ready or browser blocks autoplay)
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Autoplay was prevented. Muting is already set, but this catch handles other issues.
+                            console.log("Autoplay was prevented or failed:", error);
+                        });
+                    }
+                    
                 } else {
-                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                    // Pause when the video is out of view
+                    videoElement.pause();
                 }
             });
         }, {
+            // Video plays when 50% of it is visible
             threshold: 0.5 
         });
+
+        // Start observing the video container
         videoObserver.observe(videoContainer);
     }
 });
-
 // Menu Toggle
 // Mobile Menu Toggle Functionality
 document.addEventListener('DOMContentLoaded', () => {
@@ -706,3 +727,323 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+
+document.querySelectorAll(".marker").forEach(marker => {
+
+    // Set correct preview variable name
+    marker.style.setProperty("--preview-img", `url(${marker.dataset.img})`);
+
+    marker.addEventListener("click", () => {
+
+        const zone = marker.dataset.zone;
+        const block = marker.dataset.block;
+
+        // highlight zone tab
+        document.querySelectorAll(".fp-zone-btn").forEach(btn => {
+            btn.classList.toggle("active", btn.dataset.zone === zone);
+        });
+
+        // show block group
+        document.querySelectorAll(".fp-block-group").forEach(group => {
+            group.style.display = group.dataset.zoneGroup === zone ? "flex" : "none";
+        });
+
+        // highlight block button
+        document.querySelectorAll(".fp-block-btn").forEach(btn => {
+            btn.classList.toggle("active", btn.dataset.block === block);
+        });
+
+        // show correct floorplan pane
+        document.querySelectorAll(".fp-visual-pane").forEach(pane => {
+            pane.classList.toggle("active", pane.id === `${block}-visual`);
+        });
+
+        // change background color
+        updateFloorplanBackground(zone);
+
+        // scroll into view
+        document.querySelector("#floorplan").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    });
+});
+
+/* ==========================================================
+   FLOOR PLAN DATA MODEL
+   Each Block → Levels → Image → Info
+========================================================== */
+
+const FLOORPLAN_DATA = {
+    "block-a": {
+        title: "Block A",
+        info: {
+            type: "5-Storey Shop Lot",
+            size: "1,400 – 1,850 sqft",
+            levels: 5
+        },
+        levels: {
+            "Level 1": "templates/images/blockA-L1.png",
+            "Level 2": "templates/images/blockA-L2.png",
+            "Level 3": "templates/images/blockA-L3.png",
+            "Level 4": "templates/images/blockA-L4.png",
+            "Level 5": "templates/images/blockA-L5.png"
+        }
+    },
+
+    "block-b": {
+        title: "Block B",
+        info: {
+            type: "4-Storey Shop Lot",
+            size: "1,300 – 1,900 sqft",
+            levels: 4
+        },
+        levels: {
+            "Level 1": "templates/images/blockB-L1.png",
+            "Level 2": "templates/images/blockB-L2.png",
+            "Level 3": "templates/images/blockB-L3.png",
+            "Level 4": "templates/images/blockB-L4.png"
+        }
+    },
+
+    "block-a7": {
+        title: "Block A7",
+        info: {
+            type: "3-Storey Retail Block",
+            size: "1,200 – 1,600 sqft",
+            levels: 3
+        },
+        levels: {
+            "Level 1": "templates/images/blockA7-L1.png",
+            "Level 2": "templates/images/blockA7-L2.png",
+            "Level 3": "templates/images/blockA7-L3.png"
+        }
+    },
+
+    "block-f": {
+        title: "Block F",
+        info: {
+            type: "Lifestyle Block",
+            size: "Retail + F&B Concept",
+            levels: 3
+        },
+        levels: {
+            "Level 1": "templates/images/blockF-L1.png",
+            "Level 2": "templates/images/blockF-L2.png",
+            "Level 3": "templates/images/blockF-L3.png"
+        }
+    },
+
+    "block-i": {
+        title: "Block I (Merchant Bay)",
+        info: {
+            type: "Retail & Dining Hub",
+            size: "Flexible Layout",
+            levels: 2
+        },
+        levels: {
+            "Ground Floor": "templates/images/blockI-GF.png",
+            "First Floor": "templates/images/blockI-1F.png"
+        }
+    }
+};
+
+/* ==========================================================
+    DOM ELEMENTS
+========================================================== */
+
+const zoneButtons = document.querySelectorAll(".fp-zone-btn");
+const blockSidebar = document.querySelector(".fp-block-list");
+const levelTabsContainer = document.querySelector(".fp-level-tabs");
+const infoPanel = document.querySelector(".fp-info-panel");
+const infoTitle = document.querySelector(".fp-info-title");
+const infoDetails = document.querySelector(".fp-info-details");
+const visualWrapper = document.querySelector(".fp-visual-pane img");
+const ZONE_COLORS = {
+    "prime-square": { primary: "#20A2DC", secondary: "#1880AA" }, // Blue
+    "central-walk": { primary: "#83BC41", secondary: "#6AA035" }, // Green
+    "merchant-bay": { primary: "#E11F27", secondary: "#B5191F" }, // Red
+    "cineplex":     { primary: "#662E86", secondary: "#50246A" }, // Purple (Adding a button for this later)
+    "parkfront":    { primary: "#E22C7C", secondary: "#C12469" }  // Pink (Adding a button for this later)
+};
+
+/* ==========================================================
+    STATE MANAGER
+========================================================== */
+
+let currentZone = "prime-square";
+let currentBlock = null;
+let currentLevel = null;
+
+
+/* ==========================================================
+    LOAD BLOCK LIST WHEN ZONE CHANGES
+========================================================== */
+function setZoneTheme(zone) {
+    const color = ZONE_COLORS[zone];
+    // 设置 CSS 变量，供 CSS 使用
+    document.documentElement.style.setProperty('--zone-color-primary', color.primary);
+    document.documentElement.style.setProperty('--zone-color-secondary', color.secondary);
+}
+
+function loadBlocksForZone(zone) {
+
+    setZoneTheme(zone);
+    blockSidebar.innerHTML = "";
+
+    const zoneBlocks = {
+        "prime-square": ["block-a", "block-b"],
+        "central-walk": ["block-a7", "block-f", "block-d", "block-e", "block-g", "block-h"],
+        "merchant-bay": ["block-i"]
+    }[zone];
+
+    zoneBlocks.forEach(blockId => {
+        const btn = document.createElement("button");
+        btn.textContent = FLOORPLAN_DATA[blockId]?.title || blockId.toUpperCase();
+        btn.dataset.block = blockId;
+
+        btn.addEventListener("click", () => selectBlock(blockId));
+
+        blockSidebar.appendChild(btn);
+    });
+
+    // Auto select first block
+    selectBlock(zoneBlocks[0]);
+}
+
+
+/* ==========================================================
+   WHEN A BLOCK IS SELECTED
+========================================================== */
+function selectBlock(blockId) {
+    currentBlock = blockId;
+
+    // Update active button
+    document.querySelectorAll(".fp-block-list button").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.block === blockId);
+    });
+
+    loadLevelTabs(blockId);
+    updateInfoPanel(blockId);
+
+    // Auto-select first level
+    const firstLevel = Object.keys(FLOORPLAN_DATA[blockId].levels)[0];
+    selectLevel(firstLevel);
+}
+
+
+/* ==========================================================
+   LOAD LEVEL TABS FOR BLOCK
+========================================================== */
+function loadLevelTabs(blockId) {
+    levelTabsContainer.innerHTML = "";
+
+    const levels = FLOORPLAN_DATA[blockId].levels;
+
+    Object.keys(levels).forEach(levelName => {
+        const btn = document.createElement("button");
+        btn.textContent = levelName;
+        btn.dataset.level = levelName;
+
+        btn.addEventListener("click", () => selectLevel(levelName));
+
+        levelTabsContainer.appendChild(btn);
+    });
+}
+
+
+/* ==========================================================
+   SELECT LEVEL → SHOW FLOORPLAN IMAGE
+========================================================== */
+function selectLevel(levelName) {
+    currentLevel = levelName;
+
+    // Update active tab
+    document.querySelectorAll(".fp-level-tabs button").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.level === levelName);
+    });
+
+    // Load image
+    const imgSrc = FLOORPLAN_DATA[currentBlock].levels[levelName];
+    visualWrapper.src = imgSrc;
+}
+
+
+/* ==========================================================
+   UPDATE BLOCK INFO PANEL
+========================================================== */
+function updateInfoPanel(blockId) {
+    const data = FLOORPLAN_DATA[blockId];
+    infoTitle.textContent = data.title;
+
+    infoDetails.innerHTML = `
+        <div class="fp-info-item">
+            <span class="fp-info-label">Type</span>
+            <span class="fp-info-value">${data.info.type}</span>
+        </div>
+
+        <div class="fp-info-item">
+            <span class="fp-info-label">Level 1 Size</span>
+            <span class="fp-info-value">${data.info.size}</span>
+        </div>
+
+        <div class="fp-info-item">
+            <span class="fp-info-label">Total Levels</span>
+            <span class="fp-info-value">${data.info.levels} Floors</span>
+        </div>
+    `;
+}
+
+
+/* ==========================================================
+   ZONE BUTTON CLICK
+========================================================== */
+zoneButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        zoneButtons.forEach(z => z.classList.remove("active"));
+        btn.classList.add("active");
+
+        currentZone = btn.dataset.zone;
+        loadBlocksForZone(currentZone);
+    });
+});
+
+
+/* ==========================================================
+   SITE PLAN MARKER → SYNCHRONIZE WITH FLOORPLAN
+========================================================== */
+document.querySelectorAll(".marker").forEach(marker => {
+    marker.addEventListener("click", () => {
+        const block = marker.dataset.block;
+        const zone = marker.dataset.zone;
+
+        // Activate correct zone
+        document.querySelector(`.fp-zone-btn[data-zone="${zone}"]`)?.click();
+
+        // Select block
+        setTimeout(() => selectBlock(block), 200);
+
+        // Scroll into view
+        document.querySelector("#floorplan").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+});
+
+
+// function updateFloorplanBackground(zone) {
+//     const fp = document.querySelector(".fp-section");
+
+//     fp.classList.remove(
+//         "zone-prime-square",
+//         "zone-central-walk",
+//         "zone-merchant-bay",
+//         "zone-cineplex",
+//         "zone-parkfront"
+//     );
+
+//     fp.classList.add(`zone-${zone}`);
+// }
