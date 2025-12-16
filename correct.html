@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <div class="fake-scroll">
+        <div class="scroll-height"></div>
+    </div>
+
+    <section class="main-container">
+        <header class="site-header">
+            <div class="logo-box">
+                <img loading="lazy" src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo" class="logo">
+            </div>
+
+            <nav class="main-nav">
+                <ul id="nav">
+                    <li><a href="#concept">Concept</a></li>
+                    <li><a href="#layout">Layout</a></li>
+                    <li><a href="#happening">News</a></li>
+                    <li><a href="#location">Location</a></li>
+                    <li><a href="#developer">YKL Capital</a></li>
+                </ul>
+
+            </nav>
+            <div class="register-btn-container">
+                <a href="#register" class="register-btn">
+                    LEASE NOW
+                </a>
+            </div>
+
+            <button class="menu-toggle" aria-expanded="false" aria-controls="nav">
+                <i class="fa fa-bars"></i>
+            </button>
+        </header>
+    </section>
+
+    <section class="scene">
+        <div class="gallery">
+            <div class="gallery-item item-1"></div>
+            <div class="gallery-item item-2"></div>
+            <div class="gallery-item item-3"></div>
+            <div class="gallery-item item-4"></div>
+            <div class="gallery-item item-5" id="target-item"></div>
+            <div class="gallery-item item-6"></div>
+            <div class="gallery-item item-7"></div>
+            <div class="gallery-item item-8"></div>
+            <div class="gallery-item item-9"></div>
+        </div>
+    </section>
+
+        <section class="content-1-wrap fade-on-scroll" id="concept">
+        <div class="content-1">
+            <div class="intro">
+                <h2>muar's new centre of businesses & lifestyle</h2>
+                <h3>a beacon of sustainability</h3>
+                <p>THE HUB is an exciting, multi-component development that features innovative urban planning and
+                    design,
+                    carefully considering the needs of the community and businesses with equal measure. By incorporating
+                    green spaces, pedestrian-friendly pathways, and seamless connectivity, THE HUB fosters a lively,
+                    interconnected atmosphere that encourages social interaction and economic growth.</p>
+                <button class="btn-learn-more"><a href="#overview">more info &#8594;</a></button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const scrollBox = document.querySelector('.fake-scroll');
+        const gallery = document.querySelector('.gallery');
+        const targetItem = document.getElementById('target-item');
+        const siteHeader = document.querySelector('.site-header');
+
+        let metrics = {};
+        let currentScroll = 0;
+        let smoothedScroll = 0;
+
+        function measure() {
+            // Temporarily reset for measurement
+            gallery.style.transform = 'none';
+
+            const vpW = window.innerWidth;
+            const vpH = window.innerHeight;
+            const tRect = targetItem.getBoundingClientRect();
+
+            // Calculate how much we need to scale the center item to fill the screen
+            const scaleX = vpW / tRect.width;
+            const scaleY = vpH / tRect.height;
+
+            metrics = {
+                vpCX: vpW / 2,
+                vpCY: vpH / 2,
+                tCX: tRect.left + tRect.width / 2,
+                tCY: tRect.top + tRect.height / 2,
+                targetScale: Math.max(scaleX, scaleY) + 0.2 // Slight buffer
+            };
+
+            metrics.offX = metrics.tCX - metrics.vpCX;
+            metrics.offY = metrics.tCY - metrics.vpCY;
+        }
+
+        // Linear Interpolation function for smoothness
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        function animate() {
+            // Smooth the scroll value: 0.1 is the intensity (lower = smoother/slower)
+            smoothedScroll = lerp(smoothedScroll, currentScroll, 0.08);
+
+            const maxScroll = scrollBox.scrollHeight - window.innerHeight;
+            const progress = Math.min(Math.max(smoothedScroll / maxScroll, 0), 1);
+
+            const { offX, offY, targetScale } = metrics;
+
+            // 1. Calculate Opacity for Header
+            const navOpacity = Math.max(0, 1 - (progress * 10)); // Fades out in first 10%
+            siteHeader.style.opacity = navOpacity;
+            siteHeader.style.pointerEvents = navOpacity > 0.1 ? 'auto' : 'none';
+
+            // 2. Calculate Transform
+            // We reverse the logic: Progress 0 = Zoomed In (Target), Progress 1 = Gallery View
+            const S = targetScale - (targetScale - 1) * progress;
+            const targetOffX = offX * (1 - progress);
+            const targetOffY = offY * (1 - progress);
+
+            const Tx = -targetOffX * S;
+            const Ty = -targetOffY * S;
+
+            gallery.style.transform = `translate3d(${Tx}px, ${Ty}px, 0) scale(${S})`;
+
+            requestAnimationFrame(animate);
+        }
+
+        // Listeners
+        scrollBox.addEventListener('scroll', () => {
+            currentScroll = scrollBox.scrollTop;
+        });
+
+        window.addEventListener('resize', measure);
+        window.addEventListener('load', () => {
+            measure();
+            requestAnimationFrame(animate); // Start the loop
+        });
+    </script>
+</body>
+
+</html>

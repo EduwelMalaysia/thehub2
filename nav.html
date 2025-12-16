@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="templates/images/THE-HUB-Business-Park-logo.png">
+    <title>THE HUB</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <section class="main-container">
+        <header class="site-header">
+            <div class="logo-box">
+                <img loading="lazy" src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo" class="logo">
+            </div>
+
+            <nav class="main-nav">
+                <ul id="nav">
+                    <li><a href="#concept">Concept</a></li>
+                    <li><a href="#overview">Ecosystem</a></li>
+                    <li><a href="#happening">News</a></li>
+                    <li><a href="#location">Location</a></li>
+                    <li><a href="#developer">YKL Capital</a></li>
+                </ul>
+
+            </nav>
+            <div class="register-btn-container">
+                <a href="#register" class="register-btn">
+                    LEASE NOW
+                </a>
+            </div>
+
+            <button class="menu-toggle" aria-expanded="false" aria-controls="nav">
+                <i class="fa fa-bars"></i>
+            </button>
+        </header>
+    </section>
+
+    <section class="main-gallery">
+        <div class="gallery-item gallery-item-1"></div>
+        <div class="gallery-item gallery-item-2"></div>
+        <div class="gallery-item gallery-item-3"></div>
+        <div class="gallery-item gallery-item-4"></div>
+        <div class="gallery-item gallery-item-5"></div>
+        <div class="gallery-item gallery-item-6"></div>
+        <div class="gallery-item gallery-item-7"></div>
+        <div class="gallery-item gallery-item-8"></div>
+        <div class="gallery-item gallery-item-9"></div>
+    </section>
+
+
+</body>
+
+</html>
+
+
+html {
+scroll-behavior: smooth;
+}
+
+html,
+body {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+color: var(--text-dark);
+overflow-x: hidden;
+width: 100%;
+font-family: "Montserrat", sans-serif;
+}
+
+* {
+box-sizing: border-box;
+}
+
+:root {
+--blue: #20A2DC;
+--green: #83BC41;
+--red: #E11F27;
+--purple: #662E86;
+--pink: #E22C7C;
+--gold: #bc7b47;
+--light-gold: #c48350 --text-dark: #222;
+--text-light: #666;
+--bg-light: #f7f7f7;
+--bg-dark: #111;
+}
+
+.main-container {
+width: 100vw;
+height: 100vh;
+padding: 0;
+box-sizing: border-box;
+background: url('templates/images/cover page 13112025.jpg');
+background-repeat: no-repeat;
+background-size: cover;
+background-position: top;
+}
+
+/* Header */
+.site-header {
+width: 100%;
+height: 70px;
+position: fixed;
+z-index: 999;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0 20px;
+background: linear-gradient(to bottom, rgba(0, 0, 0, 0.582), #00000071, #0000005b, #00000038, #0000001c, #00000000);
+}
+
+.logo-box {
+position: absolute;
+left: 40px;
+top: 0;
+height: 100%;
+width: 200px;
+display: flex;
+align-items: center;
+padding: 0;
+}
+
+.logo-box .logo {
+width: 100%;
+height: auto;
+object-fit: contain;
+max-height: 120px;
+}
+
+.main-nav {
+width: auto;
+display: flex;
+justify-content: center;
+}
+
+#nav {
+position: relative;
+border: none;
+list-style: none;
+display: flex;
+justify-content: center;
+}
+
+#nav li a {
+position: relative;
+padding: 10px 30px;
+outline: none;
+color: var(--bg-light);
+display: inline-block;
+text-decoration: none;
+z-index: 3;
+text-transform: uppercase;
+font-size: 20px;
+font-weight: 600;
+border: none;
+transform: translateZ(0);
+transition:
+transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+text-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#nav li a:hover {
+text-decoration: none;
+transform: translateZ(40px);
+text-shadow:
+0 5px 8px rgba(0, 0, 0, 0.752),
+0 0 20px rgba(255,255,255,0.6);
+}
+
+.menu-toggle {
+display: none;
+}
+
+.register-btn-container {
+position: absolute;
+right: 5%;
+z-index: 10;
+height: 80%;
+display: flex;
+align-items: center;
+}
+
+.register-btn {
+border-radius: 4px;
+display: flex;
+justify-content: center;
+align-items: center;
+
+padding: 10px 20px;
+
+color: var(--bg-light, #fff);
+font-weight: 600;
+font-size: 16px;
+text-align: center;
+border: none;
+box-shadow: 8px 5px 7px rgba(19, 0, 0, 0.386);
+cursor: pointer;
+text-decoration: none;
+text-transform: uppercase;
+
+/* Keep animation/background gradient */
+background: linear-gradient(110deg, #e09f6d72, #e09f6d42, #c48350, #d49360, #e09f6d, #d49360, #c48350, #e09f6da4,
+#e09f6d72, #e09f6d72);
+background-size: 200% auto;
+animation: streamer 3s linear infinite;
+
+
+transform: translateZ(0);
+transition:
+transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.register-btn:hover {
+text-decoration: none;
+transform: translateZ(40px);
+box-shadow:
+0 5px 8px rgba(0, 0, 0, 0.752),
+0 0 20px rgba(56, 1, 1, 0.6);
+}
+
+
+/* @keyframes streamer {
+0% {
+background-position: 0% center;
+}
+
+100% {
+background-position: 200% center;
+}
+} */
+
+/* Header */
+
+/* Main Gallery */
+/* ---- Gallery Section ---- */
+.main-gallery {
+display: grid;
+grid-template-columns: repeat(3, 1fr); /* 3 columns */
+grid-template-rows: repeat(3, 300px); /* 3 rows, equal height */
+gap: 15px; /* spacing between images */
+width: 90%;
+margin: 0 auto;
+}
+
+/* ---- Each Gallery Image ---- */
+.gallery-item {
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+border-radius: 10px;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect: subtle lift */
+.gallery-item:hover {
+transform: translateY(-5px);
+box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ---- Assign Background Images ---- */
+.gallery-item-1 { background-image: url("templates/images/The-HUB-Victoria-Park-View1.jpg"); }
+.gallery-item-2 { background-image: url("templates/images/The_HUB_captial\ square_V2\ copy.png"); }
+.gallery-item-3 { background-image: url("templates/images/starview-park.png"); }
+.gallery-item-4 { background-image: url("templates/images/The_HUB_cinema2.png"); }
+.gallery-item-5 { background-image: url("templates/images/The-Hub-Entrance-Statement.jpg"); }
+.gallery-item-6 { background-image: url("templates/images/The-HUB-Central-Walk.jpg"); }
+.gallery-item-7 { background-image: url("templates/images/Hydora-Park.jpg"); }
+.gallery-item-8 { background-image: url("templates/images/Drive-Thru.jpg"); }
+.gallery-item-9 { background-image: url("templates/images/The-HUB-Children-Playground.jpg"); }
+
+
+
+/* Main Gallery */
+
+
+
+/* ---- Responsive (Mobile) ---- */
+@media (max-width: 768px) {
+.main-gallery {
+grid-template-columns: repeat(2, 1fr); /* 2 columns */
+grid-template-rows: auto;
+}
+}
+
+@media (max-width: 480px) {
+.main-gallery {
+grid-template-columns: 1fr; /* 1 column */
+}
+}
+
+first scene that user will look is main-container, when it scroll, it will slowly change the scene to main-gallery. but
+is not scrolling down, is scroll and main-container gradually change transparent where main-gallery gradually become
+solid

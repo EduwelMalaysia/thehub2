@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HUB - Muar's New Centre</title>
+    <!-- Use the new separated CSS file -->
+    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Preload map image -->
+    <link rel="preload" as="image" href="templates/images/Overall%20aerial%20view%2013112025.jpg">
+</head>
+
+<body>
+    <!-- Fake scroll container to drive the zoom animation -->
+    <div class="fake-scroll">
+        <div class="scroll-height"></div>
+    </div>
+
+    <!-- Fixed Navigation -->
+    <section class="main-container">
+        <header class="site-header">
+            <div class="logo-box">
+                <img loading="lazy" src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo" class="logo">
+            </div>
+
+            <nav class="main-nav">
+                <ul id="nav">
+                    <li><a href="#concept">Concept</a></li>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#happening">News</a></li>
+                    <li><a href="#location">Location</a></li>
+                    <li><a href="#developer-contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="register-btn-container">
+                <a href="#register" class="register-btn">
+                    LEASE NOW
+                </a>
+            </div>
+
+            <button class="menu-toggle" aria-expanded="false" aria-controls="nav">
+                <i class="fa fa-bars"></i>
+            </button>
+        </header>
+    </section>
+
+    <!-- 3D Scene / Gallery for Animation -->
+    <section class="scene">
+        <div class="gallery">
+            <div class="gallery-item item-1"></div>
+            <div class="gallery-item item-2"></div>
+            <div class="gallery-item item-3"></div>
+            <div class="gallery-item item-4"></div>
+            <div class="gallery-item item-5" id="target-item"></div> <!-- Start View -->
+            <div class="gallery-item item-6"></div>
+            <div class="gallery-item item-7"></div>
+            <div class="gallery-item item-8"></div>
+            <div class="gallery-item item-9"></div>
+        </div>
+    </section>
+
+        <section class="boxing">
+        
+        <!-- Header / Intro -->
+        <section class="content-1-wrap" id="concept">
+            <div class="content-1">
+                <h2>muar's new centre of businesses & lifestyle</h2>
+                <h3>a beacon of sustainability</h3>
+                <p>THE HUB is an exciting, multi-component development that features innovative urban planning and
+                    design,
+                    carefully considering the needs of the community and businesses with equal measure. By incorporating
+                    green spaces, pedestrian-friendly pathways, and seamless connectivity, THE HUB fosters a lively,
+                    interconnected atmosphere that encourages social interaction and economic growth.</p>
+                <a href="templates/The Hub Booklet_rev7.pdf" class="download-btn" download>
+                    <i class="fa-solid fa-download"></i> Download Floor Plans (Blocks A-I)
+                </a>
+            </div>
+        </section>
+
+        <section class="background-pic1">
+            <img fetchpriority="high" loading="lazy" src="templates/images/Component 20 – 2.png" alt="Banner"
+                class="banner-bg2" />
+        </section>
+
+        <!-- Why Move Section -->
+        <section class="why-hub-section">
+            <div class="why-hub-title">
+                <h2>Why Move</h2>
+                <h2>Your Business to THE HUB</h2>
+            </div>
+
+            <div class="why-hub-grid">
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/location.png" alt="Location">
+                    </div>
+                    <h3>Strategic Location</h3>
+                    <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
+                </div>
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/footfall.png" alt="Footfall">
+                    </div>
+                    <h3>Footfall</h3>
+                    <p>Over 200,000 population within 10km+ regional catchment</p>
+                </div>
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/film.png" alt="Cinema">
+                    </div>
+                    <h3>1<sup>st</sup> Cinema</h3>
+                    <p>1<sup>st</sup> Cinema in Muar, 7 halls with 700 seats</p>
+                </div>
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/lifestyle.png" alt="Lifestyle">
+                    </div>
+                    <h3>Lifestyle</h3>
+                    <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
+                </div>
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/prestige.png" alt="Prestige">
+                    </div>
+                    <h3>Prestige</h3>
+                    <p>A premium image for brands seeking credibility, stability, and visibility</p>
+                </div>
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/parking.png" alt="Parking">
+                    </div>
+                    <h3>Parking</h3>
+                    <p>Estimated 950 Carparks & 450 motorcycle parking lots</p>
+                </div>
+
+                <div class="why-hub-card">
+                    <div class="icon-box">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/safety.png" alt="Safety">
+                    </div>
+                    <h3>Safety</h3>
+                    <p>CCTV-monitored, 24/7 security with professional guards on duty</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="philosophy-section">
+            <div class="philosophy-header">
+                <h3 class="sub-title">The Philosophy</h3>
+                <h2>Redefining Muar’s Skyline</h2>
+                <div class="divider-line"></div>
+                <p class="philosophy-desc">
+                    The Hub is not just an address; it is a destination. We are redefining the commercial landscape by
+                    introducing Muar’s first fully managed, safe, and lifestyle-centric business park. Designed for the
+                    modern entrepreneur, The Hub bridges the gap between commerce and community. It is a place where
+                    businesses grow, families gather, and lifestyles are elevated.
+                </p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-image">
+                        <img src="templates/images/The Hub - Open Plaza.jpg" alt="Curated Synergy">
+                    </div>
+                    <div class="pillar-content">
+                        <h4>Curated Synergy</h4>
+                        <p>A lease-only ecosystem ensuring a premium mix of retail, wellness, and office tenants.</p>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-image">
+                        <img src="templates/images/The-Hub-Entrance-Statement.jpg" alt="Curated Synergy">
+                    </div>
+                    <div class="pillar-content">
+                        <h4>Professionally Managed</h4>
+                        <p>Gated, guarded, and maintained by YKL Capital for absolute peace of mind.</p>
+                    </div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-image">
+                        <img src="templates/images/The_HUB_roof_top_v3.png" alt="Curated Synergy">
+                    </div>
+                    <div class="pillar-content">
+                        <h4>Vibrant Lifestyle</h4>
+                        <p>From rooftop decks to the cinema, we bring energy to your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE SITE PLAN SECTION -->
+        <section id="overview">
+            <div class="sticky-wrapper">
+                <div class="map-frame">
+                    <img class="siteplan-img" src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan Map" decoding="async">
+
+                    <!-- Markers Container (Populated by JS) -->
+                    <div id="markers-container"></div>
+
+                    <!-- Legend -->
+                    <div class="siteplan-legend">
+                        <div class="legend-item">
+                            <span class="legend-box" style="background: #20A2DC; color: #20A2DC"></span>
+                            <span class="legend-label">Prime Square</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-box" style="background: #83BC41; color: #83BC41"></span>
+                            <span class="legend-label">Central Walk</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-box" style="background: #E11F27; color: #E11F27"></span>
+                            <span class="legend-label">Merchant Bay</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-box" style="background: #662E86; color: #662E86"></span>
+                            <span class="legend-label">The Hub Cineplex</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-box" style="background: #E22C7C; color: #E22C7C"></span>
+                            <span class="legend-label">Parkfront Avenue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section class="happenings-section fade-on-scroll" id="happening">
+
+            <div class="pulse-header">
+                <h3 class="sub-title">News & Updates</h3>
+                <h2>The Pulse</h2>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="news-scroller">
+                <div class="news-track">
+
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img fetchpriority="high" loading="lazy"
+                                src="templates/images/a) YKL Aerial - Choose this angle.jpeg" alt="Construction Site"
+                                onerror="this.src='https://placehold.co/600x400?text=Construction'">
+                            <span class="news-tag">Construction</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>Project Update: Site Progress Q4 2025</h3>
+                            <p>Shaping the future of Muar. See the latest milestones as we lay the foundation for the
+                                region's biggest hub.</p>
+                            <a href="#" class="read-more">Read Update <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img fetchpriority="high" loading="lazy" src="templates/images/handshake.jpg"
+                                alt="Partnership" onerror="this.src='https://placehold.co/600x400?text=Partnership'">
+                            <span class="news-tag">Coming Soon</span>
+                        </div>
+                        <div class="news-content">
+                            <h3>Official LOI Signing Ceremony</h3>
+                            <p>Securing the future with key anchor tenants. A landmark partnership that brings premium
+                                brands to Muar.</p>
+                            <a href="#" class="read-more">View Gallery <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section class="location fade-on-scroll" id="location">
+            <div class="location-container">
+
+                <div class="location-map-visual">
+                    <a href="#" class="open-map-trigger" id="open-full-map">
+                        <img fetchpriority="high" loading="lazy" src="templates/images/location_building - Edited.png"
+                            alt="Map Visual">
+                        <i class="fa fa-search-plus magnifier-icon"></i>
+                    </a>
+                </div>
+
+                <div class="location-details-wrapper">
+
+                    <div class="location-details">
+                        <h1 class="loc-header">We Are Here</h1>
+                        <p class="loc-body-copy">Located just 4km from Muar town along the AMJ Highway. We are
+                            positioned to
+                            serve a catchment of over 200,000 residents and the nearby EduHub Pagoh.</p>
+                    </div>
+
+                    <div class="location-markers-grid">
+
+                        <div class="marker-card">
+                            <i class="fa fa-road"></i>
+                            <h3>Access</h3>
+                            <p>AMJ Highway (Direct Frontage)</p>
+                        </div>
+
+                        <div class="marker-card">
+                            <i class="fa fa-graduation-cap"></i>
+                            <h3>Education</h3>
+                            <p>EduHub Pagoh (UTHM, IIUM)</p>
+                        </div>
+
+                        <div class="marker-card">
+                            <i class="fa fa-industry"></i>
+                            <h3>Industry</h3>
+                            <p>Muar Furniture Hub (800+ Factories)</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Register Section -->
+    <section class="register-container fade-on-scroll" id="register">
+        <div class="register-card">
+            <h5 class="sub-title">contact</h5>
+            <h2>secure your space</h2>
+            <h3>be part of muar's premier business ecosystem</h3>
+
+            <form>
+
+                <div class="grid-2">
+                    <div class="form-group icon-input">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Full Name *" required>
+                    </div>
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-phone"></i>
+                        <input type="tel" placeholder="Contact Number *" required>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group icon-input">
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" placeholder="Email Address *" required>
+                    </div>
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-clock"></i>
+                        <select required>
+                            <option disabled selected>Preferred Time to Contact *</option>
+                            <option>Morning (9:00 AM – 12:00 PM)</option>
+                            <option>Lunch Hour (12:00 PM – 2:00 PM)</option>
+                            <option>Afternoon (2:00 PM – 6:00 PM)</option>
+                            <option>After Working Hours</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group icon-input">
+                        <i class="fa fa-building"></i>
+                        <input type="text" placeholder="Company / Brand Name" required>
+                    </div>
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-briefcase"></i>
+                        <select required>
+                            <option disabled selected>Nature of Business *</option>
+                            <option>Food & Beverage (F&B)</option>
+                            <option>Retail & Fashion</option>
+                            <option>Health, Beauty & Wellness</option>
+                            <option>Corporate Office / Coworking</option>
+                            <option>Entertainment / Leisure</option>
+                            <option>Services</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h4 class="form-section-title">Requirement Details *</h4>
+                <div class="grid-2">
+                    <div class="form-group icon-input">
+                        <i class="fa fa-map-marked-alt"></i>
+                        <select id="select-zone" required>
+                            <option value="" disabled selected>Select Zone *</option>
+                            <option value="prime-square">Prime Square</option>
+                            <option value="merchant-bay">Merchant Bay</option>
+                            <option value="central-walk">Central Walk</option>
+                            <option value="parkfront-avenue">Parkfront Avenue (Drive Thru)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group icon-input">
+                        <i class="fa fa-building"></i>
+                        <select id="select-block" required disabled>
+                            <option value="" disabled selected>Select Block *</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group full-width icon-input" style="grid-column: span 2;">
+                        <i class="fa fa-layer-group"></i>
+                        <select id="select-level" required disabled>
+                            <option value="" disabled selected>Select Level/Unit *</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width icon-input">
+                    <i class="fa fa-bullhorn"></i>
+                    <select required>
+                        <option disabled selected>How did you hear about us?</option>
+                        <option>Social Media (Facebook/Instagram)</option>
+                        <option>Search Engine (Google)</option>
+                        <option>Advertisement</option>
+                        <option>Word of Mouth / Referral</option>
+                        <option>Agent</option>
+                    </select>
+                </div>
+
+                <label class="full-width" style="text-align: left; font-size:14px; line-height:1.5;">
+                    <input type="checkbox" style="width:auto; margin-right:8px;" required>
+                    I consent to the collection and processing of my personal data by YKL Capital Sdn Bhd for marketing
+                    and leasing purposes.
+                </label>
+
+                <button class="submit-btn">Submit Enquiry <i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section>
+
+<section class="developer-contact-section fade-on-scroll" id="developer-contact">
+    <div class="dev-contact-container">
+        
+        <!-- Left Column: Developer Information -->
+        <div class="dev-info-col">
+            <h3 class="sub-title">YKL CAPITAL SDN BHD</h3>
+            <h2>Built With Integrity</h2>
+            <div class="divider-line"></div>
+            <p>
+                With decades of experience in heavy industry and engineering, YKL Group brings a legacy of precision
+                and reliability to property development. We are committed to building not just structures, but
+                communities. As a developer with integrity, we ensure The Hub remains a sustainable, well-managed
+                asset that drives economic growth for Muar.
+            </p>
+        </div>
+
+        <!-- Right Column: Logo & Contact Details -->
+        <div class="dev-contact-col">
+            <div class="developer-logo-wrap">
+                <img fetchpriority="high" loading="lazy" src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital Corporate" />
+            </div>
+
+            <div class="contact-wrap">
+                <h4>Contact Us</h4>
+                <ul class="contact-list light">
+                    <li>
+                        <span class="contact-icon"><i class="fa-solid fa-map-pin"></i></span>
+                        <div class="contact-info-text">
+                            <span class="contact-title">Office Address</span>
+                            <span class="contact-detail">YKL Capital Sdn Bhd Lot 663, Batu 10, Kampung Paya Panjang,
+                                Bukit Pasir, 84300 Muar, Johor.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="contact-icon"><i class="fa-solid fa-phone-volume"></i></span>
+                        <div class="contact-info-text">
+                            <span class="contact-title">Contact Numbers</span>
+                            <span class="contact-detail">012-727 7575 | 012-727 7979</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="contact-icon"><i class="fa-solid fa-globe"></i></span>
+                        <div class="contact-info-text">
+                            <span class="contact-title">Website</span>
+                            <span class="contact-detail">www.yklcapital.com.my</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+    <footer>
+        <p>© 2025 The Hub @ Muar Business Park. All Rights Reserved.</p>
+
+    </footer>
+
+            <!-- Floating Buttons -->
+        <div class="floating-container">
+            <a href="https://wa.me/60127277979" target="_blank" class="floating-btn whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+
+            <a href="https://www.waze.com/ul?q=Lot+663%2C+Batu+10%2C+Kampung+Paya+Panjang+Bukit+Pasir%2C+84300+Muar%2C+Johor&navigate=yes"
+                target="_blank" class="floating-btn waze-btn">
+                <i class="fa-brands fa-waze"></i>
+            </a>
+
+            <button class="floating-btn scroll-btn" onclick="scrollToTop()">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+        </div>
+        
+    </section>
+
+    <!-- Modal for Map -->
+    <div id="modal">
+        <div id="modal-close">&times;</div>
+        <img id="modal-img" src="" alt="Expanded View" loading="lazy" decoding="async">
+    </div>
+
+    <script>
+        // --- INTERACTIVE MAP LOGIC ---
+        const MARKERS = [
+            // ZONE: HUB (0-20%) -> Cineplex, Parkfront
+            { id: 'cineplex', label: 'Cineplex', zone: 'hub', top: 45, left: 35, img: 'templates/images/The_HUB_cinema2.png' },
+            { id: 'parkfront', label: 'Parkfront Avenue', zone: 'hub', top: 65, left: 30, img: 'templates/images/Drive-Thru.jpg' },
+
+            // ZONE: PRIME (20-40%) -> Block A, Bx
+            { id: 'block-a', label: 'Block A', zone: 'prime', top: 55, left: 54, img: 'templates/images/The_HUB_office2_Extend.png' },
+            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 75, img: 'templates/images/The_HUB_hotel2_V2.png' },
+
+            // ZONE: CENTRAL (40-60%) -> Buildings A7, F, D, E, G, H
+            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 45, left: 55, img: 'templates/images/block-A7-preview.png' },
+            { id: 'block-f', label: 'Block F', zone: 'central', top: 46, left: 72, img: 'templates/images/block-F-preview.png' },
+            { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, img: 'templates/images/block-D-preview.png' },
+            { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, img: 'templates/images/block-E-preview.png' },
+            { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 66.5, img: 'templates/images/block-G-preview.png' },
+            { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, img: 'templates/images/block-H-preview.png' },
+
+            // ZONE: PARKS (60-80%) -> Victoria, Hydora, Jubilee, Starview
+            { id: 'victoria-park', label: 'Victoria Park', zone: 'parks', top: 40, left: 51, img: 'templates/images/The-HUB-Victoria-Park-View1.jpg' },
+            { id: 'hydora-park', label: 'Hydora Park', zone: 'parks', top: 40, left: 58, img: 'templates/images/Hydora-Park.jpg' },
+            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'parks', top: 40, left: 68, img: 'templates/images/children-playground.jpg' },
+            { id: 'starview-park', label: 'Starview Park', zone: 'parks', top: 40, left: 74, img: 'templates/images/Starview-Park.jpg' },
+
+            // ZONE: MERCHANT (80-100%) -> Block I
+            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, img: 'templates/images/block-I.png' },
+        ];
+
+        // Init Markers
+        const markersContainer = document.getElementById('markers-container');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalClose = document.getElementById('modal-close');
+
+        MARKERS.forEach(m => {
+            const el = document.createElement('div');
+            el.className = 'marker';
+            el.dataset.zone = m.zone; 
+            el.style.top = m.top + '%';
+            el.style.left = m.left + '%';
+
+            el.innerHTML = `
+                <div class="marker-line"></div>
+                <div class="marker-content">
+                    <div class="marker-label">${m.label}</div>
+                    <div class="marker-image-wrapper">
+                        <img src="${m.img}" alt="${m.label}" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            `;
+
+            const imgWrapper = el.querySelector('.marker-image-wrapper');
+            imgWrapper.addEventListener('click', () => {
+                if (el.classList.contains('active')) {
+                    modalImg.src = m.img;
+                    modal.classList.add('open');
+                }
+            });
+
+            markersContainer.appendChild(el);
+        });
+
+        modal.addEventListener('click', () => modal.classList.remove('open'));
+        modalClose.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            modal.classList.remove('open');
+        });
+
+        // Sticky Map Scroll Logic
+        window.addEventListener('scroll', () => {
+            const section = document.getElementById('overview');
+            if (!section) return;
+
+            const rect = section.getBoundingClientRect();
+            // Calculation for sticky scroll progress
+            const scrollDistance = section.offsetHeight - window.innerHeight;
+            const scrollTop = -rect.top;
+            
+            let progress = scrollTop / scrollDistance;
+            
+            // Only activate if we are somewhat inside the section
+            // Allow small buffer so markers don't disappear instantly
+            if (progress < -0.1 || progress > 1.1) {
+                // remove all if far away
+                document.querySelectorAll('.marker.active').forEach(el => el.classList.remove('active'));
+                return;
+            }
+
+            progress = Math.max(0, Math.min(1, progress));
+
+            let activeZone = null;
+            // 5 Zones split evenly (20% each)
+            if (progress >= 0.0 && progress < 0.2) activeZone = 'hub';
+            else if (progress >= 0.2 && progress < 0.4) activeZone = 'prime';
+            else if (progress >= 0.4 && progress < 0.6) activeZone = 'central';
+            else if (progress >= 0.6 && progress < 0.8) activeZone = 'parks';
+            else if (progress >= 0.8) activeZone = 'merchant';
+
+            document.querySelectorAll('.marker').forEach(el => {
+                if (el.dataset.zone === activeZone) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+        });
+
+
+        // --- EXISTING PAGE SCRIPTS ---
+        window.addEventListener('scroll', function () {
+            var scrollBtn = document.querySelector('.scroll-btn');
+            if (window.scrollY > 200) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            const duration = 2000;
+            const start = window.scrollY;
+            const startTime = performance.now();
+
+            function scroll(currentTime) {
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const ease = progress < 0.5
+                    ? 2 * progress * progress
+                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+                window.scrollTo(0, start * (1 - ease));
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(scroll);
+                }
+            }
+            requestAnimationFrame(scroll);
+        }
+
+        const animate = (selector, options = {}) => {
+            const elements = document.querySelectorAll(selector);
+            if (!elements.length) return;
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (options.stagger) {
+                            const children = entry.target.querySelectorAll(options.stagger);
+                            children.forEach((el, i) => {
+                                setTimeout(() => el.classList.add("reveal"), i * (options.delay || 100));
+                            });
+                        }
+                        entry.target.classList.add("reveal");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: options.threshold || 0.2 });
+
+            elements.forEach(el => observer.observe(el));
+        };
+
+        animate(".fade-on-scroll");
+        animate(".location-map-visual");
+        animate(".location-details-wrapper");
+        animate(".why-hub-card");
+        animate(".register-card", { stagger: ".grid-2, .form-group, label, .submit-btn", delay: 120 });
+        animate(".philosophy-header");
+        animate(".philosophy-section", { stagger: ".pillar-card", delay: 150 });
+
+    </script>
+</body>
+</html>

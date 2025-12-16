@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="top.css">
+</head>
+
+<body>
+
+    <div class="fake-scroll">
+        <div class="scroll-height"></div>
+    </div>
+
+    <section class="main-container">
+        <header class="site-header">
+            <div class="logo-box">
+                <img loading="lazy" src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo" class="logo">
+            </div>
+
+            <nav class="main-nav">
+                <ul id="nav">
+                    <li><a href="#concept">Concept</a></li>
+                    <li><a href="#layout">Layout</a></li>
+                    <li><a href="#happening">News</a></li>
+                    <li><a href="#location">Location</a></li>
+                    <li><a href="#developer">YKL Capital</a></li>
+                </ul>
+
+            </nav>
+            <div class="register-btn-container">
+                <a href="#register" class="register-btn">
+                    LEASE NOW
+                </a>
+            </div>
+
+            <button class="menu-toggle" aria-expanded="false" aria-controls="nav">
+                <i class="fa fa-bars"></i>
+            </button>
+        </header>
+    </section>
+
+    <section class="scene">
+        <div class="gallery">
+            <div class="gallery-item item-1"></div>
+            <div class="gallery-item item-2"></div>
+            <div class="gallery-item item-3"></div>
+            <div class="gallery-item item-4"></div>
+            <div class="gallery-item item-5" id="target-item"></div>
+            <div class="gallery-item item-6"></div>
+            <div class="gallery-item item-7"></div>
+            <div class="gallery-item item-8"></div>
+            <div class="gallery-item item-9"></div>
+        </div>
+    </section>
+
+    <section class="content-1-wrap" id="concept">
+        <div class="content-1">
+            <div class="intro">
+                <h2>muar's new centre of businesses & lifestyle</h2>
+                <h3>a beacon of sustainability</h3>
+                <p>THE HUB is an exciting, multi-component development that features innovative urban planning and
+                    design,
+                    carefully considering the needs of the community and businesses with equal measure. By incorporating
+                    green spaces, pedestrian-friendly pathways, and seamless connectivity, THE HUB fosters a lively,
+                    interconnected atmosphere that encourages social interaction and economic growth.</p>
+                <button class="btn-learn-more"><a href="#overview">more info &#8594;</a></button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const scrollBox = document.querySelector('.fake-scroll');
+        const scrollHeightDir = document.querySelector('.scroll-height');
+        const gallery = document.querySelector('.gallery');
+        const targetItem = document.getElementById('target-item');
+        const siteHeader = document.querySelector('.site-header');
+        const scene = document.querySelector('.scene');
+        const contentSection = document.querySelector('.content-1-wrap');
+
+        let metrics = {};
+        let currentScroll = 0;
+        let easedScroll = 0;
+
+        // The zoom phase lasts 3 screen heights
+        const ZOOM_DURATION = window.innerHeight * 3;   // zoom out
+        const HOLD_DURATION = window.innerHeight * 1;   // stay on full gallery
+        const CONTENT_DURATION = window.innerHeight * 1; // reveal content
+
+        const TOTAL_SCROLL =
+            ZOOM_DURATION +
+            HOLD_DURATION +
+            CONTENT_DURATION;
+
+        function measure() {
+            gallery.style.transform = 'none';
+            const vpW = window.innerWidth;
+            const vpH = window.innerHeight;
+            const tRect = targetItem.getBoundingClientRect();
+
+            const scaleX = vpW / tRect.width;
+            const scaleY = vpH / tRect.height;
+
+            metrics = {
+                offX: (tRect.left + tRect.width / 2) - (vpW / 2),
+                offY: (tRect.top + tRect.height / 2) - (vpH / 2),
+                targetScale: Math.max(scaleX, scaleY) + 0.1
+            };
+
+            // Calculate total scroll: Zoom Phase + Content Phase (1 screen height)
+            const totalHeight = ZOOM_DURATION + window.innerHeight;
+            scrollHeightDir.style.height = `${TOTAL_SCROLL}px`;
+
+        }
+
+        function animate() {
+            easedScroll += (currentScroll - easedScroll) * 0.08;
+
+            /* =========================
+               PHASE A — ZOOM OUT
+            ========================== */
+            const zoomProgress = Math.min(easedScroll / ZOOM_DURATION, 1);
+
+            const S = metrics.targetScale - (metrics.targetScale - 1) * zoomProgress;
+            const Tx = -metrics.offX * (1 - zoomProgress) * S;
+            const Ty = -metrics.offY * (1 - zoomProgress) * S;
+
+            gallery.style.transform = `translate3d(${Tx}px, ${Ty}px, 0) scale(${S})`;
+            gallery.style.opacity = 1;
+            // Ensure content is off-screen during zoom phase
+            contentSection.style.transform = `translate3d(0, 100vh, 0)`;
+
+            /* =========================
+               PHASE B — HOLD FULL GALLERY
+            ========================== */
+            const holdStart = ZOOM_DURATION;
+            const holdEnd = ZOOM_DURATION + HOLD_DURATION;
+
+            if (easedScroll >= holdStart && easedScroll <= holdEnd) {
+                gallery.style.transform = `translate3d(0, 0, 0) scale(1)`;
+                contentSection.style.transform = `translate3d(0, 100vh, 0)`;
+            }
+
+            /* =========================
+               PHASE C — CONTENT REVEAL
+            ========================== */
+            if (easedScroll > holdEnd) {
+                const contentProgress =
+                    Math.min((easedScroll - holdEnd) / CONTENT_DURATION, 1);
+
+                // Gallery fades out
+                gallery.style.opacity = 1 - contentProgress;
+
+                // Content slides up
+                const contentY = window.innerHeight * (1 - contentProgress);
+                contentSection.style.transform =
+                    `translate3d(0, ${contentY}px, 0)`;
+
+                // Scene moves up
+                scene.style.transform =
+                    `translate3d(0, ${-contentProgress * window.innerHeight}px, 0)`;
+
+                // 🔥 关键：content fully visible 后，scene 直接“退场”
+                if (contentProgress === 1) {
+                    scene.style.opacity = 0;
+                    scene.style.pointerEvents = 'none';
+                    scene.style.display = 'none';
+                    scrollBox.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    contentSection.style.transform = 'none';
+                } else {
+                    scene.style.opacity = 1;
+                    scene.style.pointerEvents = 'none'; // 保持不可交互
+                }
+            }
+
+
+            /* =========================
+               HEADER VISIBILITY
+            ========================== */
+            siteHeader.style.opacity =
+                easedScroll < ZOOM_DURATION * 0.1 || easedScroll > holdEnd
+                    ? 1
+                    : 0;
+
+            requestAnimationFrame(animate);
+        }
+
+        scrollBox.addEventListener('scroll', () => {
+            currentScroll = scrollBox.scrollTop;
+        }, { passive: true });
+
+        window.addEventListener('resize', measure);
+        window.addEventListener('load', () => {
+            measure();
+            scrollBox.scrollTop = 0;
+            // Initial state: push content down
+            contentSection.style.transform = `translate3d(0, 100vh, 0)`;
+            requestAnimationFrame(animate);
+        });
+    </script>
+</body>
+
+</html>
