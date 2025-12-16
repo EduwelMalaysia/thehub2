@@ -39,6 +39,9 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- Preload Critical Hero Image -->
+    <link rel="preload" as="image" href="templates/images/cover2.jpg">
+
     <style>
       /* Custom Scrollbar */
       ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -85,29 +88,30 @@
   <body class="bg-hub-bg text-hub-text font-sans antialiased overflow-x-hidden">
 
     <!-- 1. Background Gallery (Fixed) -->
-    <!-- Grid is w-screen h-screen. Removing gap and padding (p-0 gap-0) ensures 
-         that when scaled by 3, the center item (1/3 width, 1/3 height) 
-         perfectly fills the 100vw x 100vh viewport without showing edges or gaps. -->
+    <!-- Optimization: Only the center image (Item 5) loads immediately. 
+         Surrounding images use 'data-bg' and load via JS to prioritize LCP (Largest Contentful Paint). -->
     <div id="gallery-container" class="fixed inset-0 z-0 flex items-center justify-center bg-black overflow-hidden pointer-events-none perspective-1000">
       <div id="gallery-grid" class="grid grid-cols-3 grid-rows-3 gap-0 w-screen h-screen p-0 transform-style-3d will-change-transform origin-center transition-opacity duration-300" style="transform: scale(3);">
-        <!-- Item 1 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/The-HUB-Victoria-Park-View1.jpg');"></div>
-        <!-- Item 2 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/The_HUB_captial square_V2 copy.png');"></div>
-        <!-- Item 3 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/starview-park.png');"></div>
-        <!-- Item 4 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/The_HUB_cinema2.png');"></div>
-        <!-- Item 5 (Center - Initial View) -->
+        <!-- Item 1 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/The-HUB-Victoria-Park-View1.jpg')"></div>
+        <!-- Item 2 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/The_HUB_captial square_V2 copy.png')"></div>
+        <!-- Item 3 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/starview-park.png')"></div>
+        <!-- Item 4 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/The_HUB_cinema2.png')"></div>
+        
+        <!-- Item 5 (Center - Initial View - IMMEDIATE LOAD) -->
         <div class="w-full h-full bg-cover bg-center shadow-2xl z-10" style="background-image: url('templates/images/cover2.jpg');"></div>
-        <!-- Item 6 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/The-HUB-Central-Walk.jpg');"></div>
-        <!-- Item 7 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/Hydora-Park.jpg');"></div>
-        <!-- Item 8 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/Drive-Thru.jpg');"></div>
-        <!-- Item 9 -->
-        <div class="w-full h-full bg-cover bg-center shadow-2xl" style="background-image: url('templates/images/The-HUB-Children-Playground.jpg');"></div>
+        
+        <!-- Item 6 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/The-HUB-Central-Walk.jpg')"></div>
+        <!-- Item 7 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/Hydora-Park.jpg')"></div>
+        <!-- Item 8 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/Drive-Thru.jpg')"></div>
+        <!-- Item 9 (Deferred) -->
+        <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500" data-bg="url('templates/images/The-HUB-Children-Playground.jpg')"></div>
       </div>
       <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
     </div>
@@ -170,7 +174,7 @@
         </section>
         <section class="w-full relative overflow-hidden flex justify-center items-center">
              <div class="w-full relative">
-                 <img src="templates/images/Component20.png" alt="Banner" class="w-full h-full object-contain bg-hub-bg"/>
+                 <img loading="lazy" src="templates/images/Component20.png" alt="Banner" class="w-full h-full object-contain bg-hub-bg"/>
             </div>
         </section>
 
@@ -183,31 +187,31 @@
                 </div>
                 <div class="flex flex-wrap justify-center gap-x-12 gap-y-16">
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                        <div class="mb-7 inline-block p-0"><img src="templates/images/location.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/location.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Strategic Location</h3><p class="text-[17px] leading-relaxed opacity-90">4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
                     </div>
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                         <div class="mb-7 inline-block p-0"><img src="templates/images/footfall.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/footfall.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Footfall</h3><p class="text-[17px] leading-relaxed opacity-90">Over 200,000 population within 10km+ regional catchment</p>
                     </div>
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                         <div class="mb-7 inline-block p-0"><img src="templates/images/film.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/film.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">1st Cinema</h3><p class="text-[17px] leading-relaxed opacity-90">1st Cinema in Muar, 7 halls with 700 seats</p>
                     </div>
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                         <div class="mb-7 inline-block p-0"><img src="templates/images/lifestyle.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/lifestyle.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Lifestyle</h3><p class="text-[17px] leading-relaxed opacity-90">Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
                     </div>
                      <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                         <div class="mb-7 inline-block p-0"><img src="templates/images/prestige.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/prestige.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Prestige</h3><p class="text-[17px] leading-relaxed opacity-90">A premium image for brands seeking credibility, stability, and visibility</p>
                     </div>
                      <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                         <div class="mb-7 inline-block p-0"><img src="templates/images/parking.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/parking.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Parking</h3><p class="text-[17px] leading-relaxed opacity-90">Estimated 950 Carparks & 450 motorcycle parking lots</p>
                     </div>
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
-                         <div class="mb-7 inline-block p-0"><img src="templates/images/safety.png" class="h-16 w-auto opacity-90 mx-auto"></div>
+                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/safety.png" class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Safety</h3><p class="text-[17px] leading-relaxed opacity-90">CCTV-monitored, 24/7 security with professional guards on duty</p>
                     </div>
                 </div>
@@ -227,15 +231,15 @@
             </div>
             <div class="flex flex-wrap justify-center gap-8 max-w-[1200px] mx-auto">
                 <div class="flex-1 min-w-[300px] max-w-[350px] bg-white rounded-3xl overflow-hidden shadow-lg hover:-translate-y-2 transition-all">
-                    <div class="h-[200px] overflow-hidden"><img src="templates/images/The Hub - Open Plaza.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"></div>
+                    <div class="h-[200px] overflow-hidden"><img loading="lazy" src="templates/images/The Hub - Open Plaza.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"></div>
                     <div class="p-6"><h4 class="text-[28px] font-semibold mb-4 text-[#333]">Curated Synergy</h4><p class="text-[18px] text-hub-text-light">A lease-only ecosystem ensuring a premium mix.</p></div>
                 </div>
                 <div class="flex-1 min-w-[300px] max-w-[350px] bg-white rounded-3xl overflow-hidden shadow-lg hover:-translate-y-2 transition-all">
-                    <div class="h-[200px] overflow-hidden"><img src="templates/images/The-Hub-Entrance-Statement.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"></div>
+                    <div class="h-[200px] overflow-hidden"><img loading="lazy" src="templates/images/The-Hub-Entrance-Statement.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"></div>
                     <div class="p-6"><h4 class="text-[28px] font-semibold mb-4 text-[#333]">Professionally Managed</h4><p class="text-[18px] text-hub-text-light">Gated, guarded, and maintained by YKL Capital.</p></div>
                 </div>
                  <div class="flex-1 min-w-[300px] max-w-[350px] bg-white rounded-3xl overflow-hidden shadow-lg hover:-translate-y-2 transition-all">
-                    <div class="h-[200px] overflow-hidden"><img src="templates/images/The_HUB_roof_top_v3.png" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"></div>
+                    <div class="h-[200px] overflow-hidden"><img loading="lazy" src="templates/images/The_HUB_roof_top_v3.png" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700"></div>
                     <div class="p-6"><h4 class="text-[28px] font-semibold mb-4 text-[#333]">Vibrant Lifestyle</h4><p class="text-[18px] text-hub-text-light">From rooftop decks to the cinema, we bring energy to your doorstep.</p></div>
                 </div>
             </div>
@@ -244,7 +248,7 @@
         <!-- Site Plan Section -->
         <section id="overview" class="relative h-[400vh] bg-gradient-to-b from-[#4d5c93] to-[#1f2740]">
             <div class="sticky top-0 h-screen w-full overflow-hidden flex justify-center items-center bg-black">
-                <img src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan" class="w-full h-full object-cover opacity-60" />
+                <img loading="lazy" src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan" class="w-full h-full object-cover opacity-60" />
                 
                 <!-- Markers Container -->
                 <div id="markers-container" class="absolute inset-0 w-full h-full max-w-[1920px] mx-auto pointer-events-none">
@@ -277,12 +281,12 @@
             <div class="w-full overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory">
                 <div class="flex gap-8 px-[5%] w-max">
                     <div class="relative w-[350px] bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left snap-center group">
-                        <div class="h-[220px] w-full relative overflow-hidden"><img src="templates/images/a) YKL Aerial - Choose this angle.jpeg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" /></div>
+                        <div class="h-[220px] w-full relative overflow-hidden"><img loading="lazy" src="templates/images/a) YKL Aerial - Choose this angle.jpeg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" /></div>
                          <div class="absolute top-5 left-5 bg-hub-light-gold text-white px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md">Construction</div>
                         <div class="p-8"><h3 class="text-[26px] font-semibold text-[#333] mb-4">Site Progress Q4</h3><p class="text-[18px] text-[#777] mb-6">Shaping the future of Muar.</p></div>
                     </div>
                     <div class="relative w-[350px] bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left snap-center group">
-                        <div class="h-[220px] w-full relative overflow-hidden"><img src="templates/images/handshake.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" /></div>
+                        <div class="h-[220px] w-full relative overflow-hidden"><img loading="lazy" src="templates/images/handshake.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" /></div>
                         <div class="absolute top-5 left-5 bg-hub-light-gold text-white px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md">Coming Soon</div>
                         <div class="p-8"><h3 class="text-[26px] font-semibold text-[#333] mb-4">Signing Ceremony</h3><p class="text-[18px] text-[#777] mb-6">Securing the future with key anchor tenants.</p></div>
                     </div>
@@ -332,8 +336,8 @@
         </section>
 
         <!-- Register Section (UPDATED) -->
-        <section id="register" class="register-container w-full py-20 px-[20px] flex justify-center items-center bg-white">
-            <div class="register-card w-[70%] p-[40px_50px] text-[#536296] text-center uppercase">
+        <section id="register" class="register-container w-full py-20 px-[20px] flex justify-center items-center bg-hub-bg">
+            <div class="register-card w-[70%] p-[40px_50px] text-[#536296] text-center uppercase bg-white rounded-lg shadow-xl">
                 <h5 class="sub-title text-[24px] tracking-[3px] text-hub-light-gold font-extralight uppercase mb-2">contact</h5>
                 <h2 class="text-[72px] font-semibold m-0 leading-none">secure your space</h2>
                 <h3 class="text-[30px] font-extralight mt-2 mb-6">be part of muar's premier business ecosystem</h3>
@@ -449,7 +453,7 @@
         <section id="developer-contact" class="py-20 bg-white text-hub-text">
             <div class="w-[90%] max-w-[1200px] mx-auto grid md:grid-cols-2 gap-x-20 gap-y-12 items-start">
                 <div class="md:col-span-2 text-center border-b border-black/10 pb-10 mb-5">
-                    <img src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital" class="inline-block h-auto max-w-[300px]" />
+                    <img loading="lazy" src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital" class="inline-block h-auto max-w-[300px]" />
                 </div>
                 <div>
                     <h3 class="text-3xl tracking-[3px] text-hub-light-gold font-extralight uppercase mb-4">YKL CAPITAL SDN BHD</h3>
@@ -516,6 +520,21 @@
       const overviewSection = document.getElementById('overview');
       const markersContainer = document.getElementById('markers-container');
 
+      // --------------------------------------------------------
+      // OPTIMIZATION: Lazy Load Gallery Backgrounds
+      // --------------------------------------------------------
+      window.addEventListener('load', () => {
+        // We wait for the 'load' event (entire page + initial assets) 
+        // before requesting the 8 surrounding images.
+        const lazyBgs = document.querySelectorAll('.lazy-gallery-bg');
+        lazyBgs.forEach(div => {
+            const src = div.getAttribute('data-bg');
+            if(src) {
+                div.style.backgroundImage = src;
+            }
+        });
+      });
+
       // Site Plan Data
       const MARKERS = [
         { id: 'cineplex', label: 'Cineplex', zone: 'hub', top: 45, left: 35, img: 'templates/images/The_HUB_cinema2.png' },
@@ -547,7 +566,7 @@
              <div class="content absolute bottom-0 left-[-75px] w-[150px] flex flex-col items-center transition-all duration-500 ease-out translate-y-0">
                 <div class="bg-black/60 text-white px-3 py-1.5 rounded text-[13px] font-bold uppercase mb-2 whitespace-nowrap backdrop-blur-sm border border-white/10 shadow-lg relative z-10">${m.label}</div>
                 <div class="thumb w-[140px] bg-[#222] border-2 border-white rounded-lg overflow-hidden shadow-2xl transition-all duration-500 origin-top pointer-events-auto cursor-pointer relative z-20 h-0 opacity-0" onclick="openModal('${m.img}')">
-                    <img src="${m.img}" class="w-full h-full object-cover">
+                    <img loading="lazy" src="${m.img}" class="w-full h-full object-cover">
                 </div>
              </div>
           `;
