@@ -1,325 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="try.css">
-</head>
-<body>
-            <!-- INTERACTIVE SITE PLAN SECTION -->
-        <section id="overview">
-            <div class="sticky-wrapper">
-                <div class="map-frame">
-                    <img class="siteplan-img" src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan Map" decoding="async">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+        <!-- Philosophy Section -->
+        ><section id="overview"
+            class="relative h-screen w-full bg-gradient-to-b from-[#4d5c93] to-[#1f2740] overflow-hidden font-sans">
 
-                    <!-- Markers Container (Populated by JS) -->
-                    <div id="markers-container"></div>
+            <!-- Background -->
+            <div class="absolute inset-0 w-full h-full flex justify-center items-center">
+                <!-- Background Image -->
+                <img src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan"
+                    class="w-full h-full object-cover">
 
-                    <!-- Legend -->
-                    <div class="siteplan-legend">
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #20A2DC; color: #20A2DC"></span>
-                            <span class="legend-label">Prime Square</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #83BC41; color: #83BC41"></span>
-                            <span class="legend-label">Central Walk</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #E11F27; color: #E11F27"></span>
-                            <span class="legend-label">Merchant Bay</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #662E86; color: #662E86"></span>
-                            <span class="legend-label">The Hub Cineplex</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #E22C7C; color: #E22C7C"></span>
-                            <span class="legend-label">Parkfront Avenue</span>
-                        </div>
-                    </div>
+                <!-- Markers Container -->
+                <div id="markers-container"
+                    class="absolute inset-0 w-full h-full max-w-[1920px] mx-auto pointer-events-none">
+                    <!-- Markers injected via JS -->
                 </div>
             </div>
+
+            <!-- Header Overlay -->
+            <div class="absolute top-0 left-0 w-full pt-16 pb-24 bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none z-30 flex flex-col items-center justify-start transition-all duration-500">
+                
+                <h4 class="text-hub-light-gold text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-md animate-fadeIn opacity-0" style="animation-delay: 0.1s; animation-fill-mode: forwards;">Master Plan</h4>
+                
+                <h1 class="text-5xl md:text-7xl text-white font-bold uppercase tracking-widest mb-5 drop-shadow-2xl animate-fadeIn opacity-0" style="animation-delay: 0.3s; animation-fill-mode: forwards;">
+                    Overview
+                </h1>
+                
+                <div class="w-24 h-1 bg-gradient-to-r from-hub-light-gold to-[#e09f6d] rounded-full mb-8 animate-fadeIn opacity-0" style="animation-delay: 0.5s; animation-fill-mode: forwards;"></div>
+
+                <!-- Help Text -->
+                <div id="help-text" class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm md:text-base font-medium tracking-wide shadow-xl animate-fadeIn opacity-0 transition-all duration-300" style="animation-delay: 0.7s; animation-fill-mode: forwards;">
+                    Select a zone to expand details
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div id="legend-container"
+                class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-wrap gap-3 sm:gap-5 justify-center bg-[#141414d9] px-4 sm:px-8 py-3 sm:py-4 rounded-3xl backdrop-blur-md border border-white/10 shadow-2xl z-50 w-[95%] sm:w-auto transition-all duration-300">
+                <!-- Legend items injected via JS -->
+            </div>
+
+            <!-- Modal -->
+            <div id="modal"
+                class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 sm:p-10 cursor-zoom-out opacity-0 transition-opacity duration-300"
+                onclick="closeModal()">
+                <div class="absolute top-4 right-6 text-white text-5xl cursor-pointer opacity-80 hover:opacity-100">
+                    &times;</div>
+                <img id="modal-img" src=""
+                    class="max-w-full max-h-full rounded-lg border border-[#333] shadow-[0_0_50px_black] object-contain scale-95 transition-transform duration-300"
+                    onclick="event.stopPropagation()">
+            </div>
+
         </section>
-    <script>
-        // ==========================================
-        //  ZOOM ANIMATION LOGIC
-        // ==========================================
-        const scrollBox = document.querySelector('.fake-scroll');
-        const scrollHeightDir = document.querySelector('.scroll-height');
-        const gallery = document.querySelector('.gallery');
-        const targetItem = document.getElementById('target-item');
-        const siteHeader = document.querySelector('.site-header');
-        const scene = document.querySelector('.scene');
-        const mainContentWrapper = document.getElementById('main-content-wrapper');
-
-        let metrics = {};
-        let currentScroll = 0;
-        let easedScroll = 0;
-
-        // Configuration
-        const ZOOM_DURATION = window.innerHeight * 3;    // zoom out duration
-        const HOLD_DURATION = window.innerHeight * 1;    // hold full gallery
-        const REVEAL_DURATION = window.innerHeight * 1.5; // slide up content
-
-        const TOTAL_SCROLL_HEIGHT = ZOOM_DURATION + HOLD_DURATION + REVEAL_DURATION;
-
-        function measure() {
-            gallery.style.transform = 'none';
-            const vpW = window.innerWidth;
-            const vpH = window.innerHeight;
-            const tRect = targetItem.getBoundingClientRect();
-
-            const scaleX = vpW / tRect.width;
-            const scaleY = vpH / tRect.height;
-
-            metrics = {
-                // Calculate offset to center the target item
-                offX: (tRect.left + tRect.width / 2) - (vpW / 2),
-                offY: (tRect.top + tRect.height / 2) - (vpH / 2),
-                // Scale slightly larger than needed to ensure full coverage
-                targetScale: Math.max(scaleX, scaleY) + 0.05
-            };
-
-            scrollHeightDir.style.height = `${TOTAL_SCROLL_HEIGHT + window.innerHeight}px`;
-        }
-
-        function animateScrollLoop() {
-            easedScroll += (currentScroll - easedScroll) * 0.08;
-
-            // --- PHASE 1: ZOOM OUT ---
-            const zoomProgress = Math.min(Math.max(easedScroll / ZOOM_DURATION, 0), 1);
-            
-            // Interpolate scale from TargetScale -> 1
-            const S = metrics.targetScale - (metrics.targetScale - 1) * zoomProgress;
-            // Interpolate position from Offset -> 0
-            const Tx = -metrics.offX * (1 - zoomProgress) * S;
-            const Ty = -metrics.offY * (1 - zoomProgress) * S;
-
-            gallery.style.transform = `translate3d(${Tx}px, ${Ty}px, 0) scale(${S})`;
-            
-            // Reveal header partially through zoom
-            siteHeader.style.opacity = (easedScroll > ZOOM_DURATION * 0.2) ? 1 : 0;
-
-            // Keep content off-screen initially
-            mainContentWrapper.style.transform = `translate3d(0, 100vh, 0)`;
-
-            // --- PHASE 2: HOLD ---
-            const holdEnd = ZOOM_DURATION + HOLD_DURATION;
-
-            // --- PHASE 3: REVEAL CONTENT ---
-            if (easedScroll > holdEnd) {
-                const revealProgress = Math.min((easedScroll - holdEnd) / REVEAL_DURATION, 1);
-                
-                // Slide content up from 100vh to 0
-                const contentY = window.innerHeight * (1 - revealProgress);
-                mainContentWrapper.style.transform = `translate3d(0, ${contentY}px, 0)`;
-                
-                // Fade out gallery
-                gallery.style.opacity = 1 - revealProgress;
-                
-                // Move scene up slightly for parallax effect
-                scene.style.transform = `translate3d(0, ${-revealProgress * window.innerHeight * 0.5}px, 0)`;
-
-                // --- ANIMATION COMPLETE ---
-                if (revealProgress >= 0.99) {
-                    // Reset to normal document flow
-                    document.body.style.overflow = 'auto';
-                    document.documentElement.style.overflow = 'auto'; // Unlock HTML scroll too
-                    
-                    scrollBox.style.display = 'none';
-                    scene.style.display = 'none';
-                    mainContentWrapper.style.transform = 'none'; // Clear transform
-                    
-                    return; // Stop animation loop
-                }
-            } else {
-                gallery.style.opacity = 1;
-                scene.style.transform = `translate3d(0, 0, 0)`;
-            }
-
-            requestAnimationFrame(animateScrollLoop);
-        }
-
-        scrollBox.addEventListener('scroll', () => {
-            currentScroll = scrollBox.scrollTop;
-        }, { passive: true });
-
-        window.addEventListener('resize', measure);
-        
-        // Start
-        window.addEventListener('load', () => {
-            measure();
-            scrollBox.scrollTop = 0;
-            requestAnimationFrame(animateScrollLoop);
-        });
-
-
-        // ==========================================
-        //  INTERACTIVE MAP LOGIC
-        // ==========================================
-        const MARKERS = [
-            // ZONE: HUB
-            { id: 'cineplex', label: 'Cineplex', zone: 'hub', top: 45, left: 35, img: 'templates/images/The_HUB_cinema2.png' },
-            { id: 'parkfront', label: 'Parkfront Avenue', zone: 'hub', top: 65, left: 30, img: 'templates/images/Drive-Thru.jpg' },
-            // ZONE: PRIME
-            { id: 'block-a', label: 'Block A', zone: 'prime', top: 55, left: 54, img: 'templates/images/The_HUB_office2_Extend.png' },
-            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 75, img: 'templates/images/The_HUB_hotel2_V2.png' },
-            // ZONE: CENTRAL
-            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 45, left: 55, img: 'templates/images/block-A7-preview.png' },
-            { id: 'block-f', label: 'Block F', zone: 'central', top: 46, left: 72, img: 'templates/images/block-F-preview.png' },
-            { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, img: 'templates/images/block-D-preview.png' },
-            { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, img: 'templates/images/block-E-preview.png' },
-            { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 66.5, img: 'templates/images/block-G-preview.png' },
-            { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, img: 'templates/images/block-H-preview.png' },
-            // ZONE: PARKS
-            { id: 'victoria-park', label: 'Victoria Park', zone: 'parks', top: 40, left: 51, img: 'templates/images/The-HUB-Victoria-Park-View1.jpg' },
-            { id: 'hydora-park', label: 'Hydora Park', zone: 'parks', top: 40, left: 58, img: 'templates/images/Hydora-Park.jpg' },
-            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'parks', top: 40, left: 68, img: 'templates/images/children-playground.jpg' },
-            { id: 'starview-park', label: 'Starview Park', zone: 'parks', top: 40, left: 74, img: 'templates/images/Starview-Park.jpg' },
-            // ZONE: MERCHANT
-            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, img: 'templates/images/block-I.png' },
-        ];
-
-        const markersContainer = document.getElementById('markers-container');
-        const modal = document.getElementById('modal');
-        const modalImg = document.getElementById('modal-img');
-        const modalClose = document.getElementById('modal-close');
-
-        if(markersContainer) {
-            MARKERS.forEach(m => {
-                const el = document.createElement('div');
-                el.className = 'marker';
-                el.dataset.zone = m.zone; 
-                el.style.top = m.top + '%';
-                el.style.left = m.left + '%';
-
-                el.innerHTML = `
-                    <div class="marker-line"></div>
-                    <div class="marker-content">
-                        <div class="marker-label">${m.label}</div>
-                        <div class="marker-image-wrapper">
-                            <img src="${m.img}" alt="${m.label}" loading="lazy" decoding="async">
-                        </div>
-                    </div>
-                `;
-
-                const imgWrapper = el.querySelector('.marker-image-wrapper');
-                imgWrapper.addEventListener('click', () => {
-                    if (el.classList.contains('active')) {
-                        modalImg.src = m.img;
-                        modal.classList.add('open');
-                    }
-                });
-
-                markersContainer.appendChild(el);
-            });
-        }
-
-        if(modal) {
-            modal.addEventListener('click', () => modal.classList.remove('open'));
-            modalClose.addEventListener('click', (e) => {
-                e.stopPropagation(); 
-                modal.classList.remove('open');
-            });
-        }
-
-        // Sticky Map Scroll Logic
-        window.addEventListener('scroll', () => {
-            const section = document.getElementById('overview');
-            if (!section) return;
-
-            const rect = section.getBoundingClientRect();
-            const scrollDistance = section.offsetHeight - window.innerHeight;
-            const scrollTop = -rect.top;
-            
-            let progress = scrollTop / scrollDistance;
-            
-            if (progress < -0.1 || progress > 1.1) {
-                document.querySelectorAll('.marker.active').forEach(el => el.classList.remove('active'));
-                return;
-            }
-
-            progress = Math.max(0, Math.min(1, progress));
-
-            let activeZone = null;
-            if (progress >= 0.0 && progress < 0.2) activeZone = 'hub';
-            else if (progress >= 0.2 && progress < 0.4) activeZone = 'prime';
-            else if (progress >= 0.4 && progress < 0.6) activeZone = 'central';
-            else if (progress >= 0.6 && progress < 0.8) activeZone = 'parks';
-            else if (progress >= 0.8) activeZone = 'merchant';
-
-            document.querySelectorAll('.marker').forEach(el => {
-                if (el.dataset.zone === activeZone) el.classList.add('active');
-                else el.classList.remove('active');
-            });
-            
-            // Show/Hide Floating Scroll Button
-            var scrollBtn = document.querySelector('.scroll-btn');
-            if (window.scrollY > 200) {
-                scrollBtn.classList.add('show');
-            } else {
-                scrollBtn.classList.remove('show');
-            }
-        });
-
-        function scrollToTop() {
-            const duration = 2000;
-            const start = window.scrollY;
-            const startTime = performance.now();
-
-            function scroll(currentTime) {
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const ease = progress < 0.5
-                    ? 2 * progress * progress
-                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-                window.scrollTo(0, start * (1 - ease));
-
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(scroll);
-                }
-            }
-            requestAnimationFrame(scroll);
-        }
-
-        // ==========================================
-        //  FADE ON SCROLL LOGIC
-        // ==========================================
-        const animateFadeElements = (selector, options = {}) => {
-            const elements = document.querySelectorAll(selector);
-            if (!elements.length) return;
-
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (options.stagger) {
-                            const children = entry.target.querySelectorAll(options.stagger);
-                            children.forEach((el, i) => {
-                                setTimeout(() => el.classList.add("reveal"), i * (options.delay || 100));
-                            });
-                        }
-                        entry.target.classList.add("reveal");
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: options.threshold || 0.2 });
-
-            elements.forEach(el => observer.observe(el));
-        };
-
-        // Initialize observers after animations settle (or immediately)
-        // Since main content is initially offscreen, this works fine once they slide into view or we scroll
-        animateFadeElements(".fade-on-scroll");
-        animateFadeElements(".location-map-visual");
-        animateFadeElements(".location-details-wrapper");
-        animateFadeElements(".why-hub-card");
-        animateFadeElements(".register-card", { stagger: ".grid-2, .form-group, label, .submit-btn", delay: 120 });
-        animateFadeElements(".philosophy-header");
-        animateFadeElements(".philosophy-section", { stagger: ".pillar-card", delay: 150 });
-
-    </script>
-</body>
-</html>
