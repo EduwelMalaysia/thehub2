@@ -45,7 +45,7 @@
     <!-- Preload Critical Hero Image -->
     <link rel="preload" as="image" href="templates/images/cover2.jpg">
 
-    <style>
+        <style>
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -74,7 +74,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto; /* Changed to auto for manual smoothing */
         }
 
         /* Utilities */
@@ -86,7 +86,12 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-
+        :root {
+            --hub-gold: #D4AF37;
+            --hub-gold-light: #e09f6d;
+            --hub-dark: #222222;
+            --hub-bg: #F9F9F9;
+        }
         /* Animations */
         @keyframes streamer {
             0% {
@@ -130,22 +135,11 @@
             transform: translateY(0);
         }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
         /* Custom transitions for smoother animation */
-        /* Ensure all animated properties are covered */
         .marker-line {
             transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Anchor handles the position movement along the line */
         .marker-anchor {
             transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -157,6 +151,30 @@
         .marker-label {
             transition: all 0.5s ease-out;
         }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        .gold-accent {
+            background-color: var(--hub-gold);
+        }
+        .border-gold {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
     </style>
 </head>
 
@@ -165,38 +183,27 @@
     <!-- 1. Background Gallery (Fixed) -->
     <!-- Optimization: Only the center image (Item 5) loads immediately. 
          Surrounding images use 'data-bg' and load via JS to prioritize LCP (Largest Contentful Paint). -->
-    <div id="gallery-container"
+  <div id="gallery-container"
         class="fixed inset-0 z-0 flex items-center justify-center bg-black overflow-hidden pointer-events-none perspective-1000">
         <div id="gallery-grid"
             class="grid grid-cols-3 grid-rows-3 gap-0 w-screen h-screen p-0 transform-style-3d will-change-transform origin-center transition-opacity duration-300"
             style="transform: scale(3);">
-            <!-- Item 1 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/The-HUB-Victoria-Park-View1.jpg')"></div>
-            <!-- Item 2 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/The_HUB_captial square_V2 copy.png')"></div>
-            <!-- Item 3 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/starview-park.png')"></div>
-            <!-- Item 4 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/The_HUB_cinema2.png')"></div>
-
-            <!-- Item 5 (Center - Initial View - IMMEDIATE LOAD) -->
             <div class="w-full h-full bg-cover bg-center shadow-2xl z-10"
                 style="background-image: url('templates/images/cover2.jpg');"></div>
-
-            <!-- Item 6 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/The-HUB-Central-Walk.jpg')"></div>
-            <!-- Item 7 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/Hydora-Park.jpg')"></div>
-            <!-- Item 8 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/Drive-Thru.jpg')"></div>
-            <!-- Item 9 (Deferred) -->
             <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
                 data-bg="url('templates/images/The-HUB-Children-Playground.jpg')"></div>
         </div>
@@ -258,7 +265,6 @@
     <!-- 3. Spacer for Zoom Animation (The "fake scroll" area) -->
     <!-- Increased height to calc(100vh + 1000px) so content only enters viewport AFTER 1000px scroll -->
     <div style="height: calc(100vh + 1000px);" class="w-full pointer-events-none"></div>
-
     <!-- 4. Main Content ("Boxing Section") -->
     <main class="relative z-10 bg-hub-bg shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
 
@@ -281,9 +287,27 @@
                 </a>
             </div>
         </section>
+
+        <!-- Video Section -->
+        <section class="py-12 px-6 flex flex-col mx-auto items-center justify-center reveal-element">
+            <div class="video-container">
+                <video class="video-frame" 
+                       id="localVideoPlayer"
+                       src="templates/images/YKL-the-hub_004.mp4" 
+                       playsinline
+                       loop 
+                       preload="auto">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="text-center mt-12">
+                <p class="text-gray-400 uppercase tracking-widest text-xs font-bold">Experience the future of Muar</p>
+            </div>
+        </section>
+
         <section class="w-full relative overflow-hidden flex justify-center items-center animate-fadeIn">
             <div class="w-full relative reveal-element">
-                <img loading="lazy" src="templates/images/Component20.png" alt="Banner"
+                <img loading="lazy" src="templates/images/The_HUB_captial square_V2 copy FA.png" alt="Banner"
                     class="w-full h-full object-contain bg-hub-bg" />
             </div>
         </section>
@@ -309,14 +333,15 @@
                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/footfall.png"
                                 class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">Footfall</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">427,000 sqft total gross floor area.</p>
                         <p class="text-[17px] leading-relaxed opacity-90">Over 200,000 population within 10km+ regional
-                            catchment</p>
+                        catchment</p>
                     </div>
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/film.png"
                                 class="h-16 w-auto opacity-90 mx-auto"></div>
                         <h3 class="text-[22px] font-semibold mb-3">1st Cinema</h3>
-                        <p class="text-[17px] leading-relaxed opacity-90">1st Cinema in Muar, 7 halls with 700 seats</p>
+                        <p class="text-[17px] leading-relaxed opacity-90">1st Cinema in Muar wiht over 700 seats in 7 halls</p>
                     </div>
                     <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
                         <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/lifestyle.png"
@@ -351,64 +376,142 @@
         </section>
 
         <!-- Philosophy Section -->
-       <section class="pt-24 bg-white overflow-hidden">
-            <!-- Main Info -->
-            <div class="max-w-4xl mx-auto mb-20 px-6 text-center reveal-element">
-                <h3 class="text-2xl tracking-[0.2em] text-hub-light-gold font-light mb-4 uppercase">The Philosophy</h3>
-                <h2 class="text-[40px] md:text-[60px] text-[#222] font-semibold mb-6 uppercase leading-none">Redefining Muar’s Skyline</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-hub-light-gold to-[#e09f6d] mx-auto mb-8"></div>
-                <p class="text-lg md:text-xl leading-relaxed text-gray-500 max-w-3xl mx-auto">
+        <section class="pt-40 pb-24 px-6 relative overflow-hidden text-center">
+            <div class="max-w-4xl mx-auto relative z-10 animate-fade-in">
+                <h3 class="text-xs md:text-sm tracking-[0.5em] font-bold mb-4 uppercase text-gray-400" style="color: var(--hub-gold-light)">
+                    The Philosophy
+                </h3>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-light mb-8 uppercase leading-tight">
+                    Redefining <br />Muar’s Skyline
+                </h1>
+                <div class="w-24 h-1 mx-auto mb-10 bg-gradient-to-r from-yellow-600 to-yellow-400"></div>
+                <p class="text-lg md:text-2xl leading-relaxed text-gray-500 max-w-2xl mx-auto font-light">
                     The Hub is not just an address; it is a destination. We are redefining the commercial landscape by
                     introducing Muar’s first fully managed, safe, and lifestyle-centric business park.
                 </p>
             </div>
-
-            <div class="w-full flex flex-col">
-                
-                <!-- Row 1: Image Left, Info Right -->
-                <div class="flex flex-col md:flex-row w-full reveal-element delay-75">
-                    <div class="w-full md:w-1/2 h-[400px] md:h-[600px] relative">
-                        <img loading="lazy" src="templates/images/The Hub - Open Plaza.jpg" class="w-full h-full object-cover" alt="Curated Synergy">
-                    </div>
-                    <div class="w-full md:w-1/2 p-10 md:p-24 bg-hub-bg flex flex-col justify-center">
-                        <h4 class="text-3xl md:text-5xl font-light mb-6 text-[#222]">Curated Synergy</h4>
-                        <div class="w-16 h-0.5 bg-hub-light-gold mb-8"></div>
-                        <p class="text-lg text-gray-600 leading-loose">
-                            A lease-only ecosystem ensuring a premium mix. We carefully select tenants to create a complementary business environment where every brand thrives together.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Row 2: Image Right, Info Left -->
-                <div class="flex flex-col md:flex-row-reverse w-full reveal-element delay-150">
-                    <div class="w-full md:w-1/2 h-[400px] md:h-[600px] relative">
-                         <img loading="lazy" src="templates/images/The-Hub-Entrance-Statement.jpg" class="w-full h-full object-cover" alt="Professionally Managed">
-                    </div>
-                    <div class="w-full md:w-1/2 p-10 md:p-24 bg-white flex flex-col justify-center">
-                        <h4 class="text-3xl md:text-5xl font-light mb-6 text-[#222]">Professionally Managed</h4>
-                        <div class="w-16 h-0.5 bg-hub-light-gold mb-8"></div>
-                        <p class="text-lg text-gray-600 leading-loose">
-                            Safety and maintenance are our top priorities. The entire precinct is gated, guarded, and professionally maintained by YKL Capital to ensure lasting value.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Row 3: Image Left, Info Right -->
-                <div class="flex flex-col md:flex-row w-full reveal-element delay-300">
-                    <div class="w-full md:w-1/2 h-[400px] md:h-[600px] relative">
-                        <img loading="lazy" src="templates/images/The_HUB_roof_top_v3.png" class="w-full h-full object-cover" alt="Vibrant Lifestyle">
-                    </div>
-                    <div class="w-full md:w-1/2 p-10 md:p-24 bg-hub-bg flex flex-col justify-center">
-                        <h4 class="text-3xl md:text-5xl font-light mb-6 text-[#222]">Vibrant Lifestyle</h4>
-                        <div class="w-16 h-0.5 bg-hub-light-gold mb-8"></div>
-                        <p class="text-lg text-gray-600 leading-loose">
-                            From rooftop decks to the cinema, we bring energy to your doorstep. It's not just a place to work, but a place to live, play, and connect.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
+            
+            <!-- Decorative Background Elements -->
+            <div class="absolute top-1/2 left-0 w-64 h-64 bg-yellow-50 rounded-full blur-3xl opacity-30 -translate-x-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-gray-100 rounded-full blur-3xl opacity-50 translate-x-1/4"></div>
         </section>
+
+        <section id="philosophy" class="relative max-w-8xl mx-auto px-6 space-y-10 py-16">
+            
+            <!-- Vision of Success -->
+            <div class="flex flex-col md:flex-row w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-100">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The_HUB_cinema2.png" alt="Vision" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] right-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">01</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Community Driven</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">A Vision of Success</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        THE HUB is envisioned to be the most inspired, community-driven mixed developments in Muar, poised to be a promising investment prospect. Through a holistic approach that prioritizes social inclusivity, environmental responsibility, and economic viability, THE HUB is set to be a place that gives for many years to come.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vibrant Lifestyle -->
+            <div class="flex flex-col md:flex-row-reverse w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-200">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The_HUB_roof_top_v3.png" alt="Lifestyle" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] left-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">02</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Social Inclusivity</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">Vibrant Lifestyle</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        THE HUB offers a vibrant lifestyle experience for visitors, with thoughtfully designed social spaces that allow people and businesses to flourish. These spaces encourage interaction, collaboration, and a sense of community, providing an ideal environment for both work and leisure. The development is seamlessly connected through well-planned link bridges that link various blocks together, making it fully walkasble and ensuring a convenient, hassle-free experience. This design promotes accessibility and ease of movement for everyone.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Professionally Managed -->
+            <div class="flex flex-col md:flex-row w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-300">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The-Hub-Entrance-Statement.jpg" alt="Management" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] right-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">03</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Peace of Mind</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">Professionally Managed</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        Safety and maintenance are our top priorities. The entire precinct is gated, guarded, and professionally maintained by YKL Capital to ensure lasting value.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Curated Synergy -->
+            <div class="flex flex-col md:flex-row-reverse w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-300">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The Hub - Open Plaza.jpg" alt="Synergy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] left-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">04</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Lease-Only Ecosystem</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">Curated Synergy</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        A lease-only ecosystem ensuring a premium mix. We carefully select tenants to create a complementary business environment where every brand thrives together.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
 
         <!-- Site Plan Section -->
         <section id="overview"
@@ -435,7 +538,7 @@
 
             <!-- Help Text -->
             <div id="help-text"
-                class="absolute top-6 left-1/2 -translate-x-1/2 text-white/50 text-sm pointer-events-none animate-pulse bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm border border-white/5">
+                class="absolute top-6 left-1/2 -translate-x-1/2 text-white text-sm pointer-events-none animate-pulse bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm border border-white/5">
                 Select a zone to expand details
             </div>
 
@@ -453,7 +556,7 @@
         </section>
 
         <!-- News Section -->
-        <section id="happening" class="py-24 bg-[#f4f6f8] text-center overflow-hidden">
+        <section id="happening" class="py-24 text-center overflow-hidden">
             <div class="max-w-[800px] mx-auto mb-12 px-5">
                 <h3 class="text-3xl uppercase font-extralight text-hub-text mb-2">News & Updates</h3>
                 <h2 class="text-[72px] uppercase font-semibold mb-5 leading-none">The Pulse</h2>
@@ -502,8 +605,11 @@
 
         <!-- Location Section (UPDATED) -->
         <section id="location"
-            class="location w-full bg-gradient-to-b from-[#5f6c9d] to-[#7d88b0] text-[#f7f7f7] py-[80px] px-[20px] overflow-hidden">
-            <div class="location-container w-[90%] md:w-[70%] mx-auto flex items-center gap-[50px] flex-wrap">
+            class="location w-full bg-gradient-to-b from-[#5f6c9d] to-[#7d88b0] text-[#f7f7f7] overflow-hidden">
+            <img src="templates/images/The-HUB-Location-Map-no-backgroup.png" alt="Location Map" class="w-full">
+        </section>
+
+        <!-- <div class="location-container w-[90%] md:w-[70%] mx-auto flex items-center gap-[50px] flex-wrap">
 
                 <div class="location-map-visual flex-[1_1_45%] text-center max-md:flex-[1_1_100%]">
                     <div class="open-map-trigger relative block cursor-zoom-in group"
@@ -550,8 +656,7 @@
                     </div>
                 </div>
 
-            </div>
-        </section>
+            </div> -->
 
         <!-- Register Section (UPDATED) -->
         <section id="register"
@@ -765,7 +870,10 @@
         const SCROLL_THRESHOLD = 1000;
         // When nav should hide after initial scroll
         const NAV_HIDE_THRESHOLD = 50;
+        const LERP_FACTOR = 0.08; // Lower = smoother/slower, Higher = snappier
 
+        let currentScroll = 0;
+        let targetScroll = 0;
         // Elements
         const gallery = document.getElementById('gallery-grid');
         const navbar = document.getElementById('navbar');
@@ -776,6 +884,54 @@
         const siteModalImg = document.getElementById('site-modal-img');
         const overviewSection = document.getElementById('overview');
 
+        // --------------------------------------------------------
+        // OPTIMIZATION: Gallery Zoom Speed
+        // --------------------------------------------------------
+        window.addEventListener('scroll', () => {
+            targetScroll = window.scrollY;
+        }, { passive: true });
+
+        // Animation Loop
+        function animate() {
+            // Linear Interpolation: currentScroll moves towards targetScroll slowly
+            currentScroll += (targetScroll - currentScroll) * LERP_FACTOR;
+
+            // 1. Gallery Zoom Logic based on Smoothed currentScroll
+            const progress = Math.min(Math.max(currentScroll / SCROLL_THRESHOLD, 0), 1);
+            const scale = 3 - (2 * progress);
+            const opacity = currentScroll > SCROLL_THRESHOLD ? Math.max(0, 1 - (currentScroll - SCROLL_THRESHOLD) / 500) : 1;
+
+            if (gallery) {
+                gallery.style.transform = `scale(${scale})`;
+                gallery.style.opacity = opacity;
+            }
+
+            // 2. Navbar Visibility Logic
+            if (currentScroll <= NAV_HIDE_THRESHOLD) {
+                navbar.classList.remove('opacity-0', 'pointer-events-none');
+                navbar.classList.add('opacity-100', 'pointer-events-auto');
+            } else if (currentScroll > NAV_HIDE_THRESHOLD && currentScroll < SCROLL_THRESHOLD) {
+                navbar.classList.add('opacity-0', 'pointer-events-none');
+                navbar.classList.remove('opacity-100', 'pointer-events-auto');
+            } else {
+                navbar.classList.remove('opacity-0', 'pointer-events-none');
+                navbar.classList.add('opacity-100', 'pointer-events-auto');
+            }
+
+            // 3. Floating Actions Visibility
+            if (currentScroll > SCROLL_THRESHOLD) {
+                fab.classList.remove('translate-y-10', 'opacity-0', 'invisible');
+                fab.classList.add('translate-y-0', 'opacity-100', 'visible');
+            } else {
+                fab.classList.add('translate-y-10', 'opacity-0', 'invisible');
+                fab.classList.remove('translate-y-0', 'opacity-100', 'visible');
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize Animation Loop
+        requestAnimationFrame(animate);
         // --------------------------------------------------------
         // OPTIMIZATION: Lazy Load Gallery Backgrounds
         // --------------------------------------------------------
@@ -789,6 +945,32 @@
                     div.style.backgroundImage = src;
                 }
             });
+        });
+
+        // --- Video Observation Logic ---
+        document.addEventListener("DOMContentLoaded", function () {
+            const videoContainer = document.querySelector('.video-container');
+            const videoElement = document.getElementById('localVideoPlayer');
+
+            if (videoContainer && videoElement) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const playPromise = videoElement.play();
+                            if (playPromise !== undefined) {
+                                playPromise.catch(error => {
+                                    console.log("Autoplay was prevented or failed:", error);
+                                });
+                            }
+                        } else {
+                            videoElement.pause();
+                        }
+                    });
+                }, {
+                    threshold: 0.5 
+                });
+                videoObserver.observe(videoContainer);
+            }
         });
 
         // Site Plan Data
@@ -1084,14 +1266,18 @@
         }));
 
         // Register Form Reveal
-        const observer = new IntersectionObserver((entries) => {
+                const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('reveal');
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px';
+            mobileMenu.style.maxHeight = isOpen ? '0px' : '100vh';
+            mobileMenuBtn.innerHTML = isOpen ? '<i class="fa fa-bars"></i>' : '<i class="fa fa-times"></i>';
+        });
 
         // Register Form Dropdown Logic
         const zoneSelect = document.getElementById('select-zone');

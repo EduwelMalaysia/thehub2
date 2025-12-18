@@ -2,691 +2,1325 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>THE HUB - Muar's New Centre</title>
-    <!-- Use the new separated CSS file -->
-    <link rel="stylesheet" href="test.css">
+    <link rel="icon" href="templates/images/THE-HUB-Business-Park-logo.png" type="image/x-icon">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hub-blue': '#20A2DC',
+                        'hub-green': '#83BC41',
+                        'hub-red': '#E11F27',
+                        'hub-purple': '#662E86',
+                        'hub-pink': '#E22C7C',
+                        'hub-gold': '#bc7b47',
+                        'hub-light-gold': '#c48350',
+                        'hub-text': '#222',
+                        'hub-text-light': '#666',
+                        'hub-bg': '#f7f7f7',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    perspective: {
+                        '1000': '1000px',
+                    }
+                },
+            },
+        }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Preload map image -->
-    <link rel="preload" as="image" href="templates/images/Overall%20aerial%20view%2013112025.jpg">
+
+    <!-- Preload Critical Hero Image -->
+    <link rel="preload" as="image" href="templates/images/cover2.jpg">
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c48350;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bc7b47;
+        }
+
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Utilities */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        :root {
+            --hub-gold: #D4AF37;
+            --hub-gold-light: #e09f6d;
+            --hub-dark: #222222;
+            --hub-bg: #F9F9F9;
+        }
+        /* Animations */
+        @keyframes streamer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .animate-streamer {
+            animation: streamer 3s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        /* Register Form Reveal Animation */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease-out;
+        }
+
+        .reveal-element.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Custom transitions for smoother animation */
+        /* Ensure all animated properties are covered */
+        .marker-line {
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Anchor handles the position movement along the line */
+        .marker-anchor {
+            transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .marker-thumb {
+            transition: max-height 0.5s ease-out, opacity 0.4s ease-out;
+        }
+
+        .marker-label {
+            transition: all 0.5s ease-out;
+        }
+
+                @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        .gold-accent {
+            background-color: var(--hub-gold);
+        }
+        .border-gold {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+    </style>
 </head>
 
-<body>
-    <!-- Fake scroll container to drive the zoom animation -->
-    <div class="fake-scroll">
-        <div class="scroll-height"></div>
+<body class="bg-hub-bg text-hub-text font-sans antialiased overflow-x-hidden">
+
+    <!-- 1. Background Gallery (Fixed) -->
+    <!-- Optimization: Only the center image (Item 5) loads immediately. 
+         Surrounding images use 'data-bg' and load via JS to prioritize LCP (Largest Contentful Paint). -->
+    <div id="gallery-container"
+        class="fixed inset-0 z-0 flex items-center justify-center bg-black overflow-hidden pointer-events-none perspective-1000">
+        <div id="gallery-grid"
+            class="grid grid-cols-3 grid-rows-3 gap-0 w-screen h-screen p-0 transform-style-3d will-change-transform origin-center transition-opacity duration-300"
+            style="transform: scale(3);">
+            <!-- Item 1 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The-HUB-Victoria-Park-View1.jpg')"></div>
+            <!-- Item 2 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The_HUB_captial square_V2 copy.png')"></div>
+            <!-- Item 3 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/starview-park.png')"></div>
+            <!-- Item 4 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The_HUB_cinema2.png')"></div>
+
+            <!-- Item 5 (Center - Initial View - IMMEDIATE LOAD) -->
+            <div class="w-full h-full bg-cover bg-center shadow-2xl z-10"
+                style="background-image: url('templates/images/cover2.jpg');"></div>
+
+            <!-- Item 6 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The-HUB-Central-Walk.jpg')"></div>
+            <!-- Item 7 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/Hydora-Park.jpg')"></div>
+            <!-- Item 8 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/Drive-Thru.jpg')"></div>
+            <!-- Item 9 (Deferred) -->
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The-HUB-Children-Playground.jpg')"></div>
+        </div>
+        <div class="absolute inset-0 pointer-events-none"></div>
     </div>
 
-    <!-- Fixed Navigation -->
-    <section class="main-container">
-        <header class="site-header">
-            <div class="logo-box">
-                <img loading="lazy" src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo" class="logo">
+    <!-- 2. Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 left-0 w-full z-50 transition-opacity duration-500 ease-in-out opacity-100 pointer-events-auto">
+        <div
+            class="w-full h-[90px] px-6 md:px-10 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
+            <div class="flex items-center h-full">
+                <img src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo"
+                    class="h-[90px] w-auto object-contain">
             </div>
-
-            <nav class="main-nav">
-                <ul id="nav">
-                    <li><a href="#concept">Concept</a></li>
-                    <li><a href="#overview">Overview</a></li>
-                    <li><a href="#happening">News</a></li>
-                    <li><a href="#location">Location</a></li>
-                    <li><a href="#developer-contact">Contact</a></li>
+            <div class="hidden md:flex items-center gap-8">
+                <ul class="flex gap-6 list-none m-0 p-0">
+                    <li><a href="#concept"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Concept</a>
+                    </li>
+                    <li><a href="#overview"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Overview</a>
+                    </li>
+                    <li><a href="#happening"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">News</a>
+                    </li>
+                    <li><a href="#location"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Location</a>
+                    </li>
+                    <li><a href="#register"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Contact</a>
+                    </li>
                 </ul>
-            </nav>
-            <div class="register-btn-container">
-                <a href="#register" class="register-btn">
-                    LEASE NOW
-                </a>
             </div>
-
-            <button class="menu-toggle" aria-expanded="false" aria-controls="nav">
-                <i class="fa fa-bars"></i>
-            </button>
-        </header>
-    </section>
-
-    <!-- 3D Scene / Gallery for Animation -->
-    <section class="scene">
-        <div class="gallery">
-            <div class="gallery-item item-1"></div>
-            <div class="gallery-item item-2"></div>
-            <div class="gallery-item item-3"></div>
-            <div class="gallery-item item-4"></div>
-            <div class="gallery-item item-5" id="target-item"></div> <!-- Start View -->
-            <div class="gallery-item item-6"></div>
-            <div class="gallery-item item-7"></div>
-            <div class="gallery-item item-8"></div>
-            <div class="gallery-item item-9"></div>
+            <div class="flex items-center gap-4">
+                <a href="#register"
+                    class="hidden md:inline-flex px-8 py-3 rounded-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] text-white font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">Lease
+                    Now</a>
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none"><i
+                        class="fa fa-bars"></i></button>
+            </div>
         </div>
-    </section>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="md:hidden absolute top-[90px] left-0 w-full bg-black/95 text-white transition-all duration-300 overflow-hidden max-h-0 py-0">
+            <ul class="flex flex-col items-center gap-6">
+                <li><a href="#concept" class="mobile-link text-lg font-medium uppercase">Concept</a></li>
+                <li><a href="#overview" class="mobile-link text-lg font-medium uppercase">Overview</a></li>
+                <li><a href="#happening" class="mobile-link text-lg font-medium uppercase">News</a></li>
+                <li><a href="#location" class="mobile-link text-lg font-medium uppercase">Location</a></li>
+                <li><a href="#register" class="mobile-link text-lg font-medium uppercase">Contact</a></li>
+                <li><a href="#register"
+                        class="mobile-link inline-block px-8 py-3 rounded-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] text-white font-bold uppercase">Lease
+                        Now</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <section class="boxing">
-        
-        <!-- Header / Intro -->
-        <section class="content-1-wrap" id="concept">
-            <div class="content-1">
-                <h2>muar's new centre of businesses & lifestyle</h2>
-                <h3>a beacon of sustainability</h3>
-                <p>THE HUB is an exciting, multi-component development that features innovative urban planning and
-                    design,
-                    carefully considering the needs of the community and businesses with equal measure. By incorporating
-                    green spaces, pedestrian-friendly pathways, and seamless connectivity, THE HUB fosters a lively,
-                    interconnected atmosphere that encourages social interaction and economic growth.</p>
-                <a href="templates/The Hub Booklet_rev7.pdf" class="download-btn" download>
-                    <i class="fa-solid fa-download"></i> Download Floor Plans (Blocks A-I)
+    <!-- 3. Spacer for Zoom Animation (The "fake scroll" area) -->
+    <!-- Increased height to calc(100vh + 1000px) so content only enters viewport AFTER 1000px scroll -->
+    <div style="height: calc(100vh + 1000px);" class="w-full pointer-events-none"></div>
+
+    <!-- 4. Main Content ("Boxing Section") -->
+    <main class="relative z-10 bg-hub-bg shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
+
+        <!-- Concept Section -->
+        <section id="concept" class="relative w-full py-20 flex justify-center bg-hub-bg">
+            <div class="w-4/5 text-center reveal-element">
+                <h2 class="text-[40px] md:text-[60px] uppercase text-hub-gold mb-3 font-medium leading-tight">muar's new
+                    centre of businesses & lifestyle</h2>
+                <h3 class="text-2xl md:text-[35px] capitalize mb-8 text-hub-text font-light">a beacon of sustainability
+                </h3>
+                <p class="text-lg md:text-[25px] leading-relaxed text-hub-text-light mb-12">
+                    THE HUB is an exciting, multi-component development that features innovative urban planning and
+                    design, carefully considering the needs of the community and businesses with equal measure.
+                    By incorporating green spaces, pedestrian-friendly pathways, and seamless connectivity,
+                    THE HUB fosters a lively, interconnected atmosphere.
+                </p>
+                <a href="#"
+                    class="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-br from-[#147db3] to-[#05548e] text-white font-bold rounded-full uppercase tracking-wider shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+                    <i class="fa-solid fa-download"></i> Download Floor Plans
                 </a>
             </div>
         </section>
-
-        <section class="background-pic1">
-            <img fetchpriority="high" loading="lazy" src="templates/images/Component 20 – 2.png" alt="Banner"
-                class="banner-bg2" />
+        <section class="w-full relative overflow-hidden flex justify-center items-center animate-fadeIn">
+            <div class="w-full relative reveal-element">
+                <img loading="lazy" src="templates/images/The_HUB_captial square_V2 copy FA.png" alt="Banner"
+                    class="w-full h-full object-contain bg-hub-bg" />
+            </div>
         </section>
 
-        <!-- Why Move Section -->
-        <section class="why-hub-section">
-            <div class="why-hub-title">
-                <h2>Why Move</h2>
-                <h2>Your Business to THE HUB</h2>
-            </div>
-
-            <div class="why-hub-grid">
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/location.png" alt="Location">
-                    </div>
-                    <h3>Strategic Location</h3>
-                    <p>4km radius from Muar Town Centre accessible via the Muar Bypass/AMJ Highway</p>
+        <!-- Why Hub Section -->
+        <section
+            class="relative py-28 bg-[url('templates/images/Component17.png')] bg-cover bg-center bg-fixed animate-fadeIn">
+            <div class="absolute inset-0 bg-black/60 z-0"></div>
+            <div class="relative z-10 w-[85%] mx-auto text-hub-bg">
+                <div class="text-center mb-20">
+                    <h2 class="text-[40px] md:text-[58px] font-semibold uppercase leading-tight">Why Move <br /> Your
+                        Business to THE HUB</h2>
                 </div>
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/footfall.png" alt="Footfall">
+                <div class="flex flex-wrap justify-center gap-x-12 gap-y-16 reveal-element">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/location.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">Strategic Location</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">4km radius from Muar Town Centre accessible
+                            via the Muar Bypass/AMJ Highway</p>
                     </div>
-                    <h3>Footfall</h3>
-                    <p>Over 200,000 population within 10km+ regional catchment</p>
-                </div>
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/film.png" alt="Cinema">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/footfall.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">Footfall</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">427,000 sqft total gross floor area.</p>
+                        <p class="text-[17px] leading-relaxed opacity-90">Over 200,000 population within 10km+ regional
+                        catchment</p>
                     </div>
-                    <h3>1<sup>st</sup> Cinema</h3>
-                    <p>1<sup>st</sup> Cinema in Muar, 7 halls with 700 seats</p>
-                </div>
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/lifestyle.png" alt="Lifestyle">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/film.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">1st Cinema</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">1st Cinema in Muar wiht over 700 seats in 7 halls</p>
                     </div>
-                    <h3>Lifestyle</h3>
-                    <p>Cinema, F&B, Wellness, Weekend Market, Rooftop Sky Park & Corporate Offices</p>
-                </div>
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/prestige.png" alt="Prestige">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/lifestyle.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">Lifestyle</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">Cinema, F&B, Wellness, Weekend Market, Rooftop
+                            Sky Park & Corporate Offices</p>
                     </div>
-                    <h3>Prestige</h3>
-                    <p>A premium image for brands seeking credibility, stability, and visibility</p>
-                </div>
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/parking.png" alt="Parking">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/prestige.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">Prestige</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">A premium image for brands seeking
+                            credibility, stability, and visibility</p>
                     </div>
-                    <h3>Parking</h3>
-                    <p>Estimated 950 Carparks & 450 motorcycle parking lots</p>
-                </div>
-
-                <div class="why-hub-card">
-                    <div class="icon-box">
-                        <img fetchpriority="high" loading="lazy" src="templates/images/safety.png" alt="Safety">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/parking.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">Parking</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">Estimated 950 Carparks & 450 motorcycle
+                            parking lots</p>
                     </div>
-                    <h3>Safety</h3>
-                    <p>CCTV-monitored, 24/7 security with professional guards on duty</p>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/safety.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-[22px] font-semibold mb-3">Safety</h3>
+                        <p class="text-[17px] leading-relaxed opacity-90">CCTV-monitored, 24/7 security with
+                            professional guards on duty</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Philosophy Section -->
-        <section class="philosophy-section">
-            <div class="philosophy-header">
-                <h3 class="sub-title">The Philosophy</h3>
-                <h2>Redefining Muar’s Skyline</h2>
-                <div class="divider-line"></div>
-                <p class="philosophy-desc">
+        <section class="pt-40 pb-24 px-6 relative overflow-hidden text-center">
+            <div class="max-w-4xl mx-auto relative z-10 animate-fade-in">
+                <h3 class="text-xs md:text-sm tracking-[0.5em] font-bold mb-4 uppercase text-gray-400" style="color: var(--hub-gold-light)">
+                    The Philosophy
+                </h3>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-light mb-8 uppercase leading-tight">
+                    Redefining <br />Muar’s Skyline
+                </h1>
+                <div class="w-24 h-1 mx-auto mb-10 bg-gradient-to-r from-yellow-600 to-yellow-400"></div>
+                <p class="text-lg md:text-2xl leading-relaxed text-gray-500 max-w-2xl mx-auto font-light">
                     The Hub is not just an address; it is a destination. We are redefining the commercial landscape by
-                    introducing Muar’s first fully managed, safe, and lifestyle-centric business park. Designed for the
-                    modern entrepreneur, The Hub bridges the gap between commerce and community. It is a place where
-                    businesses grow, families gather, and lifestyles are elevated.
+                    introducing Muar’s first fully managed, safe, and lifestyle-centric business park.
                 </p>
             </div>
-
-            <div class="pillars-grid">
-                <div class="pillar-card">
-                    <div class="pillar-image">
-                        <img src="templates/images/The Hub - Open Plaza.jpg" alt="Curated Synergy">
-                    </div>
-                    <div class="pillar-content">
-                        <h4>Curated Synergy</h4>
-                        <p>A lease-only ecosystem ensuring a premium mix of retail, wellness, and office tenants.</p>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-image">
-                        <img src="templates/images/The-Hub-Entrance-Statement.jpg" alt="Curated Synergy">
-                    </div>
-                    <div class="pillar-content">
-                        <h4>Professionally Managed</h4>
-                        <p>Gated, guarded, and maintained by YKL Capital for absolute peace of mind.</p>
-                    </div>
-                </div>
-                <div class="pillar-card">
-                    <div class="pillar-image">
-                        <img src="templates/images/The_HUB_roof_top_v3.png" alt="Curated Synergy">
-                    </div>
-                    <div class="pillar-content">
-                        <h4>Vibrant Lifestyle</h4>
-                        <p>From rooftop decks to the cinema, we bring energy to your doorstep.</p>
-                    </div>
-                </div>
-            </div>
+            
+            <!-- Decorative Background Elements -->
+            <div class="absolute top-1/2 left-0 w-64 h-64 bg-yellow-50 rounded-full blur-3xl opacity-30 -translate-x-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-gray-100 rounded-full blur-3xl opacity-50 translate-x-1/4"></div>
         </section>
 
-        <!-- INTERACTIVE SITE PLAN SECTION -->
-        <section id="overview">
-            <div class="sticky-wrapper">
-                <div class="map-frame">
-                    <img class="siteplan-img" src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan Map" decoding="async">
-
-                    <!-- Markers Container (Populated by JS) -->
-                    <div id="markers-container"></div>
-
-                    <!-- Legend -->
-                    <div class="siteplan-legend">
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #20A2DC; color: #20A2DC"></span>
-                            <span class="legend-label">Prime Square</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #83BC41; color: #83BC41"></span>
-                            <span class="legend-label">Central Walk</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #E11F27; color: #E11F27"></span>
-                            <span class="legend-label">Merchant Bay</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #662E86; color: #662E86"></span>
-                            <span class="legend-label">The Hub Cineplex</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-box" style="background: #E22C7C; color: #E22C7C"></span>
-                            <span class="legend-label">Parkfront Avenue</span>
-                        </div>
+        <section id="philosophy" class="relative max-w-8xl mx-auto px-6 space-y-10 py-16">
+            
+            <!-- Vision of Success -->
+            <div class="flex flex-col md:flex-row w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-100">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The_HUB_cinema2.png" alt="Vision" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
+                    <div class="absolute bottom-[-20px] right-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">01</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Community Driven</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">A Vision of Success</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        THE HUB is envisioned to be the most inspired, community-driven mixed developments in Muar, poised to be a promising investment prospect. Through a holistic approach that prioritizes social inclusivity, environmental responsibility, and economic viability, THE HUB is set to be a place that gives for many years to come.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
                 </div>
             </div>
+
+            <!-- Vibrant Lifestyle -->
+            <div class="flex flex-col md:flex-row-reverse w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-200">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The_HUB_roof_top_v3.png" alt="Lifestyle" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] left-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">02</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Social Inclusivity</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">Vibrant Lifestyle</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        THE HUB offers a vibrant lifestyle experience for visitors, with thoughtfully designed social spaces that allow people and businesses to flourish. These spaces encourage interaction, collaboration, and a sense of community, providing an ideal environment for both work and leisure. The development is seamlessly connected through well-planned link bridges that link various blocks together, making it fully walkasble and ensuring a convenient, hassle-free experience. This design promotes accessibility and ease of movement for everyone.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Professionally Managed -->
+            <div class="flex flex-col md:flex-row w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-300">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The-Hub-Entrance-Statement.jpg" alt="Management" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] right-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">03</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Peace of Mind</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">Professionally Managed</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        Safety and maintenance are our top priorities. The entire precinct is gated, guarded, and professionally maintained by YKL Capital to ensure lasting value.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Curated Synergy -->
+            <div class="flex flex-col md:flex-row-reverse w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-300">
+                <div class="w-full md:w-3/5 group relative">
+                    <div class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50"></div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The Hub - Open Plaza.jpg" alt="Synergy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="absolute bottom-[-20px] left-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent"></div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">04</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest" style="color: var(--hub-gold)">Lease-Only Ecosystem</span>
+                        <h4 class="text-4xl md:text-5xl  font-light text-[#222] leading-tight">Curated Synergy</h4>
+                    </div>
+                    <p class="text-lg text-gray-500 leading-relaxed font-light">
+                        A lease-only ecosystem ensuring a premium mix. We carefully select tenants to create a complementary business environment where every brand thrives together.
+                    </p>
+                    <a href="#" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Site Plan Section -->
+        <section id="overview"
+            class="relative h-screen w-full bg-gradient-to-b from-[#4d5c93] to-[#1f2740] overflow-hidden">
+
+            <!-- Background -->
+            <div class="absolute inset-0 w-full h-full flex justify-center items-center">
+                <!-- Background Image -->
+                <img src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan"
+                    class="w-full h-full object-cover">
+
+                <!-- Markers Container -->
+                <div id="markers-container"
+                    class="absolute inset-0 w-full h-full max-w-[1920px] mx-auto pointer-events-none">
+                    <!-- Markers injected via JS -->
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div id="legend-container"
+                class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-wrap gap-3 sm:gap-5 justify-center bg-[#141414d9] px-4 sm:px-8 py-3 sm:py-4 rounded-3xl backdrop-blur-md border border-white/10 shadow-2xl z-50 w-[95%] sm:w-auto transition-all duration-300">
+                <!-- Legend items injected via JS -->
+            </div>
+
+            <!-- Help Text -->
+            <div id="help-text"
+                class="absolute top-6 left-1/2 -translate-x-1/2 text-white text-sm pointer-events-none animate-pulse bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm border border-white/5">
+                Select a zone to expand details
+            </div>
+
+            <!-- Modal -->
+            <div id="modal"
+                class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 sm:p-10 cursor-zoom-out opacity-0 transition-opacity duration-300"
+                onclick="closeModal()">
+                <div class="absolute top-4 right-6 text-white text-5xl cursor-pointer opacity-80 hover:opacity-100">
+                    &times;</div>
+                <img id="modal-img" src=""
+                    class="max-w-full max-h-full rounded-lg border border-[#333] shadow-[0_0_50px_black] object-contain scale-95 transition-transform duration-300"
+                    onclick="event.stopPropagation()">
+            </div>
+
         </section>
 
         <!-- News Section -->
-        <section class="happenings-section fade-on-scroll" id="happening">
-
-            <div class="pulse-header">
-                <h3 class="sub-title">News & Updates</h3>
-                <h2>The Pulse</h2>
-                <div class="divider-line"></div>
+        <section id="happening" class="py-24 bg-[#f4f6f8] text-center overflow-hidden">
+            <div class="max-w-[800px] mx-auto mb-12 px-5">
+                <h3 class="text-3xl uppercase font-extralight text-hub-text mb-2">News & Updates</h3>
+                <h2 class="text-[72px] uppercase font-semibold mb-5 leading-none">The Pulse</h2>
+                <div class="w-20 h-1 bg-gradient-to-br from-hub-light-gold to-[#e09f6d] mx-auto rounded-sm"></div>
             </div>
-
-            <div class="news-scroller">
-                <div class="news-track">
-
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img fetchpriority="high" loading="lazy"
-                                src="templates/images/a) YKL Aerial - Choose this angle.jpeg" alt="Construction Site"
-                                onerror="this.src='https://placehold.co/600x400?text=Construction'">
-                            <span class="news-tag">Construction</span>
+            <div class="w-full overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory">
+                <div class="flex gap-8 px-[5%] w-max">
+                    <div
+                        class="relative w-[350px] bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left snap-center group">
+                        <div class="h-[220px] w-full relative overflow-hidden"><img loading="lazy"
+                                src="templates/images/a) YKL Aerial - Choose this angle.jpeg"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         </div>
-                        <div class="news-content">
-                            <h3>Project Update: Site Progress Q4 2025</h3>
-                            <p>Shaping the future of Muar. See the latest milestones as we lay the foundation for the
-                                region's biggest hub.</p>
-                            <a href="#" class="read-more">Read Update <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img fetchpriority="high" loading="lazy" src="templates/images/handshake.jpg"
-                                alt="Partnership" onerror="this.src='https://placehold.co/600x400?text=Partnership'">
-                            <span class="news-tag">Coming Soon</span>
-                        </div>
-                        <div class="news-content">
-                            <h3>Official LOI Signing Ceremony</h3>
-                            <p>Securing the future with key anchor tenants. A landmark partnership that brings premium
-                                brands to Muar.</p>
-                            <a href="#" class="read-more">View Gallery <i class="fa fa-arrow-right"></i></a>
+                        <div
+                            class="absolute top-5 left-5 bg-hub-light-gold text-white px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md">
+                            Construction</div>
+                        <div class="p-8">
+                            <h3 class="text-[26px] font-semibold text-[#333] mb-4">Project Update: Site Progress Q4 2025
+                            </h3>
+                            <p class="text-[18px] text-[#777] mb-6">
+                                Shaping the future of Muar. See the latest milestones as we lay the foundation for the
+                                region's biggest hub.
+                            </p>
                         </div>
                     </div>
-
+                    <div
+                        class="relative w-[350px] bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left snap-center group">
+                        <div class="h-[220px] w-full relative overflow-hidden"><img loading="lazy"
+                                src="templates/images/handshake.jpg"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        </div>
+                        <div
+                            class="absolute top-5 left-5 bg-hub-light-gold text-white px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md">
+                            Coming Soon</div>
+                        <div class="p-8">
+                            <h3 class="text-[26px] font-semibold text-[#333] mb-4">Official LOI Signing Ceremony</h3>
+                            <p class="text-[18px] text-[#777] mb-6">
+                                Securing the future with key anchor tenants. A landmark partnership that brings premium
+                                brands to Muar.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Location Section -->
-        <section class="location fade-on-scroll" id="location">
-            <div class="location-container">
+        <!-- Location Section (UPDATED) -->
+        <section id="location"
+            class="location w-full bg-gradient-to-b from-[#5f6c9d] to-[#7d88b0] text-[#f7f7f7] overflow-hidden">
+            <img src="templates/images/The-HUB-Location-Map-no-backgroup.png" alt="Location Map" class="w-full">
+        </section>
 
-                <div class="location-map-visual">
-                    <a href="#" class="open-map-trigger" id="open-full-map">
+        <!-- <div class="location-container w-[90%] md:w-[70%] mx-auto flex items-center gap-[50px] flex-wrap">
+
+                <div class="location-map-visual flex-[1_1_45%] text-center max-md:flex-[1_1_100%]">
+                    <div class="open-map-trigger relative block cursor-zoom-in group"
+                        onclick="openModal('templates/images/location_building - Edited.png')">
                         <img fetchpriority="high" loading="lazy" src="templates/images/location_building - Edited.png"
-                            alt="Map Visual">
-                        <i class="fa fa-search-plus magnifier-icon"></i>
-                    </a>
+                            alt="Map Visual"
+                            class="w-full h-auto block mx-auto rounded-[15px] shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-transform duration-[2000ms] ease-out group-hover:scale-[1.02]">
+                        <i
+                            class="fa fa-search-plus magnifier-icon absolute bottom-[20px] right-[20px] text-[24px] p-[10px] w-[44px] h-[44px] bg-white/90 rounded-full flex justify-center items-center text-[#5f6c9d] shadow-md z-10 transition-all duration-300 group-hover:text-[#ff9900] group-hover:scale-110"></i>
+                    </div>
                 </div>
 
-                <div class="location-details-wrapper">
-
+                <div class="location-details-wrapper flex-[1_1_45%] text-left max-md:flex-[1_1_100%]">
                     <div class="location-details">
-                        <h1 class="loc-header">We Are Here</h1>
-                        <p class="loc-body-copy">Located just 4km from Muar town along the AMJ Highway. We are
-                            positioned to
-                            serve a catchment of over 200,000 residents and the nearby EduHub Pagoh.</p>
+                        <h1
+                            class="loc-header uppercase text-[50px] md:text-[72px] font-semibold mb-[15px] leading-none">
+                            We Are Here</h1>
+                        <p class="loc-body-copy text-[22px] leading-[1.5em] mb-[40px] opacity-90">Located just 4km from
+                            Muar town along the AMJ Highway. We are positioned to serve a catchment of over 200,000
+                            residents and the nearby EduHub Pagoh.</p>
                     </div>
 
-                    <div class="location-markers-grid">
-
-                        <div class="marker-card">
-                            <i class="fa fa-road"></i>
-                            <h3>Access</h3>
-                            <p>AMJ Highway (Direct Frontage)</p>
+                    <div class="location-markers-grid grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-[20px]">
+                        <div
+                            class="marker-card bg-white/10 p-[20px] rounded-[12px] border-l-4 border-[#ff9900] transition-transform duration-300 hover:-translate-y-[5px] hover:bg-white/20 hover:shadow-[0_5px_15px_rgba(0,0,0,0.2)]">
+                            <i class="fa fa-road text-[28px] text-[#ff9900] mb-[10px]"></i>
+                            <h3 class="text-[30px] mb-[5px] uppercase tracking-[1px] font-extralight">Access</h3>
+                            <p class="text-[22px] m-0 opacity-80">AMJ Highway (Direct Frontage)</p>
                         </div>
 
-                        <div class="marker-card">
-                            <i class="fa fa-graduation-cap"></i>
-                            <h3>Education</h3>
-                            <p>EduHub Pagoh (UTHM, IIUM)</p>
+                        <div
+                            class="marker-card bg-white/10 p-[20px] rounded-[12px] border-l-4 border-[#ff9900] transition-transform duration-300 hover:-translate-y-[5px] hover:bg-white/20 hover:shadow-[0_5px_15px_rgba(0,0,0,0.2)]">
+                            <i class="fa fa-graduation-cap text-[28px] text-[#ff9900] mb-[10px]"></i>
+                            <h3 class="text-[30px] mb-[5px] uppercase tracking-[1px] font-extralight">Education</h3>
+                            <p class="text-[22px] m-0 opacity-80">EduHub Pagoh (UTHM, IIUM)</p>
                         </div>
 
-                        <div class="marker-card">
-                            <i class="fa fa-industry"></i>
-                            <h3>Industry</h3>
-                            <p>Muar Furniture Hub (800+ Factories)</p>
+                        <div
+                            class="marker-card bg-white/10 p-[20px] rounded-[12px] border-l-4 border-[#ff9900] transition-transform duration-300 hover:-translate-y-[5px] hover:bg-white/20 hover:shadow-[0_5px_15px_rgba(0,0,0,0.2)]">
+                            <i class="fa fa-industry text-[28px] text-[#ff9900] mb-[10px]"></i>
+                            <h3 class="text-[30px] mb-[5px] uppercase tracking-[1px] font-extralight">Industry</h3>
+                            <p class="text-[22px] m-0 opacity-80">Muar Furniture Hub (800+ Factories)</p>
                         </div>
-
                     </div>
                 </div>
 
+            </div> -->
+
+        <!-- Register Section (UPDATED) -->
+        <section id="register"
+            class="register-container w-full py-20 px-[20px] flex justify-center items-center bg-white">
+            <div class="register-card w-[60%] p-[40px_50px] text-[#536296] text-center uppercase">
+                <h5 class="sub-title text-[24px] tracking-[3px] text-hub-light-gold font-extralight uppercase mb-2">
+                    contact</h5>
+                <h2 class="text-[72px] font-semibold m-0 leading-none">secure your space</h2>
+                <h3 class="text-[30px] font-extralight mt-2 mb-6">be part of muar's premier business ecosystem</h3>
+
+                <form class="flex flex-col gap-[22px]">
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa-regular fa-user absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="text" placeholder="Full Name *" required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all">
+                        </div>
+
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="tel" placeholder="Contact Number *" required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all">
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="email" placeholder="Email Address *" required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all">
+                        </div>
+
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all appearance-none cursor-pointer">
+                                <option disabled selected>Preferred Time to Contact *</option>
+                                <option>Morning (9:00 AM – 12:00 PM)</option>
+                                <option>Lunch Hour (12:00 PM – 2:00 PM)</option>
+                                <option>Afternoon (2:00 PM – 6:00 PM)</option>
+                                <option>After Working Hours</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="text" placeholder="Company / Brand Name" required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all">
+                        </div>
+
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-briefcase absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all appearance-none cursor-pointer">
+                                <option disabled selected>Nature of Business *</option>
+                                <option>Food & Beverage (F&B)</option>
+                                <option>Retail & Fashion</option>
+                                <option>Health, Beauty & Wellness</option>
+                                <option>Corporate Office / Coworking</option>
+                                <option>Entertainment / Leisure</option>
+                                <option>Services</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 class="form-section-title text-[30px] font-extralight mt-[15px]">Requirement Details *</h4>
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-map-marked-alt absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select id="select-zone" required
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all appearance-none cursor-pointer">
+                                <option value="" disabled selected>Select Zone *</option>
+                                <option value="prime-square">Prime Square</option>
+                                <option value="merchant-bay">Merchant Bay</option>
+                                <option value="central-walk">Central Walk</option>
+                                <option value="parkfront-avenue">Parkfront Avenue (Drive Thru)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select id="select-block" required disabled
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                <option value="" disabled selected>Select Block *</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group full-width icon-input relative flex flex-col col-span-1 md:col-span-2">
+                            <i
+                                class="fa fa-layer-group absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select id="select-level" required disabled
+                                class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                <option value="" disabled selected>Select Level/Unit *</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element form-group full-width icon-input relative flex flex-col">
+                        <i
+                            class="fa fa-bullhorn absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                        <select required
+                            class="w-full p-3 pl-10 rounded-[12px] border border-black/15 outline-none text-[15px] bg-white text-hub-text focus:border-[#20A2DC] transition-all appearance-none cursor-pointer">
+                            <option disabled selected>How did you hear about us?</option>
+                            <option>Social Media (Facebook/Instagram)</option>
+                            <option>Search Engine (Google)</option>
+                            <option>Advertisement</option>
+                            <option>Word of Mouth / Referral</option>
+                            <option>Agent</option>
+                        </select>
+                    </div>
+
+                    <label
+                        class="reveal-element full-width text-left text-[14px] leading-[1.5] normal-case flex items-start gap-2">
+                        <input type="checkbox" required class="w-auto mt-1 accent-[#20A2DC]">
+                        <span>I consent to the collection and processing of my personal data by YKL Capital Sdn Bhd for
+                            marketing and leasing purposes.</span>
+                    </label>
+
+                    <button
+                        class="reveal-element submit-btn mt-[10px] p-[14px] text-[16px] font-semibold rounded-[32px] border-none text-white cursor-pointer transition-all w-full md:w-[50%] max-w-[300px] flex items-center justify-center gap-2 mx-auto bg-[length:200%_auto] animate-streamer bg-gradient-to-r from-[#5f6c9d] via-[#b3b9d1] to-[#5f6c9d] hover:-translate-y-[2px]">
+                        Submit Enquiry <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
         </section>
 
-        <!-- Register Section -->
-    <section class="register-container fade-on-scroll" id="register">
-        <div class="register-card">
-            <h5 class="sub-title">contact</h5>
-            <h2>secure your space</h2>
-            <h3>be part of muar's premier business ecosystem</h3>
-
-            <form>
-
-                <div class="grid-2">
-                    <div class="form-group icon-input">
-                        <i class="fa-regular fa-user"></i>
-                        <input type="text" placeholder="Full Name *" required>
-                    </div>
-
-                    <div class="form-group icon-input">
-                        <i class="fa fa-phone"></i>
-                        <input type="tel" placeholder="Contact Number *" required>
-                    </div>
+        <!-- Developer Section -->
+        <section id="developer-contact" class="py-20 bg-white text-hub-text">
+            <div class="w-[60%] max-w-[1200px] mx-auto grid md:grid-cols-2 gap-x-20 gap-y-12 items-start">
+                <div class="md:col-span-2 text-center border-b border-black/10 pb-10 mb-5">
+                    <img loading="lazy" src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital"
+                        class="inline-block h-auto max-w-[300px]" />
                 </div>
-
-                <div class="grid-2">
-                    <div class="form-group icon-input">
-                        <i class="fa fa-envelope"></i>
-                        <input type="email" placeholder="Email Address *" required>
-                    </div>
-
-                    <div class="form-group icon-input">
-                        <i class="fa fa-clock"></i>
-                        <select required>
-                            <option disabled selected>Preferred Time to Contact *</option>
-                            <option>Morning (9:00 AM – 12:00 PM)</option>
-                            <option>Lunch Hour (12:00 PM – 2:00 PM)</option>
-                            <option>Afternoon (2:00 PM – 6:00 PM)</option>
-                            <option>After Working Hours</option>
-                        </select>
-                    </div>
+                <div>
+                    <h3 class="text-3xl tracking-[3px] text-hub-light-gold font-extralight uppercase mb-4">YKL CAPITAL
+                        SDN BHD</h3>
+                    <h2 class="text-[50px] font-semibold uppercase leading-none mb-6">Built With Integrity</h2>
+                    <p class="text-[20px] leading-relaxed text-hub-text-light text-justify">With decades of experience
+                        in heavy industry and engineering, YKL Group brings a legacy of precision and reliability to
+                        property development. We are committed to building not just structures, but communities.</p>
                 </div>
-
-                <div class="grid-2">
-                    <div class="form-group icon-input">
-                        <i class="fa fa-building"></i>
-                        <input type="text" placeholder="Company / Brand Name" required>
-                    </div>
-
-                    <div class="form-group icon-input">
-                        <i class="fa fa-briefcase"></i>
-                        <select required>
-                            <option disabled selected>Nature of Business *</option>
-                            <option>Food & Beverage (F&B)</option>
-                            <option>Retail & Fashion</option>
-                            <option>Health, Beauty & Wellness</option>
-                            <option>Corporate Office / Coworking</option>
-                            <option>Entertainment / Leisure</option>
-                            <option>Services</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
+                <div>
+                    <h4 class="text-2xl font-bold uppercase tracking-wider mb-6">Contact Us</h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4 items-center">
+                            <i class="fa-solid fa-map-pin text-hub-blue text-xl w-6"></i>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Office Address</span>
+                                <span class="text-lg font-medium">YKL Capital Sdn Bhd Lot 663, Batu 10, Kampung Paya
+                                    Panjang, Bukit Pasir, 84300 Muar, Johor.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-center">
+                            <i class="fa-solid fa-phone-volume text-hub-blue text-xl w-6"></i>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Contact Numbers</span>
+                                <span class="text-lg font-medium">012-727 7575 | 012-727 7979</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-center">
+                            <i class="fa-solid fa-globe text-hub-blue text-xl w-6"></i>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Website</span>
+                                <span class="text-lg font-medium">www.yklcapital.com.my</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </section>
 
-                <h4 class="form-section-title">Requirement Details *</h4>
-                <div class="grid-2">
-                    <div class="form-group icon-input">
-                        <i class="fa fa-map-marked-alt"></i>
-                        <select id="select-zone" required>
-                            <option value="" disabled selected>Select Zone *</option>
-                            <option value="prime-square">Prime Square</option>
-                            <option value="merchant-bay">Merchant Bay</option>
-                            <option value="central-walk">Central Walk</option>
-                            <option value="parkfront-avenue">Parkfront Avenue (Drive Thru)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group icon-input">
-                        <i class="fa fa-building"></i>
-                        <select id="select-block" required disabled>
-                            <option value="" disabled selected>Select Block *</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group full-width icon-input" style="grid-column: span 2;">
-                        <i class="fa fa-layer-group"></i>
-                        <select id="select-level" required disabled>
-                            <option value="" disabled selected>Select Level/Unit *</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group full-width icon-input">
-                    <i class="fa fa-bullhorn"></i>
-                    <select required>
-                        <option disabled selected>How did you hear about us?</option>
-                        <option>Social Media (Facebook/Instagram)</option>
-                        <option>Search Engine (Google)</option>
-                        <option>Advertisement</option>
-                        <option>Word of Mouth / Referral</option>
-                        <option>Agent</option>
-                    </select>
-                </div>
-
-                <label class="full-width" style="text-align: left; font-size:14px; line-height:1.5;">
-                    <input type="checkbox" style="width:auto; margin-right:8px;" required>
-                    I consent to the collection and processing of my personal data by YKL Capital Sdn Bhd for marketing
-                    and leasing purposes.
-                </label>
-
-                <button class="submit-btn">Submit Enquiry <i class="fa-solid fa-paper-plane"></i></button>
-            </form>
-        </div>
-    </section>
-
-<section class="developer-contact-section fade-on-scroll" id="developer-contact">
-    <div class="dev-contact-container">
-        
-        <!-- Left Column: Developer Information -->
-        <div class="dev-info-col">
-            <h3 class="sub-title">YKL CAPITAL SDN BHD</h3>
-            <h2>Built With Integrity</h2>
-            <div class="divider-line"></div>
-            <p>
-                With decades of experience in heavy industry and engineering, YKL Group brings a legacy of precision
-                and reliability to property development. We are committed to building not just structures, but
-                communities. As a developer with integrity, we ensure The Hub remains a sustainable, well-managed
-                asset that drives economic growth for Muar.
+        <!-- Footer -->
+        <footer class="w-full py-8 text-center bg-hub-bg border-t border-gray-200">
+            <p class="text-hub-text-light text-sm font-medium">© 2025 The Hub @ Muar Business Park. All Rights Reserved.
             </p>
-        </div>
+        </footer>
+    </main>
 
-        <!-- Right Column: Logo & Contact Details -->
-        <div class="dev-contact-col">
-            <div class="developer-logo-wrap">
-                <img fetchpriority="high" loading="lazy" src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital Corporate" />
-            </div>
-
-            <div class="contact-wrap">
-                <h4>Contact Us</h4>
-                <ul class="contact-list light">
-                    <li>
-                        <span class="contact-icon"><i class="fa-solid fa-map-pin"></i></span>
-                        <div class="contact-info-text">
-                            <span class="contact-title">Office Address</span>
-                            <span class="contact-detail">YKL Capital Sdn Bhd Lot 663, Batu 10, Kampung Paya Panjang,
-                                Bukit Pasir, 84300 Muar, Johor.</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="contact-icon"><i class="fa-solid fa-phone-volume"></i></span>
-                        <div class="contact-info-text">
-                            <span class="contact-title">Contact Numbers</span>
-                            <span class="contact-detail">012-727 7575 | 012-727 7979</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="contact-icon"><i class="fa-solid fa-globe"></i></span>
-                        <div class="contact-info-text">
-                            <span class="contact-title">Website</span>
-                            <span class="contact-detail">www.yklcapital.com.my</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-</section>
-    <footer>
-        <p>© 2025 The Hub @ Muar Business Park. All Rights Reserved.</p>
-
-    </footer>
-
-            <!-- Floating Buttons -->
-        <div class="floating-container">
-            <a href="https://wa.me/60127277979" target="_blank" class="floating-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-
-            <a href="https://www.waze.com/ul?q=Lot+663%2C+Batu+10%2C+Kampung+Paya+Panjang+Bukit+Pasir%2C+84300+Muar%2C+Johor&navigate=yes"
-                target="_blank" class="floating-btn waze-btn">
-                <i class="fa-brands fa-waze"></i>
-            </a>
-
-            <button class="floating-btn scroll-btn" onclick="scrollToTop()">
-                <i class="fa-solid fa-arrow-up"></i>
-            </button>
-        </div>
-        
-    </section>
-
-    <!-- Modal for Map -->
-    <div id="modal">
-        <div id="modal-close">&times;</div>
-        <img id="modal-img" src="" alt="Expanded View" loading="lazy" decoding="async">
+    <!-- 5. Floating Actions -->
+    <div id="floating-actions"
+        class="fixed bottom-8 right-8 flex flex-col gap-4 z-50 transition-all duration-500 transform translate-y-10 opacity-0 invisible">
+        <a href="https://wa.me/60127277979" target="_blank"
+            class="w-[60px] h-[60px] rounded-full bg-white text-[#25D366] shadow-lg flex items-center justify-center text-3xl hover:-translate-y-1 transition-transform"><i
+                class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.waze.com/ul?q=Lot+663%2C+Batu+10%2C+Kampung+Paya+Panjang+Bukit+Pasir%2C+84300+Muar%2C+Johor&navigate=yes"
+            target="_blank"
+            class="w-[60px] h-[60px] rounded-full bg-white text-[#33CCFF] shadow-lg flex items-center justify-center text-3xl hover:-translate-y-1 transition-transform"><i
+                class="fa-brands fa-waze"></i></a>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})"
+            class="w-[60px] h-[60px] rounded-full bg-hub-text text-white shadow-lg flex items-center justify-center text-2xl hover:-translate-y-1 transition-transform"><i
+                class="fa-solid fa-arrow-up"></i></button>
     </div>
 
+    <!-- Scripts -->
     <script>
-        // --- INTERACTIVE MAP LOGIC ---
+        // Configuration
+        const SCROLL_THRESHOLD = 1000;
+        // When nav should hide after initial scroll
+        const NAV_HIDE_THRESHOLD = 50;
+
+        // Elements
+        const gallery = document.getElementById('gallery-grid');
+        const navbar = document.getElementById('navbar');
+        const fab = document.getElementById('floating-actions');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const siteModal = document.getElementById('site-modal');
+        const siteModalImg = document.getElementById('site-modal-img');
+        const overviewSection = document.getElementById('overview');
+
+        // --------------------------------------------------------
+        // OPTIMIZATION: Lazy Load Gallery Backgrounds
+        // --------------------------------------------------------
+        window.addEventListener('load', () => {
+            // We wait for the 'load' event (entire page + initial assets) 
+            // before requesting the 8 surrounding images.
+            const lazyBgs = document.querySelectorAll('.lazy-gallery-bg');
+            lazyBgs.forEach(div => {
+                const src = div.getAttribute('data-bg');
+                if (src) {
+                    div.style.backgroundImage = src;
+                }
+            });
+        });
+
+        // Site Plan Data
         const MARKERS = [
-            // ZONE: HUB (0-20%) -> Cineplex, Parkfront
-            { id: 'cineplex', label: 'Cineplex', zone: 'hub', top: 45, left: 35, img: 'templates/images/The_HUB_cinema2.png' },
-            { id: 'parkfront', label: 'Parkfront Avenue', zone: 'hub', top: 65, left: 30, img: 'templates/images/Drive-Thru.jpg' },
+            // --- Back Row (Top ~28-32%) ---
+            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, angle: 0, lineHeight: 60, img: 'templates/images/block-I.png' },
+            { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, angle: -15, lineHeight: 100, img: 'templates/images/block-D-preview.png' },
+            { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, angle: 5, lineHeight: 100, img: 'templates/images/block-E-preview.png' },
+            { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 66.5, angle: -5, lineHeight: 100, img: 'templates/images/block-G-preview.png' },
+            { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, angle: 15, lineHeight: 100, img: 'templates/images/block-H-preview.png' },
 
-            // ZONE: PRIME (20-40%) -> Block A, Bx
-            { id: 'block-a', label: 'Block A', zone: 'prime', top: 55, left: 54, img: 'templates/images/The_HUB_office2_Extend.png' },
-            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 75, img: 'templates/images/The_HUB_hotel2_V2.png' },
+            // --- Middle Row (Top ~40-45%) ---
+            { id: 'victoria-park', label: 'Victoria Park', zone: 'central', top: 40, left: 51, angle: -90, lineHeight: 70, img: 'templates/images/The-HUB-Victoria-Park-View1.jpg' },
+            { id: 'hydora-park', label: 'Hydora Park', zone: 'central', top: 40, left: 58, angle: 5, lineHeight: 10, img: 'templates/images/Hydora-Park.jpg' },
+            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'central', top: 40, left: 68, angle: -5, lineHeight: 10, img: 'templates/images/children-playground.jpg' },
+            { id: 'starview-park', label: 'Starview Park', zone: 'central', top: 40, left: 74, angle: 90, lineHeight: 70, img: 'templates/images/Starview-Park.jpg' },
 
-            // ZONE: CENTRAL (40-60%) -> Buildings A7, F, D, E, G, H
-            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 45, left: 55, img: 'templates/images/block-A7-preview.png' },
-            { id: 'block-f', label: 'Block F', zone: 'central', top: 46, left: 72, img: 'templates/images/block-F-preview.png' },
-            { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, img: 'templates/images/block-D-preview.png' },
-            { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, img: 'templates/images/block-E-preview.png' },
-            { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 66.5, img: 'templates/images/block-G-preview.png' },
-            { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, img: 'templates/images/block-H-preview.png' },
+            { id: 'cineplex', label: 'Cineplex', zone: 'cineplex', top: 45, left: 35, angle: 0, lineHeight: 60, img: 'templates/images/The_HUB_cinema2.png' },
+            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 45, left: 55, angle: -180, lineHeight: 160, img: 'templates/images/block-A7-preview.png' },
+            { id: 'block-f', label: 'Block F', zone: 'central', top: 46, left: 72, angle: -180, lineHeight: 160, img: 'templates/images/block-F-preview.png' },
 
-            // ZONE: PARKS (60-80%) -> Victoria, Hydora, Jubilee, Starview
-            { id: 'victoria-park', label: 'Victoria Park', zone: 'parks', top: 40, left: 51, img: 'templates/images/The-HUB-Victoria-Park-View1.jpg' },
-            { id: 'hydora-park', label: 'Hydora Park', zone: 'parks', top: 40, left: 58, img: 'templates/images/Hydora-Park.jpg' },
-            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'parks', top: 40, left: 68, img: 'templates/images/children-playground.jpg' },
-            { id: 'starview-park', label: 'Starview Park', zone: 'parks', top: 40, left: 74, img: 'templates/images/Starview-Park.jpg' },
-
-            // ZONE: MERCHANT (80-100%) -> Block I
-            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, img: 'templates/images/block-I.png' },
+            // --- Front Row (Top ~55-65%) ---
+            { id: 'block-a', label: 'Block A', zone: 'prime', top: 55, left: 54, angle: 0, lineHeight: 30, img: 'templates/images/Drive-Thru.jpg' },
+            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 75, angle: 0, lineHeight: 30, img: 'templates/images/The_HUB_hotel2_V2.png' },
+            { id: 'parkfront', label: 'Parkfront Avenue', zone: 'parkfront', top: 65, left: 30, angle: 0, lineHeight: 40, img: 'templates/images/Drive-Thru.jpg' },
         ];
 
-        // Init Markers
+        const LEGEND_ITEMS = [
+            { id: 'prime', label: 'Prime Square', color: '#20A2DC' },
+            { id: 'central', label: 'Central Walk', color: '#83BC41' },
+            { id: 'merchant', label: 'Merchant Bay', color: '#E11F27' },
+            { id: 'cineplex', label: 'Cineplex', color: '#662E86' },
+            { id: 'parkfront', label: 'Parkfront Avenue', color: '#E22C7C' },
+            { id: 'keyplan', label: 'Key Plan', color: '#38bdf8' },
+        ];
+
+        // --- State ---
+        let activeZone = null;
+
+        // --- Elements ---
         const markersContainer = document.getElementById('markers-container');
+        const legendContainer = document.getElementById('legend-container');
+        const helpText = document.getElementById('help-text');
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
-        const modalClose = document.getElementById('modal-close');
 
-        MARKERS.forEach(m => {
-            const el = document.createElement('div');
-            el.className = 'marker';
-            el.dataset.zone = m.zone; 
-            el.style.top = m.top + '%';
-            el.style.left = m.left + '%';
-
-            el.innerHTML = `
-                <div class="marker-line"></div>
-                <div class="marker-content">
-                    <div class="marker-label">${m.label}</div>
-                    <div class="marker-image-wrapper">
-                        <img src="${m.img}" alt="${m.label}" loading="lazy" decoding="async">
-                    </div>
-                </div>
-            `;
-
-            const imgWrapper = el.querySelector('.marker-image-wrapper');
-            imgWrapper.addEventListener('click', () => {
-                if (el.classList.contains('active')) {
-                    modalImg.src = m.img;
-                    modal.classList.add('open');
-                }
-            });
-
-            markersContainer.appendChild(el);
-        });
-
-        modal.addEventListener('click', () => modal.classList.remove('open'));
-        modalClose.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            modal.classList.remove('open');
-        });
-
-        // Sticky Map Scroll Logic
-        window.addEventListener('scroll', () => {
-            const section = document.getElementById('overview');
-            if (!section) return;
-
-            const rect = section.getBoundingClientRect();
-            // Calculation for sticky scroll progress
-            const scrollDistance = section.offsetHeight - window.innerHeight;
-            const scrollTop = -rect.top;
-            
-            let progress = scrollTop / scrollDistance;
-            
-            // Only activate if we are somewhat inside the section
-            // Allow small buffer so markers don't disappear instantly
-            if (progress < -0.1 || progress > 1.1) {
-                // remove all if far away
-                document.querySelectorAll('.marker.active').forEach(el => el.classList.remove('active'));
-                return;
-            }
-
-            progress = Math.max(0, Math.min(1, progress));
-
-            let activeZone = null;
-            // 5 Zones split evenly (20% each)
-            if (progress >= 0.0 && progress < 0.2) activeZone = 'hub';
-            else if (progress >= 0.2 && progress < 0.4) activeZone = 'prime';
-            else if (progress >= 0.4 && progress < 0.6) activeZone = 'central';
-            else if (progress >= 0.6 && progress < 0.8) activeZone = 'parks';
-            else if (progress >= 0.8) activeZone = 'merchant';
-
-            document.querySelectorAll('.marker').forEach(el => {
-                if (el.dataset.zone === activeZone) el.classList.add('active');
-                else el.classList.remove('active');
-            });
-        });
-
-
-        // --- EXISTING PAGE SCRIPTS ---
-        window.addEventListener('scroll', function () {
-            var scrollBtn = document.querySelector('.scroll-btn');
-            if (window.scrollY > 200) {
-                scrollBtn.classList.add('show');
-            } else {
-                scrollBtn.classList.remove('show');
-            }
-        });
-
-        function scrollToTop() {
-            const duration = 2000;
-            const start = window.scrollY;
-            const startTime = performance.now();
-
-            function scroll(currentTime) {
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const ease = progress < 0.5
-                    ? 2 * progress * progress
-                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-                window.scrollTo(0, start * (1 - ease));
-
-                if (timeElapsed < duration) {
-                    requestAnimationFrame(scroll);
-                }
-            }
-            requestAnimationFrame(scroll);
+        // --- Initialization ---
+        function init() {
+            createMarkers();
+            createLegend();
+            updateUI();
         }
 
-        const animate = (selector, options = {}) => {
-            const elements = document.querySelectorAll(selector);
-            if (!elements.length) return;
+        // --- Creation (Run Once) ---
 
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (options.stagger) {
-                            const children = entry.target.querySelectorAll(options.stagger);
-                            children.forEach((el, i) => {
-                                setTimeout(() => el.classList.add("reveal"), i * (options.delay || 100));
-                            });
-                        }
-                        entry.target.classList.add("reveal");
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: options.threshold || 0.2 });
+        function createMarkers() {
+            markersContainer.innerHTML = '';
 
-            elements.forEach(el => observer.observe(el));
+            MARKERS.forEach((marker, index) => {
+                const el = document.createElement('div');
+                el.id = `marker-${index}`;
+                // Base classes
+                el.className = 'absolute w-0 h-0 transition-all duration-500';
+                el.style.top = marker.top + '%';
+                el.style.left = marker.left + '%';
+
+                // --- Pivot Container ---
+                // This handles the rotation of the line.
+                // We rotate the pivot by 'angle'.
+                const pivot = document.createElement('div');
+                pivot.className = 'absolute bottom-0 left-0 w-0 h-0';
+                pivot.style.transform = `rotate(${marker.angle || 0}deg)`;
+                pivot.style.transformOrigin = 'bottom center';
+
+                // --- Connector Line ---
+                // Grows upwards inside the rotated pivot.
+                const line = document.createElement('div');
+                line.className = 'marker-line absolute bottom-0 left-1/2 -translate-x-1/2 w-px bg-white/80 shadow-[0_0_5px_rgba(255,255,255,0.5)] origin-bottom z-0';
+                line.innerHTML = `<div class="absolute -bottom-[3px] -left-[2px] w-[5px] h-[5px] bg-white rounded-full"></div>`;
+
+                // --- Content Anchor ---
+                // This moves up and down along the line (via 'bottom' property).
+                const anchor = document.createElement('div');
+                anchor.className = 'marker-anchor absolute left-1/2 -translate-x-1/2 w-0 h-0 z-10';
+                // Initially set bottom to match inactive state
+                // This will be overridden by inline styles in updateMarkers
+
+                // --- Content Wrapper ---
+                // Counter-rotates to keep text horizontal: rotate(-angle).
+                const contentWrapper = document.createElement('div');
+                contentWrapper.style.transform = `rotate(${-(marker.angle || 0)}deg)`;
+                contentWrapper.style.transformOrigin = 'bottom center';
+
+                // Direction Logic: CENTERED and ON TOP
+                // bottom-0 ensures it sits on top of the anchor point (which is the line tip).
+                // left-[-75px] centers the 150px wide box horizontally.
+                contentWrapper.className = `marker-content absolute w-[150px] flex flex-col items-center left-[-75px] bottom-0`;
+
+                // Label
+                const label = document.createElement('div');
+                label.innerText = marker.label;
+                label.className = 'marker-label px-3 py-1.5 rounded text-[13px] font-bold uppercase mb-2 whitespace-nowrap backdrop-blur-sm border shadow-lg relative z-10';
+
+                // Image Thumbnail
+                const thumb = document.createElement('div');
+                thumb.className = 'marker-thumb w-[160px] bg-[#222] border-2 border-white rounded-lg overflow-hidden shadow-2xl origin-top relative z-20 cursor-pointer';
+                thumb.innerHTML = `
+                    <div class="aspect-[4/3] w-full relative">
+                        <img src="${marker.img}" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                `;
+                // Click handler (state dependent)
+                thumb.onclick = (e) => handleThumbClick(marker.zone, marker.img);
+
+                contentWrapper.appendChild(label);
+                contentWrapper.appendChild(thumb);
+
+                anchor.appendChild(contentWrapper);
+
+                pivot.appendChild(line);
+                pivot.appendChild(anchor);
+
+                el.appendChild(pivot);
+
+                markersContainer.appendChild(el);
+            });
+        }
+
+        function createLegend() {
+            legendContainer.innerHTML = '';
+
+            LEGEND_ITEMS.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `legend-${item.id}`;
+                btn.className = 'flex items-center gap-2.5 transition-all duration-300 group outline-none focus:outline-none select-none';
+                btn.onclick = () => toggleZone(item.id);
+
+                const dot = document.createElement('span');
+                dot.className = 'w-4 h-4 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.5)] border border-white/10';
+                dot.style.backgroundColor = item.color;
+
+                const text = document.createElement('span');
+                text.className = 'text-sm font-medium transition-colors duration-300';
+                text.innerText = item.label;
+
+                btn.appendChild(dot);
+                btn.appendChild(text);
+
+                legendContainer.appendChild(btn);
+            });
+        }
+
+        // --- Updates (Run on Interaction) ---
+
+        function updateUI() {
+            updateMarkers();
+            updateLegend();
+            helpText.innerText = activeZone ? 'Click legend again to reset view' : 'Select a zone to expand details';
+        }
+
+        function updateMarkers() {
+            MARKERS.forEach((marker, index) => {
+                const isActive = activeZone === marker.zone;
+                const el = document.getElementById(`marker-${index}`);
+                if (!el) return;
+
+                const line = el.querySelector('.marker-line');
+                const anchor = el.querySelector('.marker-anchor');
+                const label = el.querySelector('.marker-label');
+                const thumb = el.querySelector('.marker-thumb');
+
+                // Z-Index
+                // Items further down the list (lower on screen usually, or later in DOM)
+                // should generally be on top.
+                // We keep a base z-10 for inactive, and z-50 for active to pop out.
+                el.className = `absolute w-0 h-0 transition-all duration-500 ${isActive ? 'z-50' : 'z-10'}`;
+
+                // Calculate Heights
+                const targetHeight = marker.lineHeight || 64; // Default 64px
+                const stemHeight = 20; // h-5 is 20px
+
+                // Line Animation
+                if (isActive) {
+                    line.style.height = `${targetHeight}px`;
+                } else {
+                    line.style.height = '0px';
+                }
+
+                // Anchor Position (bottom relative to pivot)
+                // Active: Top of line + stem buffer
+                // Inactive: Just above base (12px)
+                if (isActive) {
+                    anchor.style.bottom = `${targetHeight + 6}px`; // +6 for small visual gap/dot
+                } else {
+                    anchor.style.bottom = '12px';
+                }
+
+                // Label Styling
+                const activeLabelClasses = ['bg-black/80', 'text-white', 'border-white/20', 'scale-110'];
+                const inactiveLabelClasses = ['bg-black/40', 'text-gray-200', 'border-white/10', 'scale-90', 'hover:scale-100', 'hover:bg-black/60'];
+
+                if (isActive) {
+                    label.classList.remove(...inactiveLabelClasses);
+                    label.classList.add(...activeLabelClasses);
+                } else {
+                    label.classList.remove(...activeLabelClasses);
+                    label.classList.add(...inactiveLabelClasses);
+                }
+
+                // Thumb Visibility & Spacing
+                if (isActive) {
+                    thumb.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none');
+                    thumb.classList.add('max-h-[200px]', 'opacity-100', 'pointer-events-auto', 'mt-2');
+                } else {
+                    thumb.classList.remove('max-h-[200px]', 'opacity-100', 'pointer-events-auto', 'mt-2');
+                    thumb.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
+                }
+            });
+        }
+
+        function updateLegend() {
+            LEGEND_ITEMS.forEach(item => {
+                const isActive = activeZone === item.id;
+                const btn = document.getElementById(`legend-${item.id}`);
+                const text = btn.querySelector('span:last-child');
+
+                if (isActive) {
+                    btn.classList.remove('hover:opacity-100', 'hover:scale-105');
+                    btn.classList.add('opacity-100', 'scale-110');
+
+                    text.classList.remove('text-gray-400', 'group-hover:text-gray-200');
+                    text.classList.add('text-white', 'font-bold', 'drop-shadow-md');
+                } else {
+                    btn.classList.remove('opacity-100', 'scale-110');
+                    btn.classList.add('hover:opacity-100', 'hover:scale-105');
+
+                    text.classList.remove('text-white', 'font-bold', 'drop-shadow-md');
+                    text.classList.add('text-gray-300', 'group-hover:text-gray-200');
+                }
+            });
+        }
+
+        // --- Interaction Logic ---
+
+        function toggleZone(zoneId) {
+            activeZone = (activeZone === zoneId) ? null : zoneId;
+            updateUI();
+        }
+
+        function handleThumbClick(markerZone, img) {
+            if (activeZone === markerZone) {
+                openModal(img);
+            }
+        }
+
+        // --- Modal ---
+
+        function openModal(src) {
+            modalImg.src = src;
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                modalImg.classList.remove('scale-95');
+                modalImg.classList.add('scale-100');
+            });
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+            }, 300);
+        }
+
+        // --- Start ---
+        window.addEventListener('load', init);
+
+        // Mobile Menu
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px';
+            mobileMenu.style.maxHeight = isOpen ? '0px' : '100vh';
+            mobileMenu.style.paddingTop = isOpen ? '0' : '1.5rem';
+            mobileMenu.style.paddingBottom = isOpen ? '0' : '1.5rem';
+            mobileMenuBtn.innerHTML = isOpen ? '<i class="fa fa-bars"></i>' : '<i class="fa fa-times"></i>';
+        });
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+            mobileMenu.style.maxHeight = '0px';
+            mobileMenu.style.padding = '0';
+            mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+        }));
+
+        // Register Form Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+
+        // Register Form Dropdown Logic
+        const zoneSelect = document.getElementById('select-zone');
+        const blockSelect = document.getElementById('select-block');
+        const levelSelect = document.getElementById('select-level');
+
+        const blocks = {
+            'prime-square': ['Block A', 'Block B'],
+            'merchant-bay': ['Block I'],
+            'central-walk': ['Block D', 'Block E', 'Block F', 'Block G', 'Block H', 'Block A7'],
+            'parkfront-avenue': ['Drive Thru Unit 1', 'Drive Thru Unit 2']
         };
 
-        animate(".fade-on-scroll");
-        animate(".location-map-visual");
-        animate(".location-details-wrapper");
-        animate(".why-hub-card");
-        animate(".register-card", { stagger: ".grid-2, .form-group, label, .submit-btn", delay: 120 });
-        animate(".philosophy-header");
-        animate(".philosophy-section", { stagger: ".pillar-card", delay: 150 });
+        const levels = ['Ground Floor', 'Level 1', 'Level 2', 'Level 3'];
 
+        zoneSelect.addEventListener('change', () => {
+            blockSelect.innerHTML = '<option value="" disabled selected>Select Block *</option>';
+            levelSelect.innerHTML = '<option value="" disabled selected>Select Level/Unit *</option>';
+            levelSelect.disabled = true;
+
+            const selectedZone = zoneSelect.value;
+            if (selectedZone && blocks[selectedZone]) {
+                blocks[selectedZone].forEach(block => {
+                    const option = document.createElement('option');
+                    option.value = block;
+                    option.textContent = block;
+                    blockSelect.appendChild(option);
+                });
+                blockSelect.disabled = false;
+            } else {
+                blockSelect.disabled = true;
+            }
+        });
+
+        blockSelect.addEventListener('change', () => {
+            levelSelect.innerHTML = '<option value="" disabled selected>Select Level/Unit *</option>';
+            if (blockSelect.value) {
+                levels.forEach(lvl => {
+                    const option = document.createElement('option');
+                    option.value = lvl;
+                    option.textContent = lvl;
+                    levelSelect.appendChild(option);
+                });
+                levelSelect.disabled = false;
+            } else {
+                levelSelect.disabled = true;
+            }
+        });
+
+        // Scroll Handler
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+
+            // 1. Gallery Zoom
+            // Progress 0 to 1 over first 1000px
+            const progress = Math.min(Math.max(scrollY / SCROLL_THRESHOLD, 0), 1);
+            const scale = 3 - (2 * progress);
+            const opacity = scrollY > SCROLL_THRESHOLD ? Math.max(0, 1 - (scrollY - SCROLL_THRESHOLD) / 500) : 1;
+
+            gallery.style.transform = `scale(${scale})`;
+            gallery.style.opacity = opacity;
+
+            // 2. Nav Visibility
+            // Start: Visible
+            // Zooming (50px to 1000px): Hidden
+            // After Zoom (>1000px): Visible
+            if (scrollY <= NAV_HIDE_THRESHOLD) {
+                navbar.classList.remove('opacity-0', 'pointer-events-none');
+                navbar.classList.add('opacity-100', 'pointer-events-auto');
+            } else if (scrollY > NAV_HIDE_THRESHOLD && scrollY < SCROLL_THRESHOLD) {
+                navbar.classList.add('opacity-0', 'pointer-events-none');
+                navbar.classList.remove('opacity-100', 'pointer-events-auto');
+            } else {
+                navbar.classList.remove('opacity-0', 'pointer-events-none');
+                navbar.classList.add('opacity-100', 'pointer-events-auto');
+            }
+
+            // 3. Floating Actions (Only show after zoom completes)
+            if (scrollY > SCROLL_THRESHOLD) {
+                fab.classList.remove('translate-y-10', 'opacity-0', 'invisible');
+                fab.classList.add('translate-y-0', 'opacity-100', 'visible');
+            } else {
+                fab.classList.add('translate-y-10', 'opacity-0', 'invisible');
+                fab.classList.remove('translate-y-0', 'opacity-100', 'visible');
+            }
+
+            // 4. Site Plan Sticky Logic
+            const rect = overviewSection.getBoundingClientRect();
+            const sectionTop = -rect.top;
+            const scrollDistance = rect.height - window.innerHeight;
+            let siteProgress = sectionTop / scrollDistance;
+
+            let activeZone = null;
+            if (siteProgress >= 0 && siteProgress <= 1) {
+                if (siteProgress < 0.2) activeZone = 'hub';
+                else if (siteProgress < 0.4) activeZone = 'prime';
+                else if (siteProgress < 0.6) activeZone = 'central';
+                else if (siteProgress < 0.8) activeZone = 'parks';
+                else activeZone = 'merchant';
+            }
+
+            document.querySelectorAll('.marker').forEach(el => {
+                const isActive = el.dataset.zone === activeZone;
+                const line = el.querySelector('.line');
+                const content = el.querySelector('.content');
+                const thumb = el.querySelector('.thumb');
+
+                if (isActive) {
+                    line.classList.remove('h-0'); line.classList.add('h-[120px]');
+                    content.classList.remove('translate-y-0'); content.classList.add('-translate-y-[120px]');
+                    thumb.classList.remove('h-0', 'opacity-0'); thumb.classList.add('h-[90px]', 'opacity-100');
+                } else {
+                    line.classList.add('h-0'); line.classList.remove('h-[120px]');
+                    content.classList.add('translate-y-0'); content.classList.remove('-translate-y-[120px]');
+                    thumb.classList.add('h-0', 'opacity-0'); thumb.classList.remove('h-[90px]', 'opacity-100');
+                }
+            });
+        });
     </script>
 </body>
+
 </html>
