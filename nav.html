@@ -258,20 +258,124 @@
             <img src="templates/images/The-HUB-Location-Map-no-backgroup.png" class="w-full">
         </section>
 
-        <!-- Register -->
-        <section id="register" class="py-32 bg-white">
-            <div class="max-w-4xl mx-auto px-6 text-center">
-                <h2 class="text-5xl font-semibold uppercase mb-12">Secure Your Space</h2>
-                <form class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                    <input type="text" placeholder="Full Name" class="p-4 border rounded-xl outline-none focus:border-hub-gold">
-                    <input type="tel" placeholder="Contact Number" class="p-4 border rounded-xl outline-none focus:border-hub-gold">
-                    <input type="email" placeholder="Email" class="p-4 border rounded-xl outline-none focus:border-hub-gold">
-                    <select class="p-4 border rounded-xl outline-none">
-                        <option>Nature of Business</option>
-                        <option>F&B</option>
-                        <option>Retail</option>
-                    </select>
-                    <button class="md:col-span-2 py-5 bg-hub-text text-white rounded-full font-bold uppercase tracking-widest hover:bg-black transition-colors">Submit Enquiry</button>
+        <!-- Register Section -->
+        <section id="register"
+            class="register-container w-full py-20 px-[20px] flex justify-center items-center bg-white">
+            <div class="register-card w-full md:w-[70%] lg:w-[60%] p-[40px_50px] text-center uppercase">
+                <h5 class="sub-title text-[20px] md:text-[24px] tracking-[3px] text-hub-gold font-bold uppercase mb-2">
+                    contact</h5>
+                <h2 class="text-[48px] md:text-[72px] font-semibold m-0 leading-tight text-hub-text">secure your space</h2>
+                <h3 class="text-[20px] md:text-[30px] font-light mt-2 mb-12 text-hub-text-light normal-case">Be part of Muar's premier business ecosystem</h3>
+
+                <form class="flex flex-col gap-[22px]">
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa-regular fa-user absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="text" placeholder="Full Name *" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="tel" placeholder="Contact Number *" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="email" placeholder="Email Address *" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                                <option disabled selected>Preferred Time to Contact *</option>
+                                <option>Morning (9:00 AM – 12:00 PM)</option>
+                                <option>Lunch Hour (12:00 PM – 2:00 PM)</option>
+                                <option>Afternoon (2:00 PM – 6:00 PM)</option>
+                                <option>After Working Hours</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <input type="text" placeholder="Company / Brand Name" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-briefcase absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                                <option disabled selected>Nature of Business *</option>
+                                <option>Food & Beverage (F&B)</option>
+                                <option>Retail & Fashion</option>
+                                <option>Health, Beauty & Wellness</option>
+                                <option>Corporate Office / Coworking</option>
+                                <option>Entertainment / Leisure</option>
+                                <option>Services</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 class="form-section-title text-[24px] md:text-[30px] text-hub-text font-light mt-[30px] normal-case">Requirement Details *</h4>
+                    
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-map-marked-alt absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select id="select-zone" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                                <option value="" disabled selected>Select Zone *</option>
+                                <option value="prime-square">Prime Square</option>
+                                <option value="merchant-bay">Merchant Bay</option>
+                                <option value="central-walk">Central Walk</option>
+                                <option value="parkfront-avenue">Parkfront Avenue (Drive Thru)</option>
+                            </select>
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select id="select-block" required disabled
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                <option value="" disabled selected>Select Block *</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i class="fa fa-layer-group absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                            <select id="select-level" required disabled
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                <option value="" disabled selected>Select Level/Unit *</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element form-group icon-input relative flex flex-col">
+                        <i class="fa fa-bullhorn absolute left-3 top-1/2 -translate-y-1/2 text-[15px] pointer-events-none text-[#888]"></i>
+                        <select required
+                            class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-[15px] bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                            <option disabled selected>How did you hear about us?</option>
+                            <option>Social Media (Facebook/Instagram)</option>
+                            <option>Search Engine (Google)</option>
+                            <option>Advertisement</option>
+                            <option>Word of Mouth / Referral</option>
+                            <option>Agent</option>
+                        </select>
+                    </div>
+
+                    <label class="reveal-element text-left text-[14px] text-hub-text-light leading-relaxed normal-case flex items-start gap-3 mt-4">
+                        <input type="checkbox" required class="w-5 h-5 mt-0.5 accent-hub-gold rounded">
+                        <span>I consent to the collection and processing of my personal data by YKL Capital Sdn Bhd for marketing and leasing purposes.</span>
+                    </label>
+
+                    <button class="reveal-element submit-btn mt-8 p-5 text-[16px] font-bold rounded-full border-none text-white cursor-pointer transition-all w-full md:w-auto md:min-w-[300px] flex items-center justify-center gap-3 mx-auto bg-gradient-to-br from-hub-gold to-hub-light-gold shadow-xl hover:-translate-y-1 hover:shadow-2xl">
+                        SUBMIT ENQUIRY <i class="fa-solid fa-paper-plane"></i>
+                    </button>
                 </form>
             </div>
         </section>
@@ -348,6 +452,60 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
+
+        // Form Select Logic
+        const zoneSelect = document.getElementById('select-zone');
+        const blockSelect = document.getElementById('select-block');
+        const levelSelect = document.getElementById('select-level');
+
+        const blocks = {
+            'prime-square': ['Block A', 'Block B'],
+            'merchant-bay': ['Block I'],
+            'central-walk': ['Block D', 'Block E', 'Block F', 'Block G', 'Block H', 'Block A7'],
+            'parkfront-avenue': ['Drive Thru Unit 1', 'Drive Thru Unit 2']
+        };
+
+        const levels = ['Ground Floor', 'Level 1', 'Level 2', 'Level 3'];
+
+        zoneSelect.addEventListener('change', () => {
+            blockSelect.innerHTML = '<option value="" disabled selected>Select Block *</option>';
+            levelSelect.innerHTML = '<option value="" disabled selected>Select Level/Unit *</option>';
+            levelSelect.disabled = true;
+
+            const selectedZone = zoneSelect.value;
+            if (selectedZone && blocks[selectedZone]) {
+                blocks[selectedZone].forEach(block => {
+                    const option = document.createElement('option');
+                    option.value = block;
+                    option.textContent = block;
+                    blockSelect.appendChild(option);
+                });
+                blockSelect.disabled = false;
+            } else {
+                blockSelect.disabled = true;
+            }
+        });
+
+        blockSelect.addEventListener('change', () => {
+            levelSelect.innerHTML = '<option value="" disabled selected>Select Level/Unit *</option>';
+            if (blockSelect.value) {
+                levels.forEach(lvl => {
+                    const option = document.createElement('option');
+                    option.value = lvl;
+                    option.textContent = lvl;
+                    levelSelect.appendChild(option);
+                });
+                levelSelect.disabled = false;
+            } else {
+                levelSelect.disabled = true;
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        mobileMenuBtn.addEventListener('click', () => {
+            // Logic for mobile menu would go here (toggle visibility)
+        });
     </script>
 </body>
 </html>
