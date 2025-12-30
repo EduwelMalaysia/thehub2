@@ -94,6 +94,11 @@
             scrollbar-width: none;
         }
 
+        #overview img {
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
         :root {
             --hub-gold: #D4AF37;
             --hub-gold-light: #e09f6d;
@@ -205,7 +210,7 @@
     <!-- Optimization: Only the center image (Item 5) loads immediately. 
          Surrounding images use 'data-bg' and load via JS to prioritize LCP (Largest Contentful Paint). -->
     <div id="gallery-container"
-        class="fixed inset-0 z-0 flex items-center justify-center bg-black overflow-hidden pointer-events-none perspective-1000">
+        class="fixed inset-0 z-0 flex items-center justify-center bg-black/60 overflow-hidden pointer-events-none perspective-1000">
         <div id="gallery-grid"
             class="grid grid-cols-1 md:grid-cols-3 grid-rows-3 gap-0 w-full h-full p-0 transform-style-3d will-change-transform origin-center transition-opacity duration-300"
             style="transform: scale(3);">
@@ -245,7 +250,7 @@
                 <img src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo"
                     class="h-[90px] w-auto object-contain">
             </div>
-            <div class="hidden md:flex items-center gap-8">
+            <div class="hidden lg:flex items-center gap-8">
                 <ul class="flex gap-6 list-none m-0 p-0">
                     <li><a href="#concept"
                             class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Concept</a>
@@ -266,15 +271,15 @@
             </div>
             <div class="flex items-center gap-4">
                 <a href="#register"
-                    class="hidden md:inline-flex px-8 py-3 rounded-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] text-white font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">Lease
+                    class="hidden lg:inline-flex px-8 py-3 rounded-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] text-white font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">Lease
                     Now</a>
-                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none"><i
+                <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl focus:outline-none"><i
                         class="fa fa-bars"></i></button>
             </div>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu"
-            class="md:hidden absolute top-[90px] left-0 w-full bg-black/95 text-white transition-all duration-300 overflow-hidden max-h-0 py-0">
+            class="lg:hidden absolute top-[90px] left-0 w-full bg-black/95 text-white transition-all duration-300 overflow-hidden max-h-0 py-0">
             <ul class="flex flex-col items-center gap-6">
                 <li><a href="#concept" class="mobile-link text-lg font-medium uppercase">Concept</a></li>
                 <li><a href="#overview" class="mobile-link text-lg font-medium uppercase">Overview</a></li>
@@ -577,13 +582,12 @@
 
 
         <!-- Site Plan Section -->
-        <section id="overview"
-            class="relative h-screen w-full bg-gradient-to-b from-[#4d5c93] to-[#1f2740] overflow-hidden">
+        <section id="overview" class="relative h-screen w-full overflow-hidden">
 
             <!-- Mobile Horizontal Scroll Wrapper -->
-            <div class="w-full h-full overflow-x-auto md:overflow-visible no-scrollbar">
+            <div class="w-full h-full overflow-x-auto overflow-y-hidden no-scrollbar">
                 <!-- Background Container (Wider on mobile) -->
-                <div class="relative min-w-[1000px] md:min-w-0 md:w-full h-full flex justify-center items-center">
+                <div class="relative w-[1600px] max-w-none h-full">
                     <!-- Background Image -->
                     <img src="templates/images/Overallaerialview13112025.png" alt="Site Plan"
                         class="w-full h-full object-cover">
@@ -596,16 +600,16 @@
                 </div>
             </div>
 
-            <!-- Legend -->
-            <div id="legend-container"
-                class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-wrap gap-3 sm:gap-5 justify-center bg-[#141414d9] px-2 sm:px-8 py-3 sm:py-4 rounded-3xl backdrop-blur-md border border-white/10 shadow-2xl z-50 w-[90%] transition-all duration-300">
-                <!-- Legend items injected via JS -->
-            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%] flex flex-col items-center gap-3 z-50">
+        
+                <div id="help-text"
+                    class="text-white text-xs sm:text-sm animate-pulse bg-black/40 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+                    Select a zone to expand details
+                </div>
 
-            <!-- Help Text -->
-            <div id="help-text"
-                class="absolute top-6 left-1/2 -translate-x-1/2 text-white text-sm pointer-events-none animate-pulse bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm border border-white/5">
-                Select a zone to expand details
+                <div id="legend-container"
+                    class="flex flex-wrap gap-3 sm:gap-5 justify-center bg-[#141414d9] px-4 sm:px-8 py-3 sm:py-4 rounded-3xl border border-white/10 shadow-2xl w-full transition-all duration-300">
+                    </div>
             </div>
 
             <!-- Modal -->
@@ -993,32 +997,32 @@
         // Site Plan Data
         const MARKERS = [
             // --- Back Row (Top ~28-32%) ---
-            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 31, left: 64, angle: 0, lineHeight: 60, img: 'templates/images/block-I.png' },
-            { id: 'block-d', label: 'Block D', zone: 'central', top: 35, left: 51.5, angle: -15, lineHeight: 100, img: 'templates/images/block-D-preview.png' },
-            { id: 'block-e', label: 'Block E', zone: 'central', top: 35, left: 60, angle: 5, lineHeight: 100, img: 'templates/images/block-E-preview.png' },
-            { id: 'block-g', label: 'Block G', zone: 'central', top: 35, left: 72, angle: -5, lineHeight: 100, img: 'templates/images/block-G-preview.png' },
-            { id: 'block-h', label: 'Block H', zone: 'central', top: 35, left: 80, angle: 15, lineHeight: 100, img: 'templates/images/block-H-preview.png' },
+            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, angle: 0, lineHeight: 60, img: 'templates/images/block-I.png' },
+            { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, angle: -15, lineHeight: 100, img: '' },
+            { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, angle: 5, lineHeight: 100, img: '' },
+            { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 67, angle: -5, lineHeight: 100, img: '' },
+            { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, angle: 15, lineHeight: 100, img: '' },
 
             // --- Middle Row (Top ~40-45%) ---
             { id: 'victoria-park', label: 'Victoria Park', zone: 'central', top: 40, left: 51, angle: -90, lineHeight: 70, img: 'templates/images/The-HUB-Victoria-Park-View1.png' },
-            { id: 'hydora-park', label: 'Hydora Park', zone: 'central', top: 40, left: 60, angle: 5, lineHeight: 10, img: 'templates/images/Hydora-Park.png' },
-            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'central', top: 40, left: 74, angle: -5, lineHeight: 10, img: 'templates/images/The-HUB-Children-Playground.png' },
-            { id: 'starview-park', label: 'Starview Park', zone: 'central', top: 40, left: 81, angle: 90, lineHeight: 70, img: 'templates/images/Starview-Park.png' },
+            { id: 'hydora-park', label: 'Hydora Park', zone: 'central', top: 40, left: 58, angle: 5, lineHeight: 10, img: 'templates/images/Hydora-Park.png' },
+            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'central', top: 40, left: 68, angle: -5, lineHeight: 10, img: 'templates/images/The-HUB-Children-Playground.png' },
+            { id: 'starview-park', label: 'Starview Park', zone: 'central', top: 40, left: 74, angle: 90, lineHeight: 70, img: 'templates/images/Starview-Park.png' },
 
-            { id: 'cineplex', label: 'Cineplex', zone: 'cineplex', top: 50, left: 30, angle: 0, lineHeight: 60, img: 'templates/images/The_HUB_cinema2.png' },
-            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 47, left: 58, angle: -180, lineHeight: 160, img: 'templates/images/block-A7-preview.png' },
-            { id: 'block-f', label: 'Block F', zone: 'central', top: 47, left: 79, angle: -180, lineHeight: 160, img: 'templates/images/block-F-preview.png' },
+            { id: 'cineplex', label: 'Cineplex', zone: 'cineplex', top: 50, left: 35, angle: 0, lineHeight: 60, img: 'templates/images/The_HUB_cinema2.png' },
+            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 47, left: 58, angle: -180, lineHeight: 160, img: '' },
+            { id: 'block-f', label: 'Block F', zone: 'central', top: 47, left: 73, angle: -180, lineHeight: 160, img: '' },
 
             // --- Front Row (Top ~55-65%) ---
             { id: 'block-a', label: 'Block A', zone: 'prime', top: 55, left: 56, angle: 0, lineHeight: 30, img: 'templates/images/The_HUB_office2_Extend.png' },
-            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 84, angle: 0, lineHeight: 30, img: 'templates/images/The_HUB_hotel2_V2.png' },
+            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 76, angle: 0, lineHeight: 30, img: 'templates/images/The_HUB_hotel2_V2.png' },
             { id: 'parkfront', label: 'Parkfront Avenue', zone: 'parkfront', top: 65, left: 30, angle: 0, lineHeight: 40, img: 'templates/images/Drive-Thru.png' },
 
             // --- Front Row (Top ~55-65%) ---
-            { id: 'perpective-entrance', label: 'Entrance', zone: 'perspective', top: 70, left: 41, angle: -70, lineHeight: 100, img: 'templates/images/The-Hub-Entrance-Statement.png' },
+            { id: 'perpective-entrance', label: 'Entrance', zone: 'perspective', top: 73, left: 43, angle: -70, lineHeight: 100, img: 'templates/images/The-Hub-Entrance-Statement.png' },
             { id: 'perspective-a7', label: 'Perspective from A7', zone: 'perspective', top: 55, left: 46, angle: 0, lineHeight: 40, img: 'templates/images/The_HUB_captial square_V2 copy.png' },
-            { id: 'perspective-highway', label: 'Perspective from Highway', zone: 'perspective', top: 75, left: 46, angle: 0, lineHeight: 40, img: 'templates/images/The_HUB_highway3b.png' },
-            { id: 'perspective-central-walk', label: 'Central Walk', zone: 'perspective', top: 55, left: 70, angle: 0, lineHeight: 30, img: 'templates/images/TheHub-DrivewayBoulevard.png' },
+            { id: 'perspective-highway', label: 'Perspective from Highway', zone: 'perspective', top: 77, left: 46, angle: 0, lineHeight: 40, img: 'templates/images/The_HUB_highway3b.png' },
+            { id: 'perspective-central-walk', label: 'Central Walk', zone: 'perspective', top: 55, left: 65, angle: 0, lineHeight: 30, img: 'templates/images/TheHub-DrivewayBoulevard.png' },
         ];
 
         const LEGEND_ITEMS = [
@@ -1030,6 +1034,12 @@
             { id: 'perspective', label: 'Perspective', color: '#ffd500' },
             { id: 'keyplan', label: 'Key Plan', color: '#d8e2dc' },
         ];
+
+        const ZONE_COLORS = LEGEND_ITEMS.reduce((acc, item) => {
+            acc[item.id] = item.color;
+            return acc;
+        }, {});
+
 
         // --- State ---
         let activeZone = null;
@@ -1054,6 +1064,13 @@
             markersContainer.innerHTML = '';
 
             MARKERS.forEach((marker, index) => {
+
+                if (!marker.img || marker.img.trim() === '') {
+                    return;
+                }
+                
+                const zoneColor = ZONE_COLORS[marker.zone] || '#000';
+
                 const el = document.createElement('div');
                 el.id = `marker-${index}`;
                 // Base classes
@@ -1096,11 +1113,11 @@
                 // Label
                 const label = document.createElement('div');
                 label.innerText = marker.label;
-                label.className = 'marker-label px-3 py-1.5 rounded text-[13px] font-bold uppercase mb-2 whitespace-nowrap backdrop-blur-sm border shadow-lg relative z-10';
-
+                label.className = 'text-sm marker-label px-3 py-1.5 rounded font-bold uppercase mb-2 whitespace-nowrap relative z-10';
+                label.style.backgroundColor = `${zoneColor}CC`;
                 // Image Thumbnail
                 const thumb = document.createElement('div');
-                thumb.className = 'marker-thumb w-[160px] bg-[#222] border-2 border-white rounded-lg overflow-hidden shadow-2xl origin-top relative z-20 cursor-pointer';
+                thumb.className = 'marker-thumb w-[150px] border-2 border-white rounded-md overflow-hidden origin-top relative z-20 cursor-pointer';
                 thumb.innerHTML = `
                     <div class="aspect-[4/3] w-full relative">
                         <img src="${marker.img}" class="w-full h-full object-cover" loading="lazy">
@@ -1137,7 +1154,7 @@
                 dot.style.backgroundColor = item.color;
 
                 const text = document.createElement('span');
-                text.className = 'text-sm md:text-lg lg:text-2xlfont-medium transition-colors duration-300';
+                text.className = 'text-sm md:text-md font-medium transition-colors duration-300';
                 text.innerText = item.label;
 
                 btn.appendChild(dot);
@@ -1158,6 +1175,7 @@
         function updateMarkers() {
             MARKERS.forEach((marker, index) => {
                 const isActive = activeZone === marker.zone;
+                const zoneColor = ZONE_COLORS[marker.zone] || '#000';
                 const el = document.getElementById(`marker-${index}`);
                 if (!el) return;
 
@@ -1179,8 +1197,10 @@
                 // Line Animation
                 if (isActive) {
                     line.style.height = `${targetHeight}px`;
+                    label.style.backgroundColor = `${zoneColor}CC`;
                 } else {
                     line.style.height = '0px';
+                    label.style.backgroundColor = `${zoneColor}CC`;
                 }
 
                 // Anchor Position (bottom relative to pivot)

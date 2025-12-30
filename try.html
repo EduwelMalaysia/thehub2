@@ -1,61 +1,234 @@
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
+<script>
+/* --------------------------------------------------------
+   DATA
+-------------------------------------------------------- */
+
+const MARKERS = [
+    { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, angle: 0, lineHeight: 60, img: 'templates/images/block-I.png' },
+    { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, angle: -15, lineHeight: 100, img: 'templates/images/block-D-preview.png' },
+    { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, angle: 5, lineHeight: 100, img: 'templates/images/block-E-preview.png' },
+    { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 67, angle: -5, lineHeight: 100, img: 'templates/images/block-G-preview.png' },
+    { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, angle: 15, lineHeight: 100, img: 'templates/images/block-H-preview.png' },
+
+    { id: 'cineplex', label: 'Cineplex', zone: 'cineplex', top: 50, left: 35, angle: 0, lineHeight: 60, img: 'templates/images/The_HUB_cinema2.png' },
+];
+
+const LEGEND_ITEMS = [
+    { id: 'prime', label: 'Prime Square', color: '#20A2DC' },
+    { id: 'central', label: 'Central Walk', color: '#83BC41' },
+    { id: 'merchant', label: 'Merchant Bay', color: '#E11F27' },
+    { id: 'cineplex', label: 'Cineplex', color: '#662E86' },
+    { id: 'parkfront', label: 'Parkfront Avenue', color: '#E22C7C' },
+    { id: 'perspective', label: 'Perspective', color: '#FFD500' }
+];
+
+/* --------------------------------------------------------
+   ZONE COLOR MAP (single source of truth)
+-------------------------------------------------------- */
+
+const ZONE_COLORS = LEGEND_ITEMS.reduce((acc, item) => {
+    acc[item.id] = item.color;
+    return acc;
+}, {});
+
+/* --------------------------------------------------------
+   STATE & ELEMENTS
+-------------------------------------------------------- */
+
+let activeZone = null;
+
+const markersContainer = document.getElementById('markers-container');
+const legendContainer  = document.getElementById('legend-container');
+const helpText         = document.getElementById('help-text');
+const modal            = document.getElementById('modal');
+const modalImg         = document.getElementById('modal-img');
+
+/* --------------------------------------------------------
+   INIT
+-------------------------------------------------------- */
+
+window.addEventListener('load', () => {
+    createMarkers();
+    createLegend();
+    updateUI();
+});
+
+/* --------------------------------------------------------
+   CREATE MARKERS (DESIGN UNCHANGED)
+-------------------------------------------------------- */
+
+function createMarkers() {
+    markersContainer.innerHTML = '';
+
+    MARKERS.forEach((marker, index) => {
+
+        // RULE: no image → no marker
+        if (!marker.img || marker.img.trim() === '') return;
+
+        const zoneColor = ZONE_COLORS[marker.zone] || '#000';
+
+        const el = document.createElement('div');
+        el.id = `marker-${index}`;
+        el.className = 'absolute w-0 h-0 transition-all duration-500';
+        el.style.top = marker.top + '%';
+        el.style.left = marker.left + '%';
+
+        const pivot = document.createElement('div');
+        pivot.className = 'absolute bottom-0 left-0 w-0 h-0';
+        pivot.style.transform = `rotate(${marker.angle || 0}deg)`;
+        pivot.style.transformOrigin = 'bottom center';
+
+        const line = document.createElement('div');
+        line.className = 'marker-line absolute bottom-0 left-1/2 -translate-x-1/2 w-px bg-white/80 shadow-[0_0_5px_rgba(255,255,255,0.5)] origin-bottom z-0';
+
+        const anchor = document.createElement('div');
+        anchor.className = 'marker-anchor absolute left-1/2 -translate-x-1/2 w-0 h-0 z-10';
+
+        const contentWrapper = document.createElement('div');
+        contentWrapper.style.transform = `rotate(${-(marker.angle || 0)}deg)`;
+        contentWrapper.className = 'marker-content absolute w-[150px] flex flex-col items-center left-[-75px] bottom-0';
+
+        const label = document.createElement('div');
+        label.innerText = marker.label;
+        label.className = 'marker-label px-3 py-1.5 rounded text-[13px] font-bold uppercase mb-2 whitespace-nowrap backdrop-blur-sm border shadow-lg relative z-10';
+
+        // ✅ ONLY CHANGE: background uses zone color instead of black
+        label.style.backgroundColor = `${zoneColor}66`; // inactive ~40%
+        label.style.color = '#fff';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'marker-thumb w-[160px] bg-[#222] border-2 border-white rounded-lg overflow-hidden shadow-2xl origin-top relative z-20 cursor-pointer max-h-0 opacity-0 pointer-events-none transition-all duration-500';
+        thumb.innerHTML = `
+            <div class="aspect-[4/3] w-full relative">
+                <img src="${marker.img}" class="w-full h-full object-cover" loading="lazy">
+            </div>
+        `;
+        thumb.onclick = () => {
+            if (activeZone === marker.zone) openModal(marker.img);
+        };
+
+        contentWrapper.appendChild(label);
+        contentWrapper.appendChild(thumb);
+        anchor.appendChild(contentWrapper);
+        pivot.appendChild(line);
+        pivot.appendChild(anchor);
+        el.appendChild(pivot);
+        markersContainer.appendChild(el);
+    });
+}
+
+/* --------------------------------------------------------
+   LEGEND (UNCHANGED)
+-------------------------------------------------------- */
+
+function createLegend() {
+    legendContainer.innerHTML = '';
+
+    LEGEND_ITEMS.forEach(item => {
+        const btn = document.createElement('button');
+        btn.id = `legend-${item.id}`;
+        btn.className = 'flex items-center gap-2.5 transition-all duration-300 group';
+        btn.onclick = () => toggleZone(item.id);
+
+        const dot = document.createElement('span');
+        dot.className = 'w-4 h-4 rounded-full';
+        dot.style.backgroundColor = item.color;
+
+        const text = document.createElement('span');
+        text.innerText = item.label;
+        text.className = 'text-sm text-gray-300';
+
+        btn.appendChild(dot);
+        btn.appendChild(text);
+        legendContainer.appendChild(btn);
+    });
+}
+
+/* --------------------------------------------------------
+   UPDATE UI (ONLY BG COLOR LOGIC CHANGED)
+-------------------------------------------------------- */
+
+function updateUI() {
+    updateMarkers();
+    updateLegend();
+    helpText.innerText = activeZone
+        ? 'Click legend again to reset view'
+        : 'Select a zone to expand details';
+}
+
+function updateMarkers() {
+    MARKERS.forEach((marker, index) => {
+        const el = document.getElementById(`marker-${index}`);
+        if (!el) return;
+
+        const zoneColor = ZONE_COLORS[marker.zone] || '#000';
+        const isActive = activeZone === marker.zone;
+
+        const line  = el.querySelector('.marker-line');
+        const anchor = el.querySelector('.marker-anchor');
+        const label = el.querySelector('.marker-label');
+        const thumb = el.querySelector('.marker-thumb');
+
+        el.style.zIndex = isActive ? 50 : 10;
+
+        line.style.height = isActive ? `${marker.lineHeight || 64}px` : '0px';
+        anchor.style.bottom = isActive ? `${(marker.lineHeight || 64) + 6}px` : '12px';
+
+        // ✅ ONLY CHANGE: swap black → zone color
+        if (isActive) {
+            label.style.backgroundColor = `${zoneColor}CC`; // active ~80%
+            label.classList.add('scale-110');
+            label.classList.remove('scale-90');
+        } else {
+            label.style.backgroundColor = `${zoneColor}66`; // inactive ~40%
+            label.classList.add('scale-90');
+            label.classList.remove('scale-110');
+        }
+
+        if (isActive) {
+            thumb.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none');
+            thumb.classList.add('max-h-[200px]', 'opacity-100', 'pointer-events-auto', 'mt-2');
+        } else {
+            thumb.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
+            thumb.classList.remove('max-h-[200px]', 'opacity-100', 'mt-2');
+        }
+    });
+}
+
+function updateLegend() {
+    LEGEND_ITEMS.forEach(item => {
+        const btn = document.getElementById(`legend-${item.id}`);
+        if (!btn) return;
+
+        btn.style.opacity = activeZone === item.id ? '1' : '0.6';
+        btn.style.transform = activeZone === item.id ? 'scale(1.1)' : 'scale(1)';
+    });
+}
+
+/* --------------------------------------------------------
+   INTERACTION
+-------------------------------------------------------- */
+
+function toggleZone(zoneId) {
+    activeZone = activeZone === zoneId ? null : zoneId;
+    updateUI();
+}
+
+/* --------------------------------------------------------
+   MODAL (UNCHANGED)
+-------------------------------------------------------- */
+
+function openModal(src) {
+    modalImg.src = src;
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => modal.classList.remove('opacity-0'));
+}
+
+function closeModal() {
+    modal.classList.add('opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modalImg.src = '';
+    }, 300);
 }
 </script>
-        <!-- Philosophy Section -->
-        ><section id="overview"
-            class="relative h-screen w-full bg-gradient-to-b from-[#4d5c93] to-[#1f2740] overflow-hidden font-sans">
-
-            <!-- Background -->
-            <div class="absolute inset-0 w-full h-full flex justify-center items-center">
-                <!-- Background Image -->
-                <img src="templates/images/Overall aerial view 13112025.jpg" alt="Site Plan"
-                    class="w-full h-full object-cover">
-
-                <!-- Markers Container -->
-                <div id="markers-container"
-                    class="absolute inset-0 w-full h-full max-w-[1920px] mx-auto pointer-events-none">
-                    <!-- Markers injected via JS -->
-                </div>
-            </div>
-
-            <!-- Header Overlay -->
-            <div class="absolute top-0 left-0 w-full pt-16 pb-24 bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none z-30 flex flex-col items-center justify-start transition-all duration-500">
-                
-                <h4 class="text-hub-light-gold text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-md animate-fadeIn opacity-0" style="animation-delay: 0.1s; animation-fill-mode: forwards;">Master Plan</h4>
-                
-                <h1 class="text-5xl md:text-7xl text-white font-bold uppercase tracking-widest mb-5 drop-shadow-2xl animate-fadeIn opacity-0" style="animation-delay: 0.3s; animation-fill-mode: forwards;">
-                    Overview
-                </h1>
-                
-                <div class="w-24 h-1 bg-gradient-to-r from-hub-light-gold to-[#e09f6d] rounded-full mb-8 animate-fadeIn opacity-0" style="animation-delay: 0.5s; animation-fill-mode: forwards;"></div>
-
-                <!-- Help Text -->
-                <div id="help-text" class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm md:text-base font-medium tracking-wide shadow-xl animate-fadeIn opacity-0 transition-all duration-300" style="animation-delay: 0.7s; animation-fill-mode: forwards;">
-                    Select a zone to expand details
-                </div>
-            </div>
-
-            <!-- Legend -->
-            <div id="legend-container"
-                class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-wrap gap-3 sm:gap-5 justify-center bg-[#141414d9] px-4 sm:px-8 py-3 sm:py-4 rounded-3xl backdrop-blur-md border border-white/10 shadow-2xl z-50 w-[95%] sm:w-auto transition-all duration-300">
-                <!-- Legend items injected via JS -->
-            </div>
-
-            <!-- Modal -->
-            <div id="modal"
-                class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 sm:p-10 cursor-zoom-out opacity-0 transition-opacity duration-300"
-                onclick="closeModal()">
-                <div class="absolute top-4 right-6 text-white text-5xl cursor-pointer opacity-80 hover:opacity-100">
-                    &times;</div>
-                <img id="modal-img" src=""
-                    class="max-w-full max-h-full rounded-lg border border-[#333] shadow-[0_0_50px_black] object-contain scale-95 transition-transform duration-300"
-                    onclick="event.stopPropagation()">
-            </div>
-
-        </section>
