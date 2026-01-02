@@ -1,234 +1,1373 @@
-<script>
-/* --------------------------------------------------------
-   DATA
--------------------------------------------------------- */
+<!DOCTYPE html>
+<html lang="en">
 
-const MARKERS = [
-    { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, angle: 0, lineHeight: 60, img: 'templates/images/block-I.png' },
-    { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, angle: -15, lineHeight: 100, img: 'templates/images/block-D-preview.png' },
-    { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, angle: 5, lineHeight: 100, img: 'templates/images/block-E-preview.png' },
-    { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 67, angle: -5, lineHeight: 100, img: 'templates/images/block-G-preview.png' },
-    { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, angle: 15, lineHeight: 100, img: 'templates/images/block-H-preview.png' },
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE HUB - Muar's New Centre</title>
+    <link rel="icon" href="templates/images/THE-HUB-Business-Park-logo.png" type="image/x-icon">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hub-blue': '#20A2DC',
+                        'hub-green': '#83BC41',
+                        'hub-red': '#E11F27',
+                        'hub-purple': '#662E86',
+                        'hub-pink': '#E22C7C',
+                        'hub-gold': '#bc7b47',
+                        'hub-light-gold': '#c48350',
+                        'hub-text': '#222',
+                        'hub-text-light': '#666',
+                        'hub-bg': '#f7f7f7',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    perspective: {
+                        '1000': '1000px',
+                    }
+                },
+            },
+        }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    { id: 'cineplex', label: 'Cineplex', zone: 'cineplex', top: 50, left: 35, angle: 0, lineHeight: 60, img: 'templates/images/The_HUB_cinema2.png' },
-];
+    <!-- Preload Critical Hero Image -->
+    <link rel="preload" as="image" href="templates/images/cover2.jpg">
 
-const LEGEND_ITEMS = [
-    { id: 'prime', label: 'Prime Square', color: '#20A2DC' },
-    { id: 'central', label: 'Central Walk', color: '#83BC41' },
-    { id: 'merchant', label: 'Merchant Bay', color: '#E11F27' },
-    { id: 'cineplex', label: 'Cineplex', color: '#662E86' },
-    { id: 'parkfront', label: 'Parkfront Avenue', color: '#E22C7C' },
-    { id: 'perspective', label: 'Perspective', color: '#FFD500' }
-];
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
 
-/* --------------------------------------------------------
-   ZONE COLOR MAP (single source of truth)
--------------------------------------------------------- */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
 
-const ZONE_COLORS = LEGEND_ITEMS.reduce((acc, item) => {
-    acc[item.id] = item.color;
-    return acc;
-}, {});
+        ::-webkit-scrollbar-thumb {
+            background: #c48350;
+            border-radius: 4px;
+        }
 
-/* --------------------------------------------------------
-   STATE & ELEMENTS
--------------------------------------------------------- */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bc7b47;
+        }
 
-let activeZone = null;
+        .perspective-1000 {
+            perspective: 1000px;
+        }
 
-const markersContainer = document.getElementById('markers-container');
-const legendContainer  = document.getElementById('legend-container');
-const helpText         = document.getElementById('help-text');
-const modal            = document.getElementById('modal');
-const modalImg         = document.getElementById('modal-img');
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
 
-/* --------------------------------------------------------
-   INIT
--------------------------------------------------------- */
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+        }
 
-window.addEventListener('load', () => {
-    createMarkers();
-    createLegend();
-    updateUI();
-});
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
 
-/* --------------------------------------------------------
-   CREATE MARKERS (DESIGN UNCHANGED)
--------------------------------------------------------- */
+        /* Utilities */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
 
-function createMarkers() {
-    markersContainer.innerHTML = '';
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-    MARKERS.forEach((marker, index) => {
+        #overview img {
+            user-select: none;
+            -webkit-user-drag: none;
+        }
 
-        // RULE: no image → no marker
-        if (!marker.img || marker.img.trim() === '') return;
+        :root {
+            --hub-gold: #D4AF37;
+            --hub-gold-light: #e09f6d;
+            --hub-dark: #222222;
+            --hub-bg: #F9F9F9;
+        }
 
-        const zoneColor = ZONE_COLORS[marker.zone] || '#000';
+        /* Animations */
+        @keyframes streamer {
+            0% {
+                background-position: 0% 50%;
+            }
 
-        const el = document.createElement('div');
-        el.id = `marker-${index}`;
-        el.className = 'absolute w-0 h-0 transition-all duration-500';
-        el.style.top = marker.top + '%';
-        el.style.left = marker.left + '%';
+            100% {
+                background-position: 200% 50%;
+            }
+        }
 
-        const pivot = document.createElement('div');
-        pivot.className = 'absolute bottom-0 left-0 w-0 h-0';
-        pivot.style.transform = `rotate(${marker.angle || 0}deg)`;
-        pivot.style.transformOrigin = 'bottom center';
+        .animate-streamer {
+            animation: streamer 3s linear infinite;
+        }
 
-        const line = document.createElement('div');
-        line.className = 'marker-line absolute bottom-0 left-1/2 -translate-x-1/2 w-px bg-white/80 shadow-[0_0_5px_rgba(255,255,255,0.5)] origin-bottom z-0';
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
 
-        const anchor = document.createElement('div');
-        anchor.className = 'marker-anchor absolute left-1/2 -translate-x-1/2 w-0 h-0 z-10';
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-        const contentWrapper = document.createElement('div');
-        contentWrapper.style.transform = `rotate(${-(marker.angle || 0)}deg)`;
-        contentWrapper.className = 'marker-content absolute w-[150px] flex flex-col items-center left-[-75px] bottom-0';
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
 
-        const label = document.createElement('div');
-        label.innerText = marker.label;
-        label.className = 'marker-label px-3 py-1.5 rounded text-[13px] font-bold uppercase mb-2 whitespace-nowrap backdrop-blur-sm border shadow-lg relative z-10';
+        /* Register Form Reveal Animation */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease-out;
+        }
 
-        // ✅ ONLY CHANGE: background uses zone color instead of black
-        label.style.backgroundColor = `${zoneColor}66`; // inactive ~40%
-        label.style.color = '#fff';
+        .reveal-element.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        const thumb = document.createElement('div');
-        thumb.className = 'marker-thumb w-[160px] bg-[#222] border-2 border-white rounded-lg overflow-hidden shadow-2xl origin-top relative z-20 cursor-pointer max-h-0 opacity-0 pointer-events-none transition-all duration-500';
-        thumb.innerHTML = `
-            <div class="aspect-[4/3] w-full relative">
-                <img src="${marker.img}" class="w-full h-full object-cover" loading="lazy">
+        /* Custom transitions for smoother animation */
+        .marker-line {
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .marker-anchor {
+            transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .marker-thumb {
+            transition: max-height 0.5s ease-out, opacity 0.4s ease-out;
+        }
+
+        .marker-label {
+            transition: all 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+
+        .gold-accent {
+            background-color: var(--hub-gold);
+        }
+
+        .border-gold {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-hub-bg text-hub-text font-sans antialiased overflow-x-hidden">
+
+    <!-- 1. Background Gallery (Fixed) -->
+    <!-- Optimization: Only the center image (Item 5) loads immediately. 
+         Surrounding images use 'data-bg' and load via JS to prioritize LCP (Largest Contentful Paint). -->
+    <div id="gallery-container"
+        class="fixed inset-0 z-0 flex items-center justify-center bg-black/60 overflow-hidden pointer-events-none perspective-1000">
+        <div id="gallery-grid"
+            class="grid grid-cols-1 md:grid-cols-3 grid-rows-3 gap-0 w-full h-full p-0 transform-style-3d will-change-transform origin-center transition-opacity duration-300"
+            style="transform: scale(3);">
+            <!-- Row 1 -->
+            <div class="lazy-gallery-bg hidden md:block w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The-HUB-Victoria-Park-View1.png')"></div>
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The_HUB_captial square_V2 copy.png')"></div>
+            <div class="lazy-gallery-bg hidden md:block w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/starview-park.png')"></div>
+
+            <!-- Row 2 -->
+            <div class="lazy-gallery-bg hidden md:block w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The_HUB_cinema2.png')"></div>
+            <div class="w-full h-full bg-cover bg-top shadow-2xl z-10"
+                style="background-image: url('templates/images/cover-page3.png');"></div>
+            <div class="lazy-gallery-bg hidden md:block w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The-HUB-Central-Walk.png')"></div>
+
+            <!-- Row 3 -->
+            <div class="lazy-gallery-bg hidden md:block w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/Hydora-Park.png')"></div>
+            <div class="lazy-gallery-bg w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/Drive-Thru.png')"></div>
+            <div class="lazy-gallery-bg hidden md:block w-full h-full bg-cover bg-center shadow-2xl transition-opacity duration-500"
+                data-bg="url('templates/images/The-HUB-Children-Playground.png')"></div>
+        </div>
+        <div class="absolute inset-0 pointer-events-none"></div>
+    </div>
+
+    <!-- 2. Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 left-0 w-full z-50 transition-opacity duration-500 ease-in-out opacity-100 pointer-events-auto">
+        <div
+            class="w-full h-[90px] px-6 md:px-10 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
+            <div class="flex items-center h-full">
+                <img src="templates/images/THE-HUB-Business-Park-logow.png" alt="Logo"
+                    class="h-[90px] w-auto object-contain">
             </div>
-        `;
-        thumb.onclick = () => {
-            if (activeZone === marker.zone) openModal(marker.img);
+            <div class="hidden lg:flex items-center gap-8">
+                <ul class="flex gap-6 list-none m-0 p-0">
+                    <li><a href="#concept"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Concept</a>
+                    </li>
+                    <li><a href="#overview"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Overview</a>
+                    </li>
+                    <li><a href="#happening"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">News</a>
+                    </li>
+                    <li><a href="#location"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Location</a>
+                    </li>
+                    <li><a href="#register"
+                            class="text-white text-[15px] font-semibold uppercase hover:text-hub-light-gold transition-all duration-300 drop-shadow-md hover:-translate-y-0.5 inline-block">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#register"
+                    class="hidden lg:inline-flex px-8 py-3 rounded-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] text-white font-bold text-sm uppercase shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">Lease
+                    Now</a>
+                <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl focus:outline-none"><i
+                        class="fa fa-bars"></i></button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="lg:hidden absolute top-[90px] left-0 w-full bg-black/95 text-white transition-all duration-300 overflow-hidden max-h-0 py-0">
+            <ul class="flex flex-col items-center gap-6">
+                <li><a href="#concept" class="mobile-link text-lg font-medium uppercase">Concept</a></li>
+                <li><a href="#overview" class="mobile-link text-lg font-medium uppercase">Overview</a></li>
+                <li><a href="#happening" class="mobile-link text-lg font-medium uppercase">News</a></li>
+                <li><a href="#location" class="mobile-link text-lg font-medium uppercase">Location</a></li>
+                <li><a href="#register" class="mobile-link text-lg font-medium uppercase">Contact</a></li>
+                <li><a href="#register"
+                        class="mobile-link inline-block px-8 py-3 rounded-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] text-white font-bold uppercase">Lease
+                        Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 3. Spacer for Zoom Animation (The "fake scroll" area) -->
+    <!-- Increased height to calc(100vh + 1000px) so content only enters viewport AFTER 1000px scroll -->
+    <div style="height: calc(100vh + 1000px);" class="w-full pointer-events-none"></div>
+    <!-- 4. Main Content ("Boxing Section") -->
+    <main class="relative z-10 bg-hub-bg shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
+
+        <!-- Concept Section -->
+        <section id="concept" class="relative w-full py-20 flex justify-center bg-hub-bg">
+            <div class="w-4/5 text-center reveal-element">
+                <h2 class="text-2xl sm:text-4xl md:text-5xl uppercase text-hub-gold mb-3 font-medium leading-tight">muar's new
+                    centre of businesses & lifestyle</h2>
+                <h3 class="text-lg sm:text-2xl md:text-3xl capitalize mb-8 text-hub-text font-light">a beacon of sustainability
+                </h3>
+                <p class="text-sm md:text-lg lg:text-2xl text-justify leading-relaxed text-hub-text-light mb-12">
+                    THE HUB is an exciting, multi-component development that features innovative urban planning and
+                    design, carefully considering the needs of the community and businesses with equal measure.
+                    By incorporating green spaces, pedestrian-friendly pathways, and seamless connectivity,
+                    THE HUB fosters a lively, interconnected atmosphere.
+                </p>
+                <a href="#"
+                    class="text-sm md:text-lg lg:text-2xl inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-br from-[#147db3] to-[#05548e] text-white font-bold rounded-full uppercase tracking-wider shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+                    <i class="fa-solid fa-download"></i> Download Floor Plans
+                </a>
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section class="py-12 px-6 flex flex-col mx-auto items-center justify-center reveal-element">
+            <div class="video-container">
+                <video class="video-frame" id="localVideoPlayer" src="templates/images/YKL-the-hub_004.mp4" playsinline
+                    loop preload="auto">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="text-center mt-12">
+                <p class="text-gray-400 uppercase tracking-widest text-xs font-bold">Experience the future of Muar</p>
+            </div>
+        </section>
+
+        <section class="w-full relative overflow-hidden flex justify-center items-center animate-fadeIn">
+            <div class="w-full relative reveal-element">
+                <img loading="lazy" src="templates/images/The_HUB_captialsquare_V2copyFA.png" alt="Banner"
+                    class="w-full h-full object-contain bg-hub-bg" />
+            </div>
+        </section>
+
+        <!-- Why Hub Section -->
+        <section
+            class="relative py-28 bg-[url('templates/images/Component17.png')] bg-cover bg-center bg-fixed animate-fadeIn">
+            <div class="absolute inset-0 bg-black/60 z-0"></div>
+            <div class="relative z-10 w-[85%] mx-auto text-hub-bg">
+                <div class="text-center mb-20">
+                    <h2 class="text-2xl sm:text-4xl md:text-5xl font-semibold uppercase leading-tight">Why Move <br /> Your
+                        Business to THE HUB</h2>
+                </div>
+                <div class="flex flex-wrap justify-center gap-x-12 gap-y-16 reveal-element">
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/location.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">Strategic Location</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">4km radius from Muar Town Centre accessible
+                            via the Muar Bypass/AMJ Highway</p>
+                    </div>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/footfall.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">Footfall</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">427,000 sqft total gross floor area.</p>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">Over 200,000 population within 10km+ regional
+                            catchment</p>
+                    </div>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/film.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">1st Cinema</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">1st Cinema in Muar wiht over 700 seats in 7
+                            halls</p>
+                    </div>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/lifestyle.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">Lifestyle</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">Cinema, F&B, Wellness, Weekend Market, Rooftop
+                            Sky Park & Corporate Offices</p>
+                    </div>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/prestige.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">Prestige</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">A premium image for brands seeking
+                            credibility, stability, and visibility</p>
+                    </div>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/parking.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">Parking</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">Estimated 950 Carparks & 450 motorcycle
+                            parking lots</p>
+                    </div>
+                    <div class="w-full md:w-[calc(50%-50px)] lg:w-[calc(25%-50px)] min-w-[260px] text-center group">
+                        <div class="mb-7 inline-block p-0"><img loading="lazy" src="templates/images/safety.png"
+                                class="h-16 w-auto opacity-90 mx-auto"></div>
+                        <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold mb-3">Safety</h3>
+                        <p class="text-sm md:text-lg lg:text-xl leading-relaxed opacity-90">CCTV-monitored, 24/7 security with
+                            professional guards on duty</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="pt-20 pb-4 px-6 relative text-center">
+            <div class="max-w-4xl mx-auto relative z-10 animate-fade-in">
+                <h3 class="text-lg sm:text-2xl md:text-3xl tracking-[0.5em] font-bold mb-4 uppercase text-gray-400"
+                    style="color: var(--hub-gold-light)">
+                    The Philosophy
+                </h3>
+                <h1 class="text-2xl sm:text-4xl md:text-5xl font-light mb-8 uppercase leading-tight">
+                    Redefining Muar’s Skyline
+                </h1>
+                <div class="w-24 h-1 mx-auto mb-10 bg-gradient-to-r from-yellow-600 to-yellow-400"></div>
+                <p class="text-sm md:text-lg lg:text-xl leading-relaxed text-gray-500 max-w-6xl mx-auto font-light">
+                    The Hub is not just an address, it is a destination. We are redefining the commercial landscape by
+                    introducing Muar’s first fully managed, safe, and lifestyle-centric business park.
+                </p>
+            </div>
+        </section>
+
+        <section id="philosophy" class="relative max-w-8xl mx-auto px-6 space-y-10 py-16">
+
+            <!-- Vision of Success -->
+            <div
+                class="flex flex-col md:flex-row w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-100">
+                <div class="w-full md:w-3/5 group relative">
+                    <div
+                        class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50">
+                    </div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The_HUB_cinema2.png" alt="Vision"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute bottom-[-20px] right-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">01</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest"
+                            style="color: var(--hub-gold)">Community Driven</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl font-light text-[#222] leading-tight">A Vision of Success</h4>
+                    </div>
+                    <p class="text-sm md:text-lg lg:text-xl text-gray-500 leading-relaxed font-light line-clamp-4">
+                        THE HUB is envisioned to be the most inspired, community-driven mixed developments in Muar,
+                        poised to be a promising investment prospect. Through a holistic approach that prioritizes
+                        social inclusivity, environmental responsibility, and economic viability, THE HUB is set to be a
+                        place that gives for many years to come.
+                    </p>
+                    <a href="#"
+                        class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vibrant Lifestyle -->
+            <div
+                class="flex flex-col md:flex-row-reverse w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-200">
+                <div class="w-full md:w-3/5 group relative">
+                    <div
+                        class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50">
+                    </div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The_HUB_roof_top_v3.png" alt="Lifestyle"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute bottom-[-20px] left-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">02</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest"
+                            style="color: var(--hub-gold)">Social Inclusivity</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl font-light text-[#222] leading-tight">Vibrant Lifestyle</h4>
+                    </div>
+                    <p class="text-sm md:text-lg lg:text-xl text-gray-500 leading-relaxed font-light line-clamp-4">
+                        THE HUB offers a vibrant lifestyle experience for visitors, with thoughtfully designed social
+                        spaces that allow people and businesses to flourish. These spaces encourage interaction,
+                        collaboration, and a sense of community, providing an ideal environment for both work and
+                        leisure. The development is seamlessly connected through well-planned link bridges that link
+                        various blocks together, making it fully walkasble and ensuring a convenient, hassle-free
+                        experience. This design promotes accessibility and ease of movement for everyone.
+                    </p>
+                    <a href="#"
+                        class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Professionally Managed -->
+            <div
+                class="flex flex-col md:flex-row w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-300">
+                <div class="w-full md:w-3/5 group relative">
+                    <div
+                        class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50">
+                    </div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/The-Hub-Entrance-Statement.png" alt="Management"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute bottom-[-20px] right-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">03</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest"
+                            style="color: var(--hub-gold)">Peace of Mind</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl font-light text-[#222] leading-tight">Professionally Managed
+                        </h4>
+                    </div>
+                    <p class="text-sm md:text-lg lg:text-xl text-gray-500 leading-relaxed font-light line-clamp-4">
+                        Safety and maintenance are our top priorities. The entire precinct is gated, guarded, and
+                        professionally maintained by YKL Capital to ensure lasting value.
+                    </p>
+                    <a href="#"
+                        class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Curated Synergy -->
+            <div
+                class="flex flex-col md:flex-row-reverse w-[80%] mx-auto items-center gap-12 lg:gap-24 animate-fade-in delay-300">
+                <div class="w-full md:w-3/5 group relative">
+                    <div
+                        class="absolute -inset-4 border border-gold pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-50">
+                    </div>
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] shadow-2xl relative z-10">
+                        <img src="templates/images/TheHub-OpenPlaza.png" alt="Synergy"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute bottom-[-20px] left-[-20px] w-32 h-32 opacity-10 pointer-events-none z-0 gold-accent">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/5 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[10px] tracking-[0.4em] uppercase font-bold text-gray-400">04</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold uppercase tracking-widest"
+                            style="color: var(--hub-gold)">Lease-Only Ecosystem</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl font-light text-[#222] leading-tight">Curated Synergy</h4>
+                    </div>
+                    <p class="text-sm md:text-lg lg:text-xl text-gray-500 leading-relaxed font-light line-clamp-4">
+                        A lease-only ecosystem ensuring a premium mix. We carefully select tenants to create a
+                        complementary business environment where every brand thrives together.
+                    </p>
+                    <a href="#"
+                        class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors hover:opacity-70">
+                        Explore
+                        <div class="h-px w-8 bg-black transition-all group-hover:w-12"></div>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Site Plan Section -->
+        <!-- Site Plan Section -->
+<section id="overview" class="relative w-full overflow-hidden">
+
+    <!-- Responsive Container with Aspect Ratio -->
+    <div class="relative w-full" style="aspect-ratio: 16/9;">
+        <!-- Background Image -->
+        <img src="templates/images/Overallaerialview13112025.png" alt="Site Plan"
+             class="absolute inset-0 w-full h-full object-cover">
+
+        <!-- Markers Container -->
+        <div id="markers-container" class="absolute inset-0 w-full h-full pointer-events-none">
+            <!-- Markers injected via JS -->
+        </div>
+    </div>
+
+    <!-- Bottom Help & Legend -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%] flex flex-col items-center gap-3 z-50">
+        <div id="help-text"
+             class="text-white text-xs sm:text-sm animate-pulse bg-black/40 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+            Select a zone to expand details
+        </div>
+
+        <div id="legend-container"
+             class="flex flex-wrap gap-3 sm:gap-5 justify-center bg-[#141414d9] px-4 sm:px-8 py-3 sm:py-4 rounded-3xl border border-white/10 shadow-2xl w-full transition-all duration-300">
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal"
+         class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 sm:p-10 cursor-zoom-out opacity-0 transition-opacity duration-300"
+         onclick="closeModal()">
+        <div class="absolute top-4 right-6 text-white text-5xl cursor-pointer opacity-80 hover:opacity-100">
+            &times;
+        </div>
+        <img id="modal-img" src=""
+             class="max-w-full max-h-full rounded-lg border border-[#333] shadow-[0_0_50px_black] object-contain scale-95 transition-transform duration-300"
+             onclick="event.stopPropagation()">
+    </div>
+
+</section>
+
+        <!-- News Section -->
+        <section id="happening" class="py-24 text-center overflow-hidden w-[70%] mx-auto">
+            <div class="max-w-[800px] mx-auto mb-12 px-5">
+                <h3 class="text-lg sm:text-2xl md:text-3xl uppercase font-extralight text-hub-text mb-2">News & Updates</h3>
+                <h2 class="text-2xl sm:text-4xl md:text-5xl uppercase font-semibold mb-5 leading-none">The Pulse</h2>
+                <div class="w-20 h-1 bg-gradient-to-br from-hub-light-gold to-[#e09f6d] mx-auto rounded-sm"></div>
+            </div>
+            <div class="w-full overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory">
+                <div class="flex gap-8 px-[5%] w-max">
+                    <div
+                        class="relative w-[350px] bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left snap-center group">
+                        <div class="h-[220px] w-full relative overflow-hidden"><img loading="lazy"
+                                src="templates/images/a) YKL Aerial - Choose this angle.jpeg"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        </div>
+                        <div
+                            class="absolute top-5 left-5 bg-hub-light-gold text-white px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md">
+                            Construction</div>
+                        <div class="p-8">
+                            <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold text-[#333] mb-4">Project Update: Site Progress Q4 2025
+                            </h3>
+                            <p class="text-sm md:text-lg lg:text-2xl text-[#777] mb-6">
+                                Shaping the future of Muar. See the latest milestones as we lay the foundation for the
+                                region's biggest hub.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="relative w-[350px] bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left snap-center group">
+                        <div class="h-[220px] w-full relative overflow-hidden"><img loading="lazy"
+                                src="templates/images/handshake.jpg"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        </div>
+                        <div
+                            class="absolute top-5 left-5 bg-hub-light-gold text-white px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md">
+                            Coming Soon</div>
+                        <div class="p-8">
+                            <h3 class="text-lg sm:text-2xl md:text-3xl font-semibold text-[#333] mb-4">Official LOI Signing Ceremony</h3>
+                            <p class="text-sm md:text-lg lg:text-2xl text-[#777] mb-6">
+                                Securing the future with key anchor tenants. A landmark partnership that brings premium
+                                brands to Muar.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section (UPDATED) -->
+        <section id="location"
+            class="location w-full bg-gradient-to-br from-hub-light-gold to-[#e09f6d] overflow-hidden">
+            <img src="templates/images/The-HUB-Location-Map-no-backgroup.png" alt="Location Map" class="w-full">
+        </section>
+
+
+        <!-- Register Section (UPDATED) -->
+        <section id="register"
+            class="register-container w-full py-20 px-[20px] flex justify-center items-center bg-white">
+            <div class="register-card w-full lg:w-[90%] p-[40px_50px] text-center uppercase">
+                <h5 class="sub-title text-lg sm:text-2xl md:text-3xl tracking-[3px] text-hub-gold font-bold uppercase mb-2">
+                    contact</h5>
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-semibold m-0 leading-tight text-hub-text">secure your space</h2>
+                <h3 class="text-sm md:text-lg lg:text-2xl font-light mt-2 mb-12 text-hub-text-light normal-case">Be part of
+                    Muar's premier business ecosystem</h3>
+
+                <form class="flex flex-col gap-[22px]">
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa-regular fa-user absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <input type="text" placeholder="Full Name *" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <input type="tel" placeholder="Contact Number *" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <input type="email" placeholder="Email Address *" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <select required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                                <option disabled selected>Preferred Time to Contact *</option>
+                                <option>Morning (9:00 AM – 12:00 PM)</option>
+                                <option>Lunch Hour (12:00 PM – 2:00 PM)</option>
+                                <option>Afternoon (2:00 PM – 6:00 PM)</option>
+                                <option>After Working Hours</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <input type="text" placeholder="Company / Brand Name" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all">
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-briefcase absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <select required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                                <option disabled selected>Nature of Business *</option>
+                                <option>Food & Beverage (F&B)</option>
+                                <option>Retail & Fashion</option>
+                                <option>Health, Beauty & Wellness</option>
+                                <option>Corporate Office / Coworking</option>
+                                <option>Entertainment / Leisure</option>
+                                <option>Services</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4
+                        class="form-section-title text-lg sm:text-2xl md:text-3xl text-hub-text font-light mt-[30px] normal-case">
+                        Requirement Details *</h4>
+
+                    <div class="reveal-element grid grid-cols-1 md:grid-cols-2 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-map-marked-alt absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-xl pointer-events-none text-[#888]"></i>
+                            <select id="select-zone" required
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                                <option value="" disabled selected>Select Zone *</option>
+                                <option value="prime-square">Prime Square</option>
+                                <option value="merchant-bay">Merchant Bay</option>
+                                <option value="central-walk">Central Walk</option>
+                                <option value="parkfront-avenue">Parkfront Avenue (Drive Thru)</option>
+                            </select>
+                        </div>
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-building absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <select id="select-block" required disabled
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                <option value="" disabled selected>Select Block *</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element grid grid-cols-1 gap-[15px]">
+                        <div class="form-group icon-input relative flex flex-col">
+                            <i
+                                class="fa fa-layer-group absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                            <select id="select-level" required disabled
+                                class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                <option value="" disabled selected>Select Level/Unit *</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="reveal-element form-group icon-input relative flex flex-col">
+                        <i
+                            class="fa fa-bullhorn absolute left-3 top-1/2 -translate-y-1/2 text-sm md:text-lg lg:text-2xl pointer-events-none text-[#888]"></i>
+                        <select required
+                            class="w-full p-4 pl-10 rounded-[12px] border border-black/10 outline-none text-sm md:text-lg lg:text-xl bg-gray-50 text-hub-text focus:border-hub-gold transition-all appearance-none cursor-pointer">
+                            <option disabled selected>How did you hear about us?</option>
+                            <option>Social Media (Facebook/Instagram)</option>
+                            <option>Search Engine (Google)</option>
+                            <option>Advertisement</option>
+                            <option>Word of Mouth / Referral</option>
+                            <option>Agent</option>
+                        </select>
+                    </div>
+
+                    <label
+                        class="reveal-element text-left text-sm md:text-lg lg:text-xl text-hub-text-light leading-relaxed normal-case flex items-start gap-3 mt-4">
+                        <input type="checkbox" required class="w-5 h-5 mt-0.5 accent-hub-gold rounded">
+                        <span>I consent to the collection and processing of my personal data by YKL Capital Sdn Bhd for
+                            marketing and leasing purposes.</span>
+                    </label>
+
+                    <button
+                        class="reveal-element submit-btn mt-8 p-5 text-sm md:text-lg lg:text-xl font-bold rounded-full border-none text-white cursor-pointer transition-all w-full md:w-auto md:min-w-[300px] flex items-center justify-center gap-3 mx-auto bg-gradient-to-br from-hub-gold to-hub-light-gold shadow-xl hover:-translate-y-1 hover:shadow-2xl">
+                        SUBMIT ENQUIRY <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Developer Section -->
+        <section id="developer-contact" class="py-20 bg-white text-hub-text">
+            <div class="w-[90%] mx-auto grid md:grid-cols-2 gap-x-20 gap-y-12 items-start">
+                <div class="md:col-span-2 text-center border-b border-black/10 pb-10 mb-5">
+                    <img loading="lazy" src="templates/images/YKL Logo Ori_page-0001.jpg" alt="YKL Capital"
+                        class="inline-block h-auto max-w-[300px]" />
+                </div>
+                <div>
+                    <h2 class="text-lg sm:text-2xl md:text-3xl font-semibold uppercase leading-none mb-6">Built With Integrity</h2>
+                    <p class="text-sm md:text-lg lg:text-xl leading-relaxed text-hub-text-light text-justify">With decades of experience
+                        in heavy industry and engineering, YKL Group brings a legacy of precision and reliability to
+                        property development. We are committed to building not just structures, but communities.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-wider mb-6">Contact Us</h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4 items-center">
+                            <i class="fa-solid fa-map-pin text-hub-blue text-xl w-6"></i>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Office Address</span>
+                                <span class="text-sm md:text-lg lg:text-xl font-medium">YKL Capital Sdn Bhd Lot 663, Batu 10, Kampung Paya
+                                    Panjang, Bukit Pasir, 84300 Muar, Johor.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-center">
+                            <i class="fa-solid fa-phone-volume text-hub-blue text-xl w-6"></i>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Contact Numbers</span>
+                                <span class="text-sm md:text-lg lg:text-xl font-medium">012-727 7575 | 012-727 7979</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-center">
+                            <i class="fa-solid fa-globe text-hub-blue text-xl w-6"></i>
+                            <div>
+                                <span class="block text-xs font-bold text-gray-400 uppercase">Website</span>
+                                <span class="text-sm md:text-lg lg:text-xl font-medium">www.yklcapital.com.my</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="w-full py-4 text-center bg-hub-bg border-t border-gray-200">
+            <p class="text-hub-text-light text-sm md:text-lg font-medium">© 2025 The Hub @ Muar Business Park. All Rights Reserved.
+            </p>
+        </footer>
+    </main>
+
+    <!-- 5. Floating Actions -->
+    <div id="floating-actions"
+        class="fixed bottom-8 right-8 flex flex-col gap-4 z-50 transition-all duration-500 transform translate-y-10 opacity-0 invisible">
+        <a href="https://wa.me/60127277979" target="_blank"
+            class="w-[60px] h-[60px] rounded-full bg-white text-[#25D366] shadow-lg flex items-center justify-center text-3xl hover:-translate-y-1 transition-transform"><i
+                class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.waze.com/ul?q=Lot+663%2C+Batu+10%2C+Kampung+Paya+Panjang+Bukit+Pasir%2C+84300+Muar%2C+Johor&navigate=yes"
+            target="_blank"
+            class="w-[60px] h-[60px] rounded-full bg-white text-[#33CCFF] shadow-lg flex items-center justify-center text-3xl hover:-translate-y-1 transition-transform"><i
+                class="fa-brands fa-waze"></i></a>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})"
+            class="w-[60px] h-[60px] rounded-full bg-hub-text text-white shadow-lg flex items-center justify-center text-2xl hover:-translate-y-1 transition-transform"><i
+                class="fa-solid fa-arrow-up"></i></button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Configuration
+        const SCROLL_THRESHOLD = 1000;
+        // When nav should hide after initial scroll
+        const NAV_HIDE_THRESHOLD = 50;
+        const LERP_FACTOR = 0.08; // Lower = smoother/slower, Higher = snappier
+
+        let currentScroll = 0;
+        let targetScroll = 0;
+        // Elements
+        const gallery = document.getElementById('gallery-grid');
+        const navbar = document.getElementById('navbar');
+        const fab = document.getElementById('floating-actions');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const siteModal = document.getElementById('site-modal');
+        const siteModalImg = document.getElementById('site-modal-img');
+        const overviewSection = document.getElementById('overview');
+
+        // --------------------------------------------------------
+        // OPTIMIZATION: Gallery Zoom Speed
+        // --------------------------------------------------------
+        window.addEventListener('scroll', () => {
+            targetScroll = window.scrollY;
+        }, { passive: true });
+
+        // Animation Loop
+        function animate() {
+            // Linear Interpolation: currentScroll moves towards targetScroll slowly
+            currentScroll += (targetScroll - currentScroll) * LERP_FACTOR;
+
+            // 1. Gallery Zoom Logic based on Smoothed currentScroll
+            const progress = Math.min(Math.max(currentScroll / SCROLL_THRESHOLD, 0), 1);
+            const scale = 3 - (2 * progress);
+            const opacity = currentScroll > SCROLL_THRESHOLD ? Math.max(0, 1 - (currentScroll - SCROLL_THRESHOLD) / 500) : 1;
+
+            if (gallery) {
+                gallery.style.transform = `scale(${scale})`;
+                gallery.style.opacity = opacity;
+            }
+
+            // 2. Navbar Visibility Logic
+            if (currentScroll <= NAV_HIDE_THRESHOLD) {
+                navbar.classList.remove('opacity-0', 'pointer-events-none');
+                navbar.classList.add('opacity-100', 'pointer-events-auto');
+            } else if (currentScroll > NAV_HIDE_THRESHOLD && currentScroll < SCROLL_THRESHOLD) {
+                navbar.classList.add('opacity-0', 'pointer-events-none');
+                navbar.classList.remove('opacity-100', 'pointer-events-auto');
+            } else {
+                navbar.classList.remove('opacity-0', 'pointer-events-none');
+                navbar.classList.add('opacity-100', 'pointer-events-auto');
+            }
+
+            // 3. Floating Actions Visibility
+            if (currentScroll > SCROLL_THRESHOLD) {
+                fab.classList.remove('translate-y-10', 'opacity-0', 'invisible');
+                fab.classList.add('translate-y-0', 'opacity-100', 'visible');
+            } else {
+                fab.classList.add('translate-y-10', 'opacity-0', 'invisible');
+                fab.classList.remove('translate-y-0', 'opacity-100', 'visible');
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize Animation Loop
+        requestAnimationFrame(animate);
+        // --------------------------------------------------------
+        // OPTIMIZATION: Lazy Load Gallery Backgrounds
+        // --------------------------------------------------------
+        window.addEventListener('load', () => {
+            // We wait for the 'load' event (entire page + initial assets) 
+            // before requesting the 8 surrounding images.
+            const lazyBgs = document.querySelectorAll('.lazy-gallery-bg');
+            lazyBgs.forEach(div => {
+                const src = div.getAttribute('data-bg');
+                if (src) {
+                    div.style.backgroundImage = src;
+                }
+            });
+        });
+
+        // --- Video Observation Logic ---
+        document.addEventListener("DOMContentLoaded", function () {
+            const videoContainer = document.querySelector('.video-container');
+            const videoElement = document.getElementById('localVideoPlayer');
+
+            if (videoContainer && videoElement) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const playPromise = videoElement.play();
+                            if (playPromise !== undefined) {
+                                playPromise.catch(error => {
+                                    console.log("Autoplay was prevented or failed:", error);
+                                });
+                            }
+                        } else {
+                            videoElement.pause();
+                        }
+                    });
+                }, {
+                    threshold: 0.5
+                });
+                videoObserver.observe(videoContainer);
+            }
+        });
+
+        // Site Plan Data
+        const MARKERS = [
+            // --- Back Row (Top ~28-32%) ---
+            { id: 'block-i', label: 'Block I', zone: 'merchant', top: 28, left: 61, angle: 0, lineHeight: 60, img: 'templates/images/block-I.png' },
+            { id: 'block-d', label: 'Block D', zone: 'central', top: 32, left: 51.5, angle: -15, lineHeight: 100, img: '' },
+            { id: 'block-e', label: 'Block E', zone: 'central', top: 32, left: 57, angle: 5, lineHeight: 100, img: '' },
+            { id: 'block-g', label: 'Block G', zone: 'central', top: 32, left: 67, angle: -5, lineHeight: 100, img: '' },
+            { id: 'block-h', label: 'Block H', zone: 'central', top: 32, left: 72, angle: 15, lineHeight: 100, img: '' },
+
+            // --- Middle Row (Top ~40-45%) ---
+            { id: 'victoria-park', label: 'Victoria Park', zone: 'central', top: 40, left: 51, angle: -90, lineHeight: 70, img: 'templates/images/The-HUB-Victoria-Park-View1.png' },
+            { id: 'hydora-park', label: 'Hydora Park', zone: 'central', top: 40, left: 58, angle: 5, lineHeight: 10, img: 'templates/images/Hydora-Park.png' },
+            { id: 'jubilee-park', label: 'Jubilee Park', zone: 'central', top: 40, left: 68, angle: -5, lineHeight: 10, img: 'templates/images/The-HUB-Children-Playground.png' },
+            { id: 'starview-park', label: 'Starview Park', zone: 'central', top: 40, left: 74, angle: 90, lineHeight: 70, img: 'templates/images/starview-park.jpg' },
+
+            { id: 'cineplex', label: 'Cineplex', zone: 'cineplex', top: 50, left: 35, angle: 0, lineHeight: 60, img: 'templates/images/The_HUB_cinema2.png' },
+            { id: 'block-a7', label: 'Block A7', zone: 'central', top: 47, left: 58, angle: -180, lineHeight: 160, img: '' },
+            { id: 'block-f', label: 'Block F', zone: 'central', top: 47, left: 73, angle: -180, lineHeight: 160, img: '' },
+
+            // --- Front Row (Top ~55-65%) ---
+            { id: 'block-a', label: 'Block A', zone: 'prime', top: 55, left: 56, angle: 0, lineHeight: 30, img: 'templates/images/The_HUB_office2_Extend.png' },
+            { id: 'block-b', label: 'Block B', zone: 'prime', top: 55, left: 76, angle: 0, lineHeight: 30, img: 'templates/images/The_HUB_hotel2_V2.png' },
+            { id: 'parkfront', label: 'Parkfront Avenue', zone: 'parkfront', top: 65, left: 30, angle: 0, lineHeight: 40, img: 'templates/images/Drive-Thru.png' },
+
+            // --- Front Row (Top ~55-65%) ---
+            { id: 'perpective-entrance', label: 'Entrance', zone: 'perspective', top: 73, left: 43, angle: -70, lineHeight: 100, img: 'templates/images/The-Hub-Entrance-Statement.png' },
+            { id: 'perspective-a7', label: 'Perspective from A7', zone: 'perspective', top: 55, left: 46, angle: 0, lineHeight: 40, img: 'templates/images/The_HUB_captial square_V2 copy.png' },
+            { id: 'perspective-highway', label: 'Perspective from Highway', zone: 'perspective', top: 77, left: 46, angle: 0, lineHeight: 40, img: 'templates/images/The_HUB_highway3b.png' },
+            { id: 'perspective-central-walk', label: 'Central Walk', zone: 'perspective', top: 55, left: 65, angle: 0, lineHeight: 30, img: 'templates/images/TheHub-DrivewayBoulevard.png' },
+        ];
+
+        const LEGEND_ITEMS = [
+            { id: 'prime', label: 'Prime Square', color: '#20A2DC' },
+            { id: 'central', label: 'Central Walk', color: '#83BC41' },
+            { id: 'merchant', label: 'Merchant Bay', color: '#E11F27' },
+            { id: 'cineplex', label: 'Cineplex', color: '#662E86' },
+            { id: 'parkfront', label: 'Parkfront Avenue', color: '#E22C7C' },
+            { id: 'perspective', label: 'Perspective', color: '#ffd500' },
+            { id: 'keyplan', label: 'Key Plan', color: '#d8e2dc' },
+        ];
+
+        const ZONE_COLORS = LEGEND_ITEMS.reduce((acc, item) => {
+            acc[item.id] = item.color;
+            return acc;
+        }, {});
+
+
+        // --- State ---
+        let activeZone = null;
+
+        // --- Elements ---
+        const markersContainer = document.getElementById('markers-container');
+        const legendContainer = document.getElementById('legend-container');
+        const helpText = document.getElementById('help-text');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+
+        init();
+        
+        // --- Initialization ---
+        function init() {
+            createMarkers();
+            createLegend();
+            updateUI();
+        }
+
+        // --- Creation (Run Once) ---
+
+        function createMarkers() {
+            markersContainer.innerHTML = '';
+
+            MARKERS.forEach((marker, index) => {
+
+                if (!marker.img || marker.img.trim() === '') {
+                    return;
+                }
+                
+                const zoneColor = ZONE_COLORS[marker.zone] || '#000';
+
+                const el = document.createElement('div');
+                el.id = `marker-${index}`;
+                // Base classes
+                el.className = 'absolute w-0 h-0 transition-all duration-500';
+                el.style.top = marker.top + '%';
+                el.style.left = marker.left + '%';
+                el.style.transform = 'translate(-50%, -50%)';
+
+                // --- Pivot Container ---
+                // This handles the rotation of the line.
+                // We rotate the pivot by 'angle'.
+                const pivot = document.createElement('div');
+                pivot.className = 'absolute bottom-0 left-0 w-0 h-0';
+                pivot.style.transform = `rotate(${marker.angle || 0}deg)`;
+                pivot.style.transformOrigin = 'bottom center';
+
+                // --- Connector Line ---
+                // Grows upwards inside the rotated pivot.
+                const line = document.createElement('div');
+                line.className = 'marker-line absolute bottom-0 left-1/2 -translate-x-1/2 w-px bg-white/80 shadow-[0_0_5px_rgba(255,255,255,0.5)] origin-bottom z-0';
+                line.innerHTML = `<div class="absolute -bottom-[3px] -left-[2px] w-[5px] h-[5px] bg-white rounded-full"></div>`;
+
+                // --- Content Anchor ---
+                // This moves up and down along the line (via 'bottom' property).
+                const anchor = document.createElement('div');
+                anchor.className = 'marker-anchor absolute left-1/2 -translate-x-1/2 w-0 h-0 z-10';
+                // Initially set bottom to match inactive state
+                // This will be overridden by inline styles in updateMarkers
+
+                // --- Content Wrapper ---
+                // Counter-rotates to keep text horizontal: rotate(-angle).
+                const contentWrapper = document.createElement('div');
+                contentWrapper.style.transform = `rotate(${-(marker.angle || 0)}deg)`;
+                contentWrapper.style.transformOrigin = 'bottom center';
+
+                // Direction Logic: CENTERED and ON TOP
+                // bottom-0 ensures it sits on top of the anchor point (which is the line tip).
+                // left-[-75px] centers the 150px wide box horizontally.
+                contentWrapper.className = `marker-content absolute w-[150px] flex flex-col items-center left-[-75px] bottom-0`;
+
+                // Label
+                const label = document.createElement('div');
+                label.innerText = marker.label;
+                label.className = 'text-sm marker-label px-3 py-1.5 rounded font-bold uppercase mb-2 whitespace-nowrap relative z-10';
+                label.style.backgroundColor = `${zoneColor}CC`;
+                // Image Thumbnail
+                const thumb = document.createElement('div');
+                thumb.className = 'marker-thumb w-[150px] border-2 border-white rounded-md overflow-hidden origin-top relative z-20 cursor-pointer';
+                thumb.innerHTML = `
+                    <div class="aspect-[4/3] w-full relative">
+                        <img src="${marker.img}" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                `;
+                // Click handler (state dependent)
+                thumb.onclick = (e) => handleThumbClick(marker.zone, marker.img);
+
+                contentWrapper.appendChild(label);
+                contentWrapper.appendChild(thumb);
+
+                anchor.appendChild(contentWrapper);
+
+                pivot.appendChild(line);
+                pivot.appendChild(anchor);
+
+                el.appendChild(pivot);
+
+                markersContainer.appendChild(el);
+            });
+        }
+
+        function createLegend() {
+            legendContainer.innerHTML = '';
+
+            LEGEND_ITEMS.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `legend-${item.id}`;
+                btn.className = 'flex items-center gap-2.5 transition-all duration-300 group outline-none focus:outline-none select-none';
+                btn.onclick = () => toggleZone(item.id);
+
+                const dot = document.createElement('span');
+                dot.className = 'w-4 h-4 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.5)] border border-white/10';
+                dot.style.backgroundColor = item.color;
+
+                const text = document.createElement('span');
+                text.className = 'text-sm md:text-md font-medium transition-colors duration-300';
+                text.innerText = item.label;
+
+                btn.appendChild(dot);
+                btn.appendChild(text);
+
+                legendContainer.appendChild(btn);
+            });
+        }
+
+        // --- Updates (Run on Interaction) ---
+
+        function updateUI() {
+            updateMarkers();
+            updateLegend();
+            helpText.innerText = activeZone ? 'Click legend again to reset view' : 'Select a zone to expand details';
+        }
+
+        function updateMarkers() {
+            MARKERS.forEach((marker, index) => {
+                const isActive = activeZone === marker.zone;
+                const zoneColor = ZONE_COLORS[marker.zone] || '#000';
+                const el = document.getElementById(`marker-${index}`);
+                if (!el) return;
+
+                const line = el.querySelector('.marker-line');
+                const anchor = el.querySelector('.marker-anchor');
+                const label = el.querySelector('.marker-label');
+                const thumb = el.querySelector('.marker-thumb');
+
+                // Z-Index
+                // Items further down the list (lower on screen usually, or later in DOM)
+                // should generally be on top.
+                // We keep a base z-10 for inactive, and z-50 for active to pop out.
+                el.className = `absolute w-0 h-0 transition-all duration-500 ${isActive ? 'z-50' : 'z-10'}`;
+
+                // Calculate Heights
+                const targetHeight = marker.lineHeight || 64; // Default 64px
+                const stemHeight = 20; // h-5 is 20px
+
+                // Line Animation
+                if (isActive) {
+                    line.style.height = `${targetHeight}px`;
+                    label.style.backgroundColor = `${zoneColor}CC`;
+                } else {
+                    line.style.height = '0px';
+                    label.style.backgroundColor = `${zoneColor}CC`;
+                }
+
+                // Anchor Position (bottom relative to pivot)
+                // Active: Top of line + stem buffer
+                // Inactive: Just above base (12px)
+                if (isActive) {
+                    anchor.style.bottom = `${targetHeight + 6}px`; // +6 for small visual gap/dot
+                } else {
+                    anchor.style.bottom = '12px';
+                }
+
+                // Label Styling
+                const activeLabelClasses = ['bg-black/80', 'text-white', 'border-white/20', 'scale-110'];
+                const inactiveLabelClasses = ['bg-black/40', 'text-gray-200', 'border-white/10', 'scale-90', 'hover:scale-100', 'hover:bg-black/60'];
+
+                if (isActive) {
+                    label.classList.remove(...inactiveLabelClasses);
+                    label.classList.add(...activeLabelClasses);
+                } else {
+                    label.classList.remove(...activeLabelClasses);
+                    label.classList.add(...inactiveLabelClasses);
+                }
+
+                // Thumb Visibility & Spacing
+                if (isActive) {
+                    thumb.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none');
+                    thumb.classList.add('max-h-[200px]', 'opacity-100', 'pointer-events-auto', 'mt-2');
+                } else {
+                    thumb.classList.remove('max-h-[200px]', 'opacity-100', 'pointer-events-auto', 'mt-2');
+                    thumb.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
+                }
+            });
+        }
+
+        function updateLegend() {
+            LEGEND_ITEMS.forEach(item => {
+                const isActive = activeZone === item.id;
+                const btn = document.getElementById(`legend-${item.id}`);
+                const text = btn.querySelector('span:last-child');
+
+                if (isActive) {
+                    btn.classList.remove('hover:opacity-100', 'hover:scale-105');
+                    btn.classList.add('opacity-100', 'scale-110');
+
+                    text.classList.remove('text-gray-400', 'group-hover:text-gray-200');
+                    text.classList.add('text-white', 'font-bold', 'drop-shadow-md');
+                } else {
+                    btn.classList.remove('opacity-100', 'scale-110');
+                    btn.classList.add('hover:opacity-100', 'hover:scale-105');
+
+                    text.classList.remove('text-white', 'font-bold', 'drop-shadow-md');
+                    text.classList.add('text-gray-300', 'group-hover:text-gray-200');
+                }
+            });
+        }
+
+        // --- Interaction Logic ---
+
+        function toggleZone(zoneId) {
+            activeZone = (activeZone === zoneId) ? null : zoneId;
+            updateUI();
+        }
+
+        function handleThumbClick(markerZone, img) {
+            if (activeZone === markerZone) {
+                openModal(img);
+            }
+        }
+
+        // --- Modal ---
+
+        function openModal(src) {
+            modalImg.src = src;
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                modalImg.classList.remove('scale-95');
+                modalImg.classList.add('scale-100');
+            });
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+            }, 300);
+        }
+
+        // --- Start ---
+        window.addEventListener('load', init);
+
+        // Mobile Menu
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px';
+            mobileMenu.style.maxHeight = isOpen ? '0px' : '100vh';
+            mobileMenu.style.paddingTop = isOpen ? '0' : '1.5rem';
+            mobileMenu.style.paddingBottom = isOpen ? '0' : '1.5rem';
+            mobileMenuBtn.innerHTML = isOpen ? '<i class="fa fa-bars"></i>' : '<i class="fa fa-times"></i>';
+        });
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+            mobileMenu.style.maxHeight = '0px';
+            mobileMenu.style.padding = '0';
+            mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+        }));
+
+        // Register Form Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('reveal');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+
+
+
+        // Register Form Dropdown Logic
+        const zoneSelect = document.getElementById('select-zone');
+        const blockSelect = document.getElementById('select-block');
+        const levelSelect = document.getElementById('select-level');
+
+        const blocks = {
+            'prime-square': ['Block A', 'Block B'],
+            'merchant-bay': ['Block I'],
+            'central-walk': ['Block D', 'Block E', 'Block F', 'Block G', 'Block H', 'Block A7'],
+            'parkfront-avenue': ['Drive Thru Unit 1', 'Drive Thru Unit 2']
         };
 
-        contentWrapper.appendChild(label);
-        contentWrapper.appendChild(thumb);
-        anchor.appendChild(contentWrapper);
-        pivot.appendChild(line);
-        pivot.appendChild(anchor);
-        el.appendChild(pivot);
-        markersContainer.appendChild(el);
-    });
-}
+        const levels = ['Ground Floor', 'Level 1', 'Level 2', 'Level 3'];
 
-/* --------------------------------------------------------
-   LEGEND (UNCHANGED)
--------------------------------------------------------- */
+        zoneSelect.addEventListener('change', () => {
+            blockSelect.innerHTML = '<option value="" disabled selected>Select Block *</option>';
+            levelSelect.innerHTML = '<option value="" disabled selected>Select Level/Unit *</option>';
+            levelSelect.disabled = true;
 
-function createLegend() {
-    legendContainer.innerHTML = '';
+            const selectedZone = zoneSelect.value;
+            if (selectedZone && blocks[selectedZone]) {
+                blocks[selectedZone].forEach(block => {
+                    const option = document.createElement('option');
+                    option.value = block;
+                    option.textContent = block;
+                    blockSelect.appendChild(option);
+                });
+                blockSelect.disabled = false;
+            } else {
+                blockSelect.disabled = true;
+            }
+        });
 
-    LEGEND_ITEMS.forEach(item => {
-        const btn = document.createElement('button');
-        btn.id = `legend-${item.id}`;
-        btn.className = 'flex items-center gap-2.5 transition-all duration-300 group';
-        btn.onclick = () => toggleZone(item.id);
+        blockSelect.addEventListener('change', () => {
+            levelSelect.innerHTML = '<option value="" disabled selected>Select Level/Unit *</option>';
+            if (blockSelect.value) {
+                levels.forEach(lvl => {
+                    const option = document.createElement('option');
+                    option.value = lvl;
+                    option.textContent = lvl;
+                    levelSelect.appendChild(option);
+                });
+                levelSelect.disabled = false;
+            } else {
+                levelSelect.disabled = true;
+            }
+        });
 
-        const dot = document.createElement('span');
-        dot.className = 'w-4 h-4 rounded-full';
-        dot.style.backgroundColor = item.color;
 
-        const text = document.createElement('span');
-        text.innerText = item.label;
-        text.className = 'text-sm text-gray-300';
+    </script>
+</body>
 
-        btn.appendChild(dot);
-        btn.appendChild(text);
-        legendContainer.appendChild(btn);
-    });
-}
-
-/* --------------------------------------------------------
-   UPDATE UI (ONLY BG COLOR LOGIC CHANGED)
--------------------------------------------------------- */
-
-function updateUI() {
-    updateMarkers();
-    updateLegend();
-    helpText.innerText = activeZone
-        ? 'Click legend again to reset view'
-        : 'Select a zone to expand details';
-}
-
-function updateMarkers() {
-    MARKERS.forEach((marker, index) => {
-        const el = document.getElementById(`marker-${index}`);
-        if (!el) return;
-
-        const zoneColor = ZONE_COLORS[marker.zone] || '#000';
-        const isActive = activeZone === marker.zone;
-
-        const line  = el.querySelector('.marker-line');
-        const anchor = el.querySelector('.marker-anchor');
-        const label = el.querySelector('.marker-label');
-        const thumb = el.querySelector('.marker-thumb');
-
-        el.style.zIndex = isActive ? 50 : 10;
-
-        line.style.height = isActive ? `${marker.lineHeight || 64}px` : '0px';
-        anchor.style.bottom = isActive ? `${(marker.lineHeight || 64) + 6}px` : '12px';
-
-        // ✅ ONLY CHANGE: swap black → zone color
-        if (isActive) {
-            label.style.backgroundColor = `${zoneColor}CC`; // active ~80%
-            label.classList.add('scale-110');
-            label.classList.remove('scale-90');
-        } else {
-            label.style.backgroundColor = `${zoneColor}66`; // inactive ~40%
-            label.classList.add('scale-90');
-            label.classList.remove('scale-110');
-        }
-
-        if (isActive) {
-            thumb.classList.remove('max-h-0', 'opacity-0', 'pointer-events-none');
-            thumb.classList.add('max-h-[200px]', 'opacity-100', 'pointer-events-auto', 'mt-2');
-        } else {
-            thumb.classList.add('max-h-0', 'opacity-0', 'pointer-events-none');
-            thumb.classList.remove('max-h-[200px]', 'opacity-100', 'mt-2');
-        }
-    });
-}
-
-function updateLegend() {
-    LEGEND_ITEMS.forEach(item => {
-        const btn = document.getElementById(`legend-${item.id}`);
-        if (!btn) return;
-
-        btn.style.opacity = activeZone === item.id ? '1' : '0.6';
-        btn.style.transform = activeZone === item.id ? 'scale(1.1)' : 'scale(1)';
-    });
-}
-
-/* --------------------------------------------------------
-   INTERACTION
--------------------------------------------------------- */
-
-function toggleZone(zoneId) {
-    activeZone = activeZone === zoneId ? null : zoneId;
-    updateUI();
-}
-
-/* --------------------------------------------------------
-   MODAL (UNCHANGED)
--------------------------------------------------------- */
-
-function openModal(src) {
-    modalImg.src = src;
-    modal.classList.remove('hidden');
-    requestAnimationFrame(() => modal.classList.remove('opacity-0'));
-}
-
-function closeModal() {
-    modal.classList.add('opacity-0');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        modalImg.src = '';
-    }, 300);
-}
-</script>
+</html>
